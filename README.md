@@ -17,7 +17,7 @@ Data models for metabolomics
 
 
 
-## Structure
+## Structure (tentative)
 
 metabolicModel.py
         compound
