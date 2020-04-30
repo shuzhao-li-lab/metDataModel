@@ -19,16 +19,17 @@ Data models for metabolomics
 
 ## Structure (tentative)
 
-metabolicModel.py
+
+### ./azimuth_metabolomics
+    metabolicModel.py
         compound
         reaction
         pathway
 
 
 
-
-experimentalData.py
-        contaminants
+    experimentalData.py
+        contaminants (from ../spectrometry)
         empirical compound
         peaks
 
@@ -36,23 +37,12 @@ experimentalData.py
 
         source experiment
 
+    data/
 
+        shipped metabolic models (Genome-scale)
+        and metabolite properties
 
-
-
-
-## data/
-
-shipped metabolic models (Genome-scale)
-and metabolite properties
-
-
-contaminants.tsv
-
-
-
-
-## utils/
+    utils/
 
 To compile models from Azimuth DB
 
@@ -69,4 +59,14 @@ download
 How to build models
 
 from EBI, etc.
+
+### ./spectrometry
+
+mass spec related data 
+contaminants.tsv
+
+### ./identifiers
+
+Identifier mapping btw databases and metabolic models
+
 
