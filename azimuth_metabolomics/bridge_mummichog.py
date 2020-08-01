@@ -104,8 +104,27 @@ class metabolicNetwork:
  
 
 
+class Compound_Methods:
+    '''To calcuate MS-related properties here for each Compound
+    '''
 
+    # isotopes and adducts, both pos and neg precomputed
+    self.adducts = {}
 
+    def get_pos_ions(self):
+        return {}
+
+    def get_neg_ions(self):
+        return {}
+
+    def get_pos_MS2(self):
+        return {}
+
+    def get_neg_MS2(self):
+        return {}
+    
+    def get_CCS(self):
+        return {}
 
 
 

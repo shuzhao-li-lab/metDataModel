@@ -1,6 +1,61 @@
-# Pseudo code for Azimuth mass spec data model
-# SL 2019-09-03
+'''
 
+General data model for mass spec data
+
+
+For Converting Emory IROA library to Python module
+
+Shuzhao, 2020-07-29
+
+
+library = {
+    'metadata': {},
+    'compounds': [],
+}
+
+metadata = {
+    'library': 'IROA ', # need be more specific 
+    'instrument': 'Orbitrap QE', # need be more specific 
+    'chromatography_column': 'C18', #  need be more specific
+    'chromatography_time': '10 minutes',
+    'ionization': 'ESI',
+    'ionization_mode': 'negative',
+    'expt_contact': 'Ken Liu',
+    'expt_data_generated': '2017', # need be more specific 
+    'data_processed_by': 'Shuzhao Li',
+    
+}
+
+# based on azimuth_metabolomics
+# class annotatedCompound
+
+annCpd = {
+    'name': '',
+    'neutral_formula':'',  # not same as observed in MS
+    'inchi': '',
+    'SMILES': '',
+    'neutral_base_mass': 0.0000,
+    'observed_mz': 0.0000,
+    'observed_rtime': 0,
+    'observed_ion': '',
+    'parent_CID': '',   
+    
+    # better data model for a later day
+    'peaks': {
+				'M+H[1+]': 0,
+				'M[1+]': 0,
+				'M+Na[1+]': 0,
+				#
+				'M-H[1-]': 0,
+				'M-H2O-H[-]': 0,
+				'M-2H[2-]': 0,
+			},
+    
+}
+
+
+
+'''
 
 class Experiment:
 	'''
@@ -80,21 +135,43 @@ class EmpiricalCompound:
     Thought to be a tentative metabolite. 
     Due to false matches, one Compound could have more EmpiricalCompounds
     
-    In mummichog, this replaces the Mnode class in version 1;
-    and is the compound presentation for Activity network and HTML report.
-    
-    This class serves as in between user-input MassFetaure and theoretical model Compound.
-    
-    Experiment specific for this class.
-    We will have a cumulative list of AnnotatedCompound
+    Can be Experiment specific for this class.
+	experiment_belonged = ''
+
+    We will have a cumulative list of annotatedCompound
+
+	libraryCompound = annotatedCompound
+
+
     
     '''
     
-    experiment_belonged = ''
+    def __init__(self):
+		'''
+		An empCpd has one and only one base neutral mass
+		'''
+		self.neutral_base_mass = 0.0000
+        
+		self.peaks = {
+				'M+H[1+]': 0,
+				'M[1+]': 0,
+				'M+Na[1+]': 0,
+				#
+				'M-H[1-]': 0,
+				'M-H2O-H[-]': 0,
+				'M-2H[2-]': 0,
+			},
+		
+		self.MS2_spectra = [
+			# or list of spectra?
+		]
+
+		self.top_compound = ''
+		self.probable_compounds = []
+        
     
-    
-    def __init__(self, listOfFeatures):
-        '''
+	def mummichog_methods(self, listOfFeatures)
+		'''
         Initiation using 
         listOfFeatures = [[retention_time, row_number, ion, mass, compoundID], ...]
         This will be merged and split later to get final set of EmpCpds.
@@ -111,4 +188,21 @@ class EmpiricalCompound:
         self.evidence_score = 0
         self.primary_ion_present = False
         self.statistic = 0
-    
+
+	def export_json(self):
+		return {}
+
+
+class annotatedCompound(EmpiricalCompound):
+	'''
+	library compound will use same class
+
+
+	'''
+	self.observed_mass = 0.0000
+
+
+
+
+
+

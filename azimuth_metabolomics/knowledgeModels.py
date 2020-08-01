@@ -56,35 +56,26 @@ class Compound:
         Take into consideration of charge state; adjust adduct calculation based on charge
 
         '''
-        self.azimuth_id = ''
+        self.internal_id = ''
         self.name = ''          # common name
-        self.other_ids = {
+        self.db_ids = {
             'KEGG': '',
             'HMDB': '',
+            'Azimuth': '',
+            'PubChem': '',
+            'MetaNetX', '',
             }
-        self.formula = ''       # neutral
+        self.neutral_formula = ''
+        self.neutral_mono_mass = 0.0000
+
+        self.SMILES = ''
         self.inchi = ''
-        self.mw = 0             # mono_mass
         
-        # isotopes and adducts, both pos and neg precomputed
-        self.adducts = {}
 
-    def get_pos_ions(self):
-        return {}
-
-    def get_neg_ions(self):
-        return {}
-
-    def get_pos_MS2(self):
-        return {}
-
-    def get_neg_MS2(self):
-        return {}
-    
-    def get_CCS(self):
-        return {}
 
     def get_concentration_range(self):
+        '''organism, tissue specific
+        '''
         # concentration ranges given at HMDB etc.
         return {}
 
