@@ -1,72 +1,44 @@
-# Azimuth-metabolomics
+# metDataModel
 
-Data models for metabolomics
-
-
-## Use
-
-* import all models to mummichog
-
-  mummichog no longer contains metabolic models, but depends on this package
-
-* Serve community as Azimuth DB API?
-
-* Support a web interface for people to browse and edit (with permited access)
-
-
-
+Data models for metabolomics 
+(renamed from Azimuth-metabolomics)
 
 
 ## Structure (tentative)
 
+    metabolic model
 
-### ./azimuth_metabolomics
-    metabolicModel.py
         compound
         reaction
         pathway
 
 
-
-    experimentalData.py
-        contaminants (from ../spectrometry)
+    data model
+        
+        peak
+        feature
+        experiment
         empirical compound
-        peaks
-
-        spectra
-
-        source experiment
-
-    data/
-
-        shipped metabolic models (Genome-scale)
-        and metabolite properties
-
-    utils/
-
-To compile models from Azimuth DB
 
 
-How to convert
 
-downloaed JSON -> py models
+## All annotation functions are in mass2chem package.
+
+Change metDataModel -> mass2chem
 
 
-download 
-  contaminants.tsv
-  references.tsv
 
-How to build models
+## The mummichog suite include
 
-from EBI, etc.
+* mummichog(3): core algorithm package for pathway/network analysis
 
-### ./spectrometry
+* cloud-mummichog: server and worker (RESTful) implementations
 
-mass spec related data 
-contaminants.tsv
+* Azimuth DB: the chemical database for biology, including metabolic models
 
-### ./identifiers
+* metDataModel: data models for metabolomics, used by mummichog and Azimuth DB
 
-Identifier mapping btw databases and metabolic models
+* mass2chem: common utilities in interpreting mass spectrometry data, annotation
 
+* massBrowser: visualization using js
 
