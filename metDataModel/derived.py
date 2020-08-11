@@ -27,16 +27,16 @@ class similarityGroup(Pathway):
 
 
 class annotatedCompound(EmpiricalCompound):
-	'''
-	library compound will use same class
+    '''
+    library compound will use same class
 
     We will have a cumulative list of annotatedCompound
 
-	libraryCompound = annotatedCompound
+    libraryCompound = annotatedCompound
 
 
-	'''
-	self.observed_mass = 0.0000
+    '''
+    self.observed_mass = 0.0000
 
 
 class mzCompound(Compound):
@@ -47,14 +47,14 @@ class mzCompound(Compound):
 
     '''
     'peaks': {
-				'M+H[1+]': 0,
-				'M[1+]': 0,
-				'M+Na[1+]': 0,
-				#
-				'M-H[1-]': 0,
-				'M-H2O-H[-]': 0,
-				'M-2H[2-]': 0,
-			},
+                'M+H[1+]': 0,
+                'M[1+]': 0,
+                'M+Na[1+]': 0,
+                #
+                'M-H[1-]': 0,
+                'M-H2O-H[-]': 0,
+                'M-2H[2-]': 0,
+            },
     
     self.inferred_formula = ''
     self.class = ''  # refer to Classifire ontology or lipid ontology

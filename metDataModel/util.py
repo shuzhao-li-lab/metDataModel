@@ -148,8 +148,8 @@ def build_mummichog_model:
 
 class mummichog_empCpd(EmpiricalCompound):
     
-	def mummichog_methods(self, listOfFeatures)
-		'''
+    def mummichog_methods(self, listOfFeatures)
+        '''
         Initiation using 
         listOfFeatures = [[retention_time, row_number, ion, mass, compoundID], ...]
         This will be merged and split later to get final set of EmpCpds.
@@ -167,8 +167,8 @@ class mummichog_empCpd(EmpiricalCompound):
         self.primary_ion_present = False
         self.statistic = 0
 
-	def export_json(self):
-		return {}
+    def export_json(self):
+        return {}
 
 
 

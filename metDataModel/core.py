@@ -62,7 +62,7 @@ class Peak:
     '''
     ms_level = 1                    # MS levle - 1, 2. 3, etc.
     aligned = False
-	ionization = 'positive'
+    ionization = 'positive'
     
     mz = 0
     retention_time = 0
@@ -106,7 +106,7 @@ class EmpiricalCompound:
     and isobaric/isomeric metabolites when not distinguished by the mass spec data.
 
     Considered to be a tentative metabolite (compound), 
-	result of [computational] annotation.
+    result of [computational] annotation.
 
     This should be equivalent to 'pseudo spectrum' in CAMERA,
     'feature group' in mz.Unit.
@@ -119,16 +119,16 @@ class EmpiricalCompound:
         '''
         self.neutral_base_mass = 0.0000
 
-		self.list_of_features = [
-			# feature, ion, [m/z, rtime, mean_intensity]
-			{'feature': '', 'ion': 'M-H[1-]', 'M+H[1+]', 'm/z': 169.0013, 'rtime': 55},
-			{},
-			# ...
-		]
+        self.list_of_features = [
+            # feature, ion, [m/z, rtime, mean_intensity]
+            {'feature': '', 'ion': 'M-H[1-]', 'M+H[1+]', 'm/z': 169.0013, 'rtime': 55},
+            {},
+            # ...
+        ]
 
         # if available
         self.probable_compounds = []
-		self.top_compound = ''
+        self.top_compound = ''
         
         # Experiment specific.
         self.experiment_belonged = ''
@@ -137,9 +137,9 @@ class EmpiricalCompound:
             # or list of spectra?
         ]
 
-		self.annotation_method = ''
-		self.confidence_score = ''
-		self.FDR = 1
+        self.annotation_method = ''
+        self.confidence_score = ''
+        self.FDR = 1
 
 
 
