@@ -1,17 +1,22 @@
 # metDataModel
 
-Data models for metabolomics 
-(renamed from Azimuth-metabolomics)
+Data models for mass spectrometry based metabolomics .
+
+(This was renamed from Azimuth-metabolomics. All annotation functions are moved to mass2chem package.)
+
+Start with yaml/core.yaml. 
+
+Implement in Python or other languages following the YAML model.
 
 
-## Structure (tentative)
+## Core data Structure
 
     metabolic model
 
         compound
         reaction
         pathway
-
+        network
 
     data model
         
@@ -20,11 +25,8 @@ Data models for metabolomics
         experiment
         empirical compound
 
-
-
-## All annotation functions are in mass2chem package.
-
-Change metDataModel -> mass2chem
+Try to keep the core models minimal. 
+Leave index functions in util or applications.
 
 
 

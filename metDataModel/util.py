@@ -1,6 +1,5 @@
-
 '''
-Data models in mummichog
+Place holder for now -
 
 Import from serialized Python objects.
 (A server version will use or a central database)
@@ -126,11 +125,50 @@ class Compound_Methods:
     def get_CCS(self):
         return {}
 
+    def get_concentration_range(self):
+        '''organism, tissue specific
+        '''
+        # concentration ranges given at HMDB etc.
+        return {}
 
 
 
 
+#
+# Full metabolic models can be built based on compounds and reactions
+#
 
+
+def build_full_model:
+    pass
+
+def build_mummichog_model:
+    pass
+
+
+class mummichog_empCpd(EmpiricalCompound):
+    
+	def mummichog_methods(self, listOfFeatures)
+		'''
+        Initiation using 
+        listOfFeatures = [[retention_time, row_number, ion, mass, compoundID], ...]
+        This will be merged and split later to get final set of EmpCpds.
+        '''
+        self.listOfFeatures = listOfFeatures
+        self.listOfFeatures.sort(key=lambda x: x[1])
+        self.str_row_ion = self.__make_str_row_ion__()          # also a unique ID
+        self.__unpack_listOfFeatures__()
+        
+        self.EID = ''
+        self.chosen_compounds = []
+        self.face_compound = ''
+        
+        self.evidence_score = 0
+        self.primary_ion_present = False
+        self.statistic = 0
+
+	def export_json(self):
+		return {}
 
 
 
