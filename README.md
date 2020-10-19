@@ -11,6 +11,8 @@ Implement in Python or other languages following the YAML model.
 
 ## Core data Structure
 
+![Core data Structure](docs/datastru.png)
+
     metabolic model
 
         compound
