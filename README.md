@@ -1,12 +1,14 @@
 # metDataModel
 
-Data models for mass spectrometry based metabolomics .
+Data models for mass spectrometry based metabolomics.
 
-(This was renamed from Azimuth-metabolomics. All annotation functions are moved to mass2chem package.)
+To define a minimal set of data models (concepts), and others can derive from them.
 
-Start with yaml/core.yaml. 
+Python code is used as example, but this should be language neutral.
 
-Implement in Python or other languages following the YAML model.
+Minimal JSON formats should be used for mummichog project.
+
+YAML should be equivalent to JSON.
 
 
 ## Core data Structure
@@ -46,3 +48,7 @@ Leave index functions in util or applications.
 
 * massBrowser: visualization using js
 
+
+## History
+
+This repo was renamed from Azimuth-metabolomics. All annotation functions are moved to mass2chem package.

@@ -1,0 +1,110 @@
+# --------------------------------
+# This is minimal defition of a metabolic model, with Compounds, Reactions, Pathways.
+#  
+# A metabolic model needs minimal meta data
+# list of reactions and compounds
+
+Model: {
+    'version': '',
+    'source': '',
+    'id': '',
+}
+
+# 
+# a Compound 'id'=azimuth_id, 'mw'=neutral mass
+# other DB IDs, formula, structure are desired but not in minimal requirement
+#
+
+Compounds: [
+
+    {'id':'', 'name':'', 'mw':0, },
+    {},
+    {},
+
+]
+
+#
+# enzyme is a protein to link to genes, not in minimal requirement
+#
+
+Reactions: [
+
+    {
+        'reactants': [compound1, compound2,],
+        'products': [compound3, compound4,],
+        'enzyme': '',
+    },
+    {},
+    {},
+
+]
+
+
+#
+# A Pathway is defined by a list of reactions
+# Network needs no explicit definition. All reactions link to the total network.
+#
+
+Pathways: [
+    {
+        'id': '',
+        'list_of_reactions': [reaction1, reaction2, ],
+    },
+    {},
+    {},
+]
+
+
+
+# --------------------------------
+# This is minimal defition of experimental MS data
+#  
+# A metabolic model needs minimal meta data
+# list of reactions and compounds
+
+Experiment: {
+    'id': '',
+    'list_of_samples': [],
+}
+
+
+# linked to samples
+Peaks: [
+    {
+    'mz': '',
+    'retention_time': '',
+    'intensity': '',
+    }, 
+    {}, 
+    {},
+]
+
+
+Features: [
+
+    {}, {}, {}
+]
+
+
+EmpiricalCompounds: [
+    {},
+    {},
+    {},
+]
+
+
+
+# --------------------------------
+# mapping of EmpiricalCompounds and Compounds
+#  
+
+empCpd_to_Compound: [
+    (empCpd1, Compound1),
+    (empCpd2, Compound1),
+    (empCpd2, Compound2),
+    (),
+    
+]
+
+
+
