@@ -49,6 +49,16 @@ Leave index functions in util or applications.
 * massBrowser: visualization using js
 
 
+## Related community resources
+
+While we focus on the application of mass spectrometry data, 
+many mass spectrometry data structures are defined in various software projects that focus on "pre-processing", e.g.
+
+- openMS (https://abibuilder.informatik.uni-tuebingen.de/archive/openms/Documentation/nightly/html/index.html)
+
+- MSnBase (https://github.com/lgatto/MSnbase)
+
+
 ## History
 
 This repo was renamed from Azimuth-metabolomics. All annotation functions are moved to mass2chem package.
