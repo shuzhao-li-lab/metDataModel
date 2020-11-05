@@ -12,12 +12,12 @@ Model: {
 
 # 
 # a Compound 'id'=azimuth_id, 'mw'=neutral mass
-# other DB IDs, formula, structure are desired but not in minimal requirement
+# other DB IDs, structure are desired but not in minimal requirement
 #
 
 Compounds: [
-
-    {'id':'', 'name':'', 'mw':0, },
+    # formula and mw should be exact mass in neutral form
+    {'id':'', 'name':'', 'formula': '', 'mw':0, },
     {},
     {},
 
@@ -86,25 +86,31 @@ Features: [
 ]
 
 
+# mapping of EmpiricalCompounds and Compounds is 
+# generated after annotation, which should be done separately but mummichog contains a fallback function
+# This is stored in "identity"
+# Note that an empCpd can be a mixture of real compounds
+
 EmpiricalCompounds: [
+
+    {"neutral_base_mass": 0, 
+        "list_of_features": [
+                  # feature, ion, [m/z, rtime, mean_intensity]
+                  {'feature': '', 'ion': 'M-H[1-]', 'M+H[1+]', 'm/z': 169.0013, 'rtime': 55},
+                  {},
+                  # ...
+              ],
+        "identity": {
+                  # compound(s): probability
+                  (compound x): 0.6,
+                  (compound y, compound z): 0.2,
+          },
+      },
     {},
     {},
     {},
 ]
 
-
-
-# --------------------------------
-# mapping of EmpiricalCompounds and Compounds
-#  
-
-empCpd_to_Compound: [
-    (empCpd1, Compound1),
-    (empCpd2, Compound1),
-    (empCpd2, Compound2),
-    (),
-    
-]
 
 
 

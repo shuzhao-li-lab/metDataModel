@@ -10,6 +10,8 @@ Minimal JSON formats should be used for mummichog project.
 
 YAML should be equivalent to JSON.
 
+Use Wiki pages for detailed discussions.
+
 
 ## Core data Structure
 

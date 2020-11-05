@@ -125,11 +125,7 @@ class EmpiricalCompound:
             {},
             # ...
         ]
-
-        # if available
-        self.probable_compounds = []
-        self.top_compound = ''
-        
+       
         # Experiment specific.
         self.experiment_belonged = ''
         
@@ -138,10 +134,13 @@ class EmpiricalCompound:
         ]
 
         self.annotation_method = ''
-        self.confidence_score = ''
-        self.FDR = 1
 
-
+        # after annotation
+        self.identity = {
+                  # compound(s): probability
+                  (Compound x): 0.6,
+                  (Compound y, Compound z): 0.2,
+          }
 
 #
 # Theoretical concepts: compound, reaction, pathway, network
