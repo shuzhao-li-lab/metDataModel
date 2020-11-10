@@ -118,29 +118,27 @@ class EmpiricalCompound:
         An empCpd has one and only one base neutral mass
         '''
         self.neutral_base_mass = 0.0000
-
+        # this is list of MS1 features
         self.list_of_features = [
-            # feature, ion, [m/z, rtime, mean_intensity]
-            {'feature': '', 'ion': 'M-H[1-]', 'M+H[1+]', 'm/z': 169.0013, 'rtime': 55},
+            {'feature': 'row23', 'ion': 'M+H[1+]', 'm/z': 169.0013, 'rtime': 55},
             {},
             # ...
         ]
-       
-        # Experiment specific.
-        self.experiment_belonged = ''
-        
-        self.MS2_spectra = [
-            # or list of spectra?
-        ]
-
-        self.annotation_method = ''
-
         # after annotation
         self.identity = {
                   # compound(s): probability
-                  (Compound x): 0.6,
-                  (Compound y, Compound z): 0.2,
+                  (Compound x): 5,
+                  (Compound y, Compound z): 5,
           }
+
+        # Experiment specific.
+        self.experiment_belonged = ''
+        self.annotation_method = ''
+
+        # data structure for MS2/MSn, while spectra are modeled in annotation
+        self.fragment_tree = {}
+            
+        
 
 #
 # Theoretical concepts: compound, reaction, pathway, network
