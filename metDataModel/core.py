@@ -71,6 +71,7 @@ class Peak:
     intensity = 0
     intensity_value_by = 'area'     # or height, etc.
     
+    XIC = []                        # should be able to plot the peaks 
     peak_shape = ''                 # need a method to define this
     
 
@@ -124,9 +125,9 @@ class EmpiricalCompound:
             {},
             # ...
         ]
-        # after annotation
+        # after annotation, not ruling out an empCpd can be mixture (isomers, etc)
         self.identity = {
-                  # compound(s): probability
+                  # compound(mixtures): probability
                   (Compound x): 5,
                   (Compound y, Compound z): 5,
           }

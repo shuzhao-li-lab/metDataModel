@@ -34,6 +34,21 @@ Use Wiki pages for detailed discussions.
 Try to keep the core models minimal. 
 Leave index functions in util or applications.
 
+## empCpd format (JSON)
+ 
+    {"neutral_base_mass": 0, 
+      "list_of_features": [
+                # feature, ion, [m/z, rtime, mean_intensity]
+                {'feature': '', 'ion': 'M-H[1-]', 'm/z': 169.0013, 'rtime': 55},
+                {},
+                # ...
+            ],
+      "identity": {
+                # compound(mixtures): probability
+                (compound x): 0.6,
+                (compound y, compound z): 0.2,
+        }
+    }
 
 
 ## The mummichog suite include
