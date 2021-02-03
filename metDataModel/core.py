@@ -1,5 +1,5 @@
 '''
-General data models for metabolomics data
+General data models for metabolomics data.
 
 For experimental data,
 The hierarchy is Experiment -> empCpd -> Features -> Peaks
@@ -8,6 +8,15 @@ For theoretical data,
 The hierarchy is Network/pathway -> reactions -> compounds
 
 Not all concepts have to be explicitly modeled in a project (e.g. expt, peak, network).
+Use derived/inherited classes for more explict or specialized data.
+
+To learn about mass spectrometry concepts and pre-processing:
+https://pyopenms.readthedocs.io/en/latest/datastructures.html
+https://github.com/jorainer/metabolomics2018
+
+To learn about genome scale metabolic models:
+https://link.springer.com/article/10.1186/s13059-019-1730-3
+https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19
 
 '''
 
@@ -18,11 +27,12 @@ Not all concepts have to be explicitly modeled in a project (e.g. expt, peak, ne
 
 class Experiment:
     '''
-    type can be LC-MS, LC-MS/MS, GC-MS, LC-IMS, etc.
-    Can model after metTab in Metabolomics Workbench.
-    
+    An experiment of LC-MS, LC-MS/MS, GC-MS, LC-IMS, etc.
+    This can be equivalent to XCMSnExp class in the XCMS R package, 
+    or MSExperiment in the OpenMS software,
+    but need not be so extensive when pre-processing is not the focus.
     '''
-    id = 1000
+    id = ''
     input_data_from = ''
     type = 'LC-MS'
     instrument = ''
@@ -44,53 +54,58 @@ class Experiment:
         # etc.
     }
     
+    @property
+    def __init__(self, id):
+        self.id = id
     
+
+
 class Peak:
     '''
-    Specific to a sample in an experiment.
-    Preprocessing software extracts peaks per sample, then performs alignment.
-    The alignment shifts m/z, rt etc values.
-    For this class, pre-alignment is preferred. 
+    Chromatographic peak, specific to a sample in an experiment.
+    Preprocessing software extracts peaks per sample, then performs alignment/correspondence.
+    For high-resolution data, m/z alignment isn't a major concern.
+    Retention time alignment shifts the data values.
+    For this class, pre-alignment data is preferred, 
+    so that people can use different methods for their own alignment.
     
-    But almost all data tables we have are post-alignment, 
-    which are accommodated here by setting aligned=True.
+    When data tables come as post-alignment data, 
+    which are accommodated in list_retention_time_corrected.
 
-    # indexing can be done from feature / expt
-    feature_belonged = ''
-    experiment_belonged = ''
-    
     '''
     ms_level = 1                    # MS levle - 1, 2. 3, etc.
-    aligned = False
     ionization = 'positive'
-    
-    mz = 0
-    retention_time = 0
-    collision_cross_section = 0     # reserved for IM data
-    
-    intensity = 0
-    intensity_value_by = 'area'     # or height, etc.
-    
-    XIC = []                        # should be able to plot the peaks 
-    peak_shape = ''                 # need a method to define this
-    
+    corresponding_feature_id = ''   # belong to which feature after correspondence
+    experiment_belonged = ''
 
+    mz_peak_value = 0
+    min_mz, max_mz = 0, 0
+    # XIC and peak_shape are defined by intensity as teh the function of rtime
+    list_retention_time = []
+    list_intensity = []
+
+    # if RT aligned/adjusted
+    list_retention_time_corrected = []
+    # 
+    # collision_cross_section = 0     # reserved for IM data
+
+    
 
 class Feature:
     '''
-    A feature is a peak that is aligned across samples.
+    A feature is a set of peaks that are aligned across samples.
     So this is experiment specific.
-
+    The default is LC-MS feature. Derivative classes include MS2feature, etc.
 
     '''
     ms_level = 1                    # MS levle - 1, 2. 3, etc.
     mz = 0
     retention_time = 0
 
-    intensities = []
+    including_peaks = []
 
     # optional
-    collision_cross_section = 0     # reserved for IM data
+    # collision_cross_section = 0     # reserved for IM data
     
     intensity_sample_mean = 0
     intensity_sample_std = 0
@@ -174,7 +189,10 @@ class Compound:
 
 class Reaction:
     '''
-    Key info is reactants and products - each a list of compounds.
+    A reaction is defined by reactants and products, each a list of compounds.
+    There is directionality of a reaction. A forward reaction is different from reverse reaction.
+    We can treat the reactions catalyzed by different enzymes as the same 
+
 
     Reactions are species specific, 
     because genes are species specific.

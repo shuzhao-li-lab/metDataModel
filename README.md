@@ -1,16 +1,13 @@
-# metDataModel
+# metDataModel, data models for mass spectrometry based metabolomics
 
-Data models for mass spectrometry based metabolomics.
+Our goal is to define a minimal set of data models to promote interoperability in computational metabolomics.
+This package will lay out the basic concepts and data structures, then we can import them to other projects, and extend to more specialized classes via inheritance. 
 
-To define a minimal set of data models (concepts), and others can derive from them.
-
-Python code is used as example, but this should be language neutral.
-
-Minimal JSON formats should be used for mummichog project.
-
-YAML should be equivalent to JSON.
-
-Use Wiki pages for detailed discussions.
+There's been extensive software development in related areas. 
+The XCMS ecosystem (https://www.bioconductor.org/packages/release/bioc/html/xcms.html) is a leading example of data preprocessing.
+The modeling of metabolism is exemplified by the Escher project (https://github.com/zakandrewking/escher).
+The advancing of science relies on the close interaction of experimental measurements and theoretical modeling, and the two should feed on each other. However, a clear gap exists between the two in metabolomics. E.g., the elemental mass table in Escher (retrieved on version 1.7.3) are of average mass, but mass spectrometers measure isotopic mass. 
+Many software programs already have excellent data models and data structures. But the reuse of data models is much easier to start from basics, hence this project, where complexity is an option.
 
 
 ## Core data Structure
@@ -51,7 +48,9 @@ Leave index functions in util or applications.
     }
 
 
-## The mummichog suite include
+## The mummichog suite 
+
+This package is used in mummichog 3.
 
 * mummichog(3): core algorithm package for pathway/network analysis
 
@@ -66,14 +65,26 @@ Leave index functions in util or applications.
 * massBrowser: visualization using js
 
 
-## Related community resources
+## For developers
 
+Python code is used as example, but this should be language neutral.
+
+Need better use of operators (getters, setters) in Python code
+
+Minimal JSON formats should be used for mummichog project.
+
+YAML should be equivalent to JSON.
+
+Use Wiki pages for detailed discussions.
+
+
+### Related community resources
 While we focus on the application of mass spectrometry data, 
 many mass spectrometry data structures are defined in various software projects that focus on "pre-processing", e.g.
 
-- openMS (https://abibuilder.informatik.uni-tuebingen.de/archive/openms/Documentation/nightly/html/index.html)
+- openMS (https://abibuilder.informatik.uni-tuebingen.de/archive/openms/Documentation/nightly/html/index.html) and (https://pyopenms.readthedocs.io/en/latest/datastructures.html)
 
-- MSnBase (https://github.com/lgatto/MSnbase)
+- MSnBase (used by XCMS, https://github.com/lgatto/MSnbase)
 
 
 ## History

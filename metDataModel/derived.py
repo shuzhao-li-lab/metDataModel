@@ -1,5 +1,5 @@
 """
-Place holder for now -
+Place holder for now - classes derived from the 8 basic classes.
 
 
 compound example in mummichog 2: 
@@ -8,13 +8,17 @@ compound example in mummichog 2:
 
 
 
-
-
-
-
-
-
 """
+
+class MS2feature(Feature):
+    ms_level = 2
+    parent_ion = 0
+
+    list_mz = []
+    list_intensity = []
+    retention_time = 0
+
+
 
 class metaboliteSet(Pathway):
     self.members = []
