@@ -1,6 +1,8 @@
 # --------------------------------
 # This is minimal defition of a metabolic model, with Compounds, Reactions, Pathways.
-#  
+# We start the implementation in the core.py, so please refer there to update this file if needed. 
+
+
 # A metabolic model needs minimal meta data
 # list of reactions and compounds
 

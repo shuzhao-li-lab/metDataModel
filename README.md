@@ -21,12 +21,12 @@ Many software programs already have excellent data models and data structures. B
         pathway
         network
 
-    data model
+    experimental data model
         
         peak
         feature
-        experiment
         empirical compound
+        experiment
 
 Try to keep the core models minimal. 
 Leave index functions in util or applications.
@@ -67,24 +67,37 @@ This package is used in mummichog 3.
 
 ## For developers
 
-Python code is used as example, but this should be language neutral.
+This should be language neutral. We start using Python code, and it'd be the primary reference. 
+But we encourage the adaptation/update/extension in other languages.
 
-Need better use of operators (getters, setters) in Python code
+YAML should be equivalent to JSON. Since Python classes are where we started, please use them as primary reference.
 
 Minimal JSON formats should be used for mummichog project.
 
-YAML should be equivalent to JSON.
+In progress: need better and consistent use of operators (getters, setters) in Python code.
 
-Use Wiki pages for detailed discussions.
+Use Wiki pages for detailed discussions of ideas.
 
 
 ### Related community resources
 While we focus on the application of mass spectrometry data, 
 many mass spectrometry data structures are defined in various software projects that focus on "pre-processing", e.g.
 
-- openMS (https://abibuilder.informatik.uni-tuebingen.de/archive/openms/Documentation/nightly/html/index.html) and (https://pyopenms.readthedocs.io/en/latest/datastructures.html)
+- openMS (https://abibuilder.informatik.uni-tuebingen.de/archive/openms/Documentation/nightly/html/index.html) 
 
 - MSnBase (used by XCMS, https://github.com/lgatto/MSnbase)
+
+To learn about mass spectrometry concepts and pre-processing:
+
+- Data structure described for (py)openMS (https://pyopenms.readthedocs.io/en/latest/datastructures.html)
+
+- XCMS tutorial by Johannes Rainer (https://github.com/jorainer/metabolomics2018)
+
+To learn about genome scale metabolic models:
+
+- review by Gu et al, 2019 (https://link.springer.com/article/10.1186/s13059-019-1730-3)
+
+- our book chapter to explain metabolic models in the context of metabolomic pathway analysis (https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19)
 
 
 ## History
