@@ -4,11 +4,8 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
-
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
 
 requirements = [ ]
 
@@ -34,15 +31,15 @@ setup(
     description="Data models for metabolomics",
     install_requires=requirements,
     license="BSD license",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     include_package_data=True,
-    keywords='azimuth_metabolomics',
-    name='azimuth_metabolomics',
-    packages=find_packages(include=['azimuth_metabolomics', 'azimuth_metabolomics.*']),
+    keywords='metDataModel',
+    name='metDataModel',
+    packages=find_packages(include=['json', 'core.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/shuzhao-li/azimuth_metabolomics',
-    version='0.1.0',
+    version='0.1.1',
     zip_safe=False,
 )
