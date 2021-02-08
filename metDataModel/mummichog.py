@@ -6,6 +6,8 @@ classes used by mummichog
 import numpy as np
 import networkx as nx
 
+primary_ions = ['M+H[1+]', 'M+Na[1+]', 'M-H2O+H[1+]', 'M-H[-]', 'M-2H[2-]', 'M-H2O-H[-]']
+
 #
 # -----------------------------------------------------------------------------
 #
