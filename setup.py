@@ -1,11 +1,7 @@
-#!/usr/bin/env python
-
-"""The setup script."""
-
 from setuptools import setup, find_packages
 
-with open('README.md') as readme_file:
-    readme = readme_file.read()
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
 requirements = [ ]
 
@@ -31,7 +27,8 @@ setup(
     description="Data models for metabolomics",
     install_requires=requirements,
     license="BSD license",
-    long_description=readme,
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     include_package_data=True,
     keywords='metDataModel',
     name='metDataModel',
@@ -39,7 +36,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/shuzhao-li/azimuth_metabolomics',
+    url='https://github.com/shuzhao-li/metDataModel',
     version='0.1.1',
     zip_safe=False,
 )

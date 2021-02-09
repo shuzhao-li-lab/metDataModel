@@ -4,6 +4,7 @@ classes used by mummichog
 """
 
 import numpy as np
+# mummichog uses nx 1.x
 import networkx as nx
 
 primary_ions = ['M+H[1+]', 'M+Na[1+]', 'M-H2O+H[1+]', 'M-H[-]', 'M-2H[2-]', 'M-H2O-H[-]']
@@ -257,21 +258,9 @@ class MassFeature:
 
 class EmpiricalCompound:
     '''
-    EmpiricalCompound is a computational unit to include 
-    multiple ions that belong to the same metabolite,
-    and isobaric/isomeric metabolites when not distinguished by the mass spec data.
-    Thought to be a tentative metabolite. 
-    Due to false matches, one Compound could have more EmpiricalCompounds
-    
-    In mummichog, this replaces the Mnode class in version 1;
-    and is the compound presentation for Activity network and HTML report.
-    
-    This class serves as in between user-input MassFetaure and theoretical model Compound.
+    Carryover from mummichog 2.
 
-
-
-    Will update in accordance to and import from
-    https://github.com/shuzhao-li/metDataModel
+    to be updated from .core
     
     
     '''
