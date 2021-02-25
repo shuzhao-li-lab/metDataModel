@@ -22,7 +22,7 @@ https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19
 
 #
 # Experimental concepts: experiment, peak, feature, empirical compound
-# only considering mass spec data
+# only considering mass spec data here
 #
 
 class Experiment:
@@ -48,6 +48,8 @@ class Experiment:
     '''
     id = 'EXP00001234'                         # long str to be unique in the world
     input_data_from = ''
+
+    # expt meta data
     type = 'LC-MS'
     instrument = ''
     instrument_parameters = {}
@@ -70,6 +72,7 @@ class Experiment:
         # etc.
     }
     
+    # data 
     feature_DataFrame = None
     FeatureAnnotation = {} 
     ObservationAnnotation = {
@@ -103,24 +106,24 @@ class Peak:
 
     '''
     id = 'P00001234'
-    experiment_belonged = ''
     ms_level = 1                    # MS levle - 1, 2. 3, etc.
     ionization = 'positive'
-    corresponding_feature_id = ''   # belong to which feature after correspondence
-    
-    mz_peak_value = 0
-    min_mz, max_mz = 0, 0
-
     # XIC and peak_shape are defined by intensity as the the function of rtime
     list_retention_time = []
     list_intensity = []
-
     # if RT aligned/adjusted
     list_retention_time_corrected = []
 
-    # 
+    # derivative to XIC
+    mz, min_mz, max_mz = 0, 0, 0
+    rtime, min_rtime, max_rtime = 0, 0, 0
+    # other attributes of interest
     # collision_cross_section = 0     # reserved for IM data
 
+    # optional as this can be reverse indexed
+    corresponding_feature_id = ''   # belong to which feature after correspondence
+    experiment_belonged = ''
+    
 
 class Feature:
     '''
@@ -132,23 +135,21 @@ class Feature:
     The default is LC-MS feature. Derivative classes include MS2feature, etc.
     '''
     id = 'F00001234'
-    experiment_belonged = ''
-
     ms_level = 1                    # MS levle - 1, 2. 3, etc.
     mz = 0
-    retention_time = 0
+    rtime = 0
+    # other attributes of interest
 
     including_peaks = []
-
-    # optional
-    # collision_cross_section = 0     # reserved for IM data
 
     # statistics across samples
     intensity_sample_mean = 0
     intensity_sample_std = 0
     intensity_sample_cv = 0
     intensity_replicate_cv = 0
-    
+
+    experiment_belonged = ''
+
 
 class EmpiricalCompound:
     '''
@@ -162,9 +163,10 @@ class EmpiricalCompound:
     The probablity ranges between [0, 1]. 
     This unit then enables approaches to factor the probablistic models into biological interpretation (e.g. mummichog). 
 
-    EmpiricalCompound is experiment specific.
+    EmpiricalCompound is experiment specific,
+    and can combine multiple methods, including pos and neg ESI, MS^n.
 
-    Similar concepts are 'pseudo spectrum' in CAMERA, and 'feature group' in mz.Unit.
+    Similar concepts are 'pseudo spectrum' in CAMERA, and 'feature group' in mz.Unity.
     '''
 
     @property
@@ -222,7 +224,7 @@ class EmpiricalCompound:
 
 
 #
-# Theoretical concepts: compound, reaction, pathway, network
+# Theoretical concepts (metabolic model): compound, reaction, pathway, network
 #
 
 class Compound:
@@ -271,6 +273,8 @@ class Reaction:
 
         self.reactants = []
         self.products = []
+
+        # below this line are optional
         self.enzymes = []
         self.genes = []
 
@@ -308,6 +312,7 @@ class Network:
     All based on prior knowledge.
     This class does not include correlation networks and as such.
     '''
+    def __init__(self):
         self.azimuth_id = ''
         self.name = ''
         self.source = []
