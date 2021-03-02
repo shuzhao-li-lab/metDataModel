@@ -37,7 +37,7 @@ compound example in mummichog 2:
 
 """
 
-from metDataModel.core import Experiment
+from metDataModel.core import Experiment, Compound
 
 class metabolicModel:
     '''
@@ -87,3 +87,19 @@ class annotatedCompound(EmpiricalCompound):
     libraryCompound = annotatedCompound
     '''
     observed_mass = 0.0000
+
+
+class Compound_spectra(Compound):
+    '''
+    Compound with added spectra from spectral databases or in silico prediciton.
+    Refer to how HMDB organizes spectra for metabolites.
+    '''
+    meta = {}
+    MS1_ESI_pos = []
+    MS1_ESI_neg = []
+    MS1_EISA_pos = []
+    MS1_EISA_neg = []
+    MS1_GC_pos = []
+    MS1_GC_neg = []
+    MS2_CID_pos = []
+    MS2_CID_neg = []

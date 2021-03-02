@@ -32,11 +32,13 @@ setup(
     include_package_data=True,
     keywords='metDataModel',
     name='metDataModel',
-    packages=find_packages(),
+    packages=find_packages(
+        include=['*', "metDataModel"],
+    ),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/shuzhao-li/metDataModel',
-    version='0.1.4',
+    version='0.1.5',
     zip_safe=False,
 )
