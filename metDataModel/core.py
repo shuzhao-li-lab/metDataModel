@@ -20,6 +20,8 @@ https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19
 
 '''
 
+import json
+
 #
 # Experimental concepts: experiment, peak, feature, empirical compound
 # only considering mass spec data here
@@ -88,6 +90,12 @@ class Experiment:
     @property
     def __init__(self, id):
         self.id = id
+
+    def from_json():
+        pass
+
+    def to_json():
+        pass
     
 
 class Peak:

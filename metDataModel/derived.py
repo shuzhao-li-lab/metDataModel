@@ -46,6 +46,7 @@ class metabolicModel:
     Compounds are union of all reactants and products in reactions.
     Genes and proteins correspond to enzymes in reactions.
     '''
+    id = ''
     species = ''
     source = ''                 # where the model comes from
     version = ''
