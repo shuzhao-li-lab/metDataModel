@@ -142,21 +142,34 @@ class Feature:
 
     The default is LC-MS feature. Derivative classes include MS2feature, etc.
     '''
-    id = 'F00001234'
-    ms_level = 1                    # MS levle - 1, 2. 3, etc.
-    mz = 0
-    rtime = 0
-    # other attributes of interest
 
-    including_peaks = []
+    # to enable getters and setters
+    @property
+    def __init__(self, id):
+        self.id = id                # e.g. 'F00001234'
+        self.ms_level = 1           # MS levle - 1, 2. 3, etc.
+        self.mz = 0
+        self.rtime = 0
 
-    # statistics across samples
-    intensity_sample_mean = 0
-    intensity_sample_std = 0
-    intensity_sample_cv = 0
-    intensity_replicate_cv = 0
+        # other attributes of interest
+        including_peaks = []
 
-    experiment_belonged = ''
+        experiment_belonged = ''
+
+        # statistics across samples
+        self.statistics = {
+            'intensity_sample_mean': None,
+            'intensity_sample_std': None,
+            'intensity_sample_cv': None,
+            'intensity_replicate_cv': None,
+        }
+
+    def from_json():
+        pass
+
+    def to_json():
+        pass
+    
 
 
 class EmpiricalCompound:
@@ -170,6 +183,7 @@ class EmpiricalCompound:
     and this allows probablistic annotation on experimental data. 
     The probablity ranges between [0, 1]. 
     This unit then enables approaches to factor the probablistic models into biological interpretation (e.g. mummichog). 
+    If an annotation method only provides scores (e.g. from MS2 search), mummichog will use them.
 
     EmpiricalCompound is experiment specific,
     and can combine multiple methods, including pos and neg ESI, MS^n.
@@ -180,7 +194,9 @@ class EmpiricalCompound:
     @property
     def __init__(self):
         '''
-        An empCpd has one and only one base neutral mass
+        An empCpd is the result of annotation.
+        It has one and only one base neutral mass.
+        Many attributes are optional.
         '''
         self.id = 'E00001234'
         self.neutral_base_mass = 0.0000
@@ -193,9 +209,22 @@ class EmpiricalCompound:
         # neutral formulae
         self.candidate_formulae = []
 
+        #
+        # one of the scores or probabilities is expected after annotation
+        #
         # How to assign probability depends on annotation method
         self.identity_probability = {
                   # (compound or mixtures): probability
+                  (Compound x): 0.0,
+                  (Compound y, Compound z): 0.0,
+          }
+
+        self.identity_probability_mummichog = {
+            # updated probability after mummichog analysis
+        }
+
+        # Scores from annotation method
+        self.identity_scores = {
                   (Compound x): 0.0,
                   (Compound y, Compound z): 0.0,
           }
@@ -229,6 +258,12 @@ class EmpiricalCompound:
             {}
         ]
 
+    def from_json():
+        pass
+
+    def to_json():
+        pass
+    
 
 
 #
