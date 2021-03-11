@@ -78,8 +78,8 @@ class Experiment:
     feature_DataFrame = None
     FeatureAnnotation = {} 
     ObservationAnnotation = {
-        sample_list: [],
-        file_sample_mapper: {}
+        'sample_list': [],
+        'file_sample_mapper': {}
     }
     # immutable ordered version of sample_list
     ordered_samples = ()
