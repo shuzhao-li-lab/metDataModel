@@ -132,6 +132,12 @@ class Peak:
     corresponding_feature_id = ''   # belong to which feature after correspondence
     experiment_belonged = ''
     
+    def from_json():
+        pass
+
+    def to_json():
+        pass
+    
 
 class Feature:
     '''
@@ -219,8 +225,8 @@ class EmpiricalCompound:
         # Changing from dict to list, as these are tables not easy keys 
         self.identity_probability = [
                   # (compound or mixtures): probability
-                  [0.0, (Compound x)],
-                  [0.0, (Compound y, Compound z)],
+                  [0.0, ('Compound x')],
+                  [0.0, ('Compound y', 'Compound z')],
           ]
 
         self.identity_probability_mummichog = [
@@ -229,13 +235,13 @@ class EmpiricalCompound:
 
         # Scores from annotation method
         self.identity_scores = [
-                  [0.0, (Compound x)],
-                  [0.0, (Compound y, Compound z)],
+                  [0.0, ('Compound x')],
+                  [0.0, ('Compound y', 'Compound z')],
           ]
 
         # Representative intensity values, can base on the MS1 feature of highest intensity
         self.intensities = {
-            "sample1": 0, "sample2": 0, ...
+            "sample1": 0, "sample2": 0, # etc
         }
         # more efficient version of self.intensities
         self.intensities_by_ordered_samples = []
@@ -300,6 +306,12 @@ class Compound:
         self.SMILES = ''
         self.inchi = ''
         
+    def from_json():
+        pass
+
+    def to_json():
+        pass
+    
 
 class Reaction:
     '''
@@ -335,6 +347,12 @@ class Reaction:
         self.cell_types = []
         self.tissues = []
         
+    def from_json():
+        pass
+
+    def to_json():
+        pass
+    
 
 class Pathway:
     '''
@@ -347,6 +365,12 @@ class Pathway:
         self.list_of_reactions = []
         self.status = ''
 
+    def from_json():
+        pass
+
+    def to_json():
+        pass
+    
 
 class Network:
     '''
@@ -366,3 +390,9 @@ class Network:
         self.list_of_reactions = []
         self.status = ''
 
+    def from_json():
+        pass
+
+    def to_json():
+        pass
+    
