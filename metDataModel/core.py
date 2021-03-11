@@ -162,6 +162,9 @@ class Feature:
             'intensity_sample_std': None,
             'intensity_sample_cv': None,
             'intensity_replicate_cv': None,
+            # statistic_score and p_value depend on the statistical test
+            'statistic_score': None,
+            'p_value': None,
         }
 
     def from_json():
@@ -213,21 +216,22 @@ class EmpiricalCompound:
         # one of the scores or probabilities is expected after annotation
         #
         # How to assign probability depends on annotation method
-        self.identity_probability = {
+        # Changing from dict to list, as these are tables not easy keys 
+        self.identity_probability = [
                   # (compound or mixtures): probability
-                  (Compound x): 0.0,
-                  (Compound y, Compound z): 0.0,
-          }
+                  [0.0, (Compound x)],
+                  [0.0, (Compound y, Compound z)],
+          ]
 
-        self.identity_probability_mummichog = {
+        self.identity_probability_mummichog = [
             # updated probability after mummichog analysis
-        }
+        ]
 
         # Scores from annotation method
-        self.identity_scores = {
-                  (Compound x): 0.0,
-                  (Compound y, Compound z): 0.0,
-          }
+        self.identity_scores = [
+                  [0.0, (Compound x)],
+                  [0.0, (Compound y, Compound z)],
+          ]
 
         # Representative intensity values, can base on the MS1 feature of highest intensity
         self.intensities = {

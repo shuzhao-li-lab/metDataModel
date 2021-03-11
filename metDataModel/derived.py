@@ -123,3 +123,6 @@ class Contaminant(Compound):
     '''
     type_of_contaminant = ''
     references = []
+
+
+
