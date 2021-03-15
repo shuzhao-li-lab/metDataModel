@@ -255,18 +255,8 @@ class EmpiricalCompound:
             # ...
         ]
 
-        # this is list of  MS2 features; templated on MONA JSON
-        self.MS2_Spectra = [
-            {"instrument": "",
-            "precursor type": "M+H[1+]",
-            "precursor m/z": 169,
-            "collision energy": "30V",
-            "score": 5.5,
-            "spectrum": "59.000:0.615142 72.600:0.031546 74.600:0.015773 78.900:0.086751 85.200:1.490536 150.500:0.055205 166.000:0.055205 167.200:100.000000",
-            },
-            {},
-            {}
-        ]
+        # this is list of  MS2 features, derived.Spectrum is based on Peak.
+        self.MS2_Spectra = []
 
     def from_json():
         pass
