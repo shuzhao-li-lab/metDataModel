@@ -100,7 +100,8 @@ class Experiment:
 
 class Peak:
     '''
-    The default is a chromatographic peak in LC-MS, specific to a sample in an experiment.
+    The default is a chromatographic peak (called EIC or XIC) in LC-MS, 
+    specific to a sample in an experiment.
     This can be extended to other type of peaks as needed.
 
     Preprocessing software extracts peaks per sample, then performs alignment/correspondence.
@@ -219,26 +220,22 @@ class EmpiricalCompound:
         self.candidate_formulae = []
 
         #
-        # one of the scores or probabilities is expected after annotation
-        #
+        # Scores or probabilities is expected after annotation
         # How to assign probability depends on annotation method
-        # Changing from dict to list, as these are tables not easy keys 
-        self.identity_probability = [
-                  # (compound or mixtures): probability
+        # Using list not dictionary, as these are tables not easy keys 
+        #
+        self.identity_table_value = 'score' # or 'probability'
+        self.identity_table = [
+                  # score or probability, (compound or mixtures)
                   [0.0, ('Compound x')],
                   [0.0, ('Compound y', 'Compound z')],
           ]
 
-        self.identity_probability_mummichog = [
-            # updated probability after mummichog analysis
-        ]
+        # short-hand notions of identity_table
+        self.identity_probability = []
+        self.identity_scores = []
 
-        # Scores from annotation method
-        self.identity_scores = [
-                  [0.0, ('Compound x')],
-                  [0.0, ('Compound y', 'Compound z')],
-          ]
-
+    def get_intensities():
         # Representative intensity values, can base on the MS1 feature of highest intensity
         self.intensities = {
             "sample1": 0, "sample2": 0, # etc
@@ -246,6 +243,7 @@ class EmpiricalCompound:
         # more efficient version of self.intensities
         self.intensities_by_ordered_samples = []
 
+    def get_MS1_pseudo_Spectra():
         # this is list of MS1 features, either using pointers to Features in the database,
         # or shorthanding everything here.
         # How to group ions into empCpd depends on annotation method
@@ -255,8 +253,17 @@ class EmpiricalCompound:
             # ...
         ]
 
-        # this is list of  MS2 features, derived.Spectrum is based on Peak.
+    def get_spectra():
+        # this is list of  MS2 features, derived.Spectrum is derived on Peak.
         self.MS2_Spectra = []
+
+    def mummichog_annotation():
+        '''
+        Updated identity table by mummichog
+        '''
+        self.identity_probability_mummichog = [
+            # updated probability after mummichog analysis
+        ]
 
     def from_json():
         pass
