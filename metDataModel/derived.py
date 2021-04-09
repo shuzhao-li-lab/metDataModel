@@ -70,27 +70,6 @@ class userData(Experiment):
     list_of_features = []
 
 
-class Spectrum(Peak):
-    '''
-    templated on MONA JSON
-            {"instrument": "",
-            "precursor type": "M+H[1+]",
-            "precursor m/z": 169,
-            "collision energy": "30V",
-            "score": 5.5,
-            "spectrum": "59.000:0.615142 72.600:0.031546 74.600:0.015773 78.900:0.086751 85.200:1.490536 150.500:0.055205 166.000:0.055205 167.200:100.000000",
-            },
-            {},
-            {}
-    '''
-
-    ms_level = 2
-    precursor_ion = ''
-    precursor_ion_mz = 0
-
-    list_mz = []
-    list_intensity = []
-    retention_time = 0
 
 
 class annotatedCompound(EmpiricalCompound):

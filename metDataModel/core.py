@@ -87,16 +87,7 @@ class Experiment:
     # EmpiricalCompounds, after annotation
     List_of_empCpds = []
 
-    @property
-    def __init__(self, id):
-        self.id = id
 
-    def from_json():
-        pass
-
-    def to_json():
-        pass
-    
 
 class Peak:
     '''
@@ -133,12 +124,33 @@ class Peak:
     corresponding_feature_id = ''   # belong to which feature after correspondence
     experiment_belonged = ''
     
-    def from_json():
-        pass
 
-    def to_json():
-        pass
+class Spectrum(Peak):
+    '''
+    Spectrum provide data points as measured on instrument, 
+    to support the concept of Peak.
+    This can be MS level 1, 2 or n.
     
+    templated on MONA JSON
+            {"instrument": "",
+            "precursor type": "M+H[1+]",
+            "precursor m/z": 169,
+            "collision energy": "30V",
+            "score": 5.5,
+            "spectrum": "59.000:0.615142 72.600:0.031546 74.600:0.015773 78.900:0.086751 85.200:1.490536 150.500:0.055205 166.000:0.055205 167.200:100.000000",
+            },
+            {},
+            {}
+    '''
+
+    ms_level = 2
+    precursor_ion = ''
+    precursor_ion_mz = 0
+
+    list_mz = []
+    list_intensity = []
+    retention_time = 0
+
 
 class Feature:
     '''
@@ -150,8 +162,8 @@ class Feature:
     The default is LC-MS feature. Derivative classes include MS2feature, etc.
     '''
 
-    # to enable getters and setters
-    @property
+    # Not using getters and setters - see discussion in README
+
     def __init__(self, id):
         self.id = id                # e.g. 'F00001234'
         self.ms_level = 1           # MS levle - 1, 2. 3, etc.
@@ -174,12 +186,7 @@ class Feature:
             'p_value': None,
         }
 
-    def from_json():
-        pass
 
-    def to_json():
-        pass
-    
 
 
 class EmpiricalCompound:
@@ -265,12 +272,6 @@ class EmpiricalCompound:
             # updated probability after mummichog analysis
         ]
 
-    def from_json():
-        pass
-
-    def to_json():
-        pass
-    
 
 
 #
@@ -303,12 +304,7 @@ class Compound:
         self.SMILES = ''
         self.inchi = ''
         
-    def from_json():
-        pass
 
-    def to_json():
-        pass
-    
 
 class Reaction:
     '''
@@ -343,13 +339,8 @@ class Reaction:
         self.compartments = []
         self.cell_types = []
         self.tissues = []
-        
-    def from_json():
-        pass
 
-    def to_json():
-        pass
-    
+
 
 class Pathway:
     '''
@@ -362,12 +353,7 @@ class Pathway:
         self.list_of_reactions = []
         self.status = ''
 
-    def from_json():
-        pass
 
-    def to_json():
-        pass
-    
 
 class Network:
     '''
@@ -386,10 +372,3 @@ class Network:
         self.source = []
         self.list_of_reactions = []
         self.status = ''
-
-    def from_json():
-        pass
-
-    def to_json():
-        pass
-    

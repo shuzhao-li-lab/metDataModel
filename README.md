@@ -74,7 +74,13 @@ YAML should be equivalent to JSON. Since Python classes are where we started, pl
 
 Minimal JSON formats should be used for mummichog project.
 
-In progress: need better and consistent use of operators (getters, setters) in Python code.
+We strive for the right level of abstraction.
+For the core classes, it's more important to have transparent, extensible structure.
+Therefore, it's a design decision not to have getter or setter functions; 
+to leave out JSON methods to elsewhere;
+to keep shallow data structures, which are more portable.
+
+More abstracted, detailed, extended classess are used for more specific projects.
 
 Use Wiki pages for detailed discussions of ideas.
 
