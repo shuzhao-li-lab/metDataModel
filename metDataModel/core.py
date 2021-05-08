@@ -1,5 +1,6 @@
 '''
 General data models for metabolomics data.
+These try to be simple so that complex and specialized classes can be derived from these.
 
 For experimental data,
 The hierarchy is Experiment -> empCpd -> Features -> Peaks
@@ -9,6 +10,12 @@ The hierarchy is Network/pathway -> reactions -> compounds
 
 Not all concepts have to be explicitly modeled in a project (e.g. expt, peak, network).
 Use derived/inherited classes for more explict or specialized data.
+
+Spectrum is derived from Peak.
+
+We try be explicit in source code, and Python supports introspection.
+Therefore, getters and setters are voided.
+A serialize function is made available for easy JSON export. 
 
 To learn about mass spectrometry concepts and pre-processing:
 https://pyopenms.readthedocs.io/en/latest/datastructures.html
@@ -20,10 +27,8 @@ https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19
 
 '''
 
-import json
-
 #
-# Experimental concepts: experiment, peak, feature, empirical compound
+# Experimental concepts: experiment, peak, spectrum, feature, empirical compound
 # only considering mass spec data here
 #
 
@@ -48,52 +53,66 @@ class Experiment:
 
     The empCpd-level data can be in JSON or other formats.
     '''
-    id = 'EXP00001234'                         # long str to be unique in the world
-    input_data_from = ''
+    def __init__(self, id=''):
+        '''
+        Try to use long str to be unique in the world.
+        Additional fields can be added to the dictionaries.
+        '''
+        self.id = id                    # e.g. 'EXP00001234'
+        self.provenance = {
+            'generated_time': '',       # day of experiment
+            'generated_by': '',         # operator of experiment
+            'input_filename': '',
+            'preprocess_software': '',
+            'preprocess_parameters': {
+                'version': '0.0',
+                'ppm': 1,
+                'SNR': 1.5,
+            },
+        }
+        self.instrumentation = {
+            'type': 'LC-MS',
+            'spectrometer': '',         # mass spectrometer model
+            'method_file': '',          # method file used
+        }
+        self.chromatography = {
+            'system': '',               # LC model
+            'total_time': 300,          # seconds
+            'method_file': '',
+            'column_model': '',
+            'column_length': '',
+        }
+        
+        # data 
+        self.feature_DataFrame = None
+        self.FeatureAnnotation = {} 
+        self.ObservationAnnotation = {
+            'sample_list': [],
+            'file_sample_mapper': {}
+        }
+        # immutable ordered version of sample_list
+        self.ordered_samples = ()
 
-    # expt meta data
-    type = 'LC-MS'
-    instrument = ''
-    instrument_parameters = {}
-    study_metadata = {}
+        # EmpiricalCompounds, after annotation
+        self.List_of_empCpds = []
 
-    chromatography = ''
-    chromatography_parameters = {
-        'column_length': '',
-        'column_diameter': '',
-        'total_time': '300', # seconds
-        'gradient': '',
-        # etc.
-    }
-    
-    preprocess_software = ''
-    preprocess_parameters = {
-        'version': '0.0',
-        'ppm': 1,
-        'SNR': 1.5,
-        # etc.
-    }
-    
-    # data 
-    feature_DataFrame = None
-    FeatureAnnotation = {} 
-    ObservationAnnotation = {
-        'sample_list': [],
-        'file_sample_mapper': {}
-    }
-    # immutable ordered version of sample_list
-    ordered_samples = ()
-
-    # EmpiricalCompounds, after annotation
-    List_of_empCpds = []
-
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'provenance': self.provenance,
+                'instrumentation': self.instrumentation,
+                'chromatography': self.chromatography,
+                }
+        
 
 
 class Peak:
     '''
     The default is a chromatographic peak (called EIC or XIC) in LC-MS, 
     specific to a sample in an experiment.
-    This can be extended to other type of peaks as needed.
+    This can be extended to other type of peaks, and include more detailed data as needed.
 
     Preprocessing software extracts peaks per sample, then performs alignment/correspondence.
     For high-resolution data, m/z alignment isn't a major concern.
@@ -103,27 +122,47 @@ class Peak:
     
     When data tables come as post-alignment data, 
     which are accommodated in list_retention_time_corrected.
-
-    '''
-    id = 'P00001234'
-    ms_level = 1                    # MS levle - 1, 2. 3, etc.
-    ionization = 'positive'
-    # XIC and peak_shape are defined by intensity as the the function of rtime
-    list_retention_time = []
-    list_intensity = []
-    # if RT aligned/adjusted
-    list_retention_time_corrected = []
-
-    # derivative to XIC
-    mz, min_mz, max_mz = 0, 0, 0
-    rtime, min_rtime, max_rtime = 0, 0, 0
-    # other attributes of interest
-    # collision_cross_section = 0     # reserved for IM data
-
-    # optional as this can be reverse indexed
-    corresponding_feature_id = ''   # belong to which feature after correspondence
-    experiment_belonged = ''
+    '''    
     
+    def __init__(self, id=''):
+        self.id = id
+        self.ms_level = 1                    # MS levle - 1, 2. 3, etc.
+        self.ionization = 'positive'
+        # XIC and peak_shape are defined by intensity as the the function of rtime.
+        # If mz is of little variation, it's not always necesssary to show list_mz.
+        self.list_mz = []
+        self.list_retention_time = []
+        self.list_intensity = []
+        # if RT aligned/adjusted
+        self.list_retention_time_corrected = []
+
+        # derivative to XIC
+        self.mz, self.min_mz, self.max_mz = 0, 0, 0
+        self.rtime, self.min_rtime, self.max_rtime = 0, 0, 0
+
+        # other attributes of interest
+        # e.g. for IM data
+        # collision_cross_section = 0
+
+        # optional as this can be reverse indexed
+        self.corresponding_feature_id = ''   # belong to which feature after correspondence
+        self.experiment_belonged = ''
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'mz': self.mz, 
+                'rtime': self.rtime, 
+                'ms_level': self.ms_level,
+                'ionization': self.ionization,
+                'list_mz': self.list_mz,
+                'list_retention_time': self.list_retention_time,
+                'list_retention_time_corrected': self.list_retention_time_corrected,
+                'list_intensity': self.list_intensity,
+                }
+
 
 class Spectrum(Peak):
     '''
@@ -142,14 +181,26 @@ class Spectrum(Peak):
             {},
             {}
     '''
+    def __init__(self, id=''):
+        self.id = id
+        self.ms_level = 2
+        self.precursor_ion = self.precursor_ion_mz = 0
 
-    ms_level = 2
-    precursor_ion = ''
-    precursor_ion_mz = 0
+        self.list_mz = []
+        self.list_intensity = []
+        self.retention_time = self.rtime = 0
 
-    list_mz = []
-    list_intensity = []
-    retention_time = 0
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'precursor_ion': self.precursor_ion, 
+                'rtime': self.rtime, 
+                'ms_level': self.ms_level,
+                'ionization': self.ionization,
+                'list_intensity': self.list_intensity,
+                }
 
 
 class Feature:
@@ -162,18 +213,15 @@ class Feature:
     The default is LC-MS feature. Derivative classes include MS2feature, etc.
     '''
 
-    # Not using getters and setters - see discussion in README
-
-    def __init__(self, id):
+    def __init__(self, id=''):
         self.id = id                # e.g. 'F00001234'
         self.ms_level = 1           # MS levle - 1, 2. 3, etc.
         self.mz = 0
         self.rtime = 0
 
         # other attributes of interest
-        including_peaks = []
-
-        experiment_belonged = ''
+        self.list_peaks = self.including_peaks = []
+        self.experiment_belonged = ''
 
         # statistics across samples
         self.statistics = {
@@ -186,7 +234,15 @@ class Feature:
             'p_value': None,
         }
 
-
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'mz': self.mz, 
+                'rtime': self.rtime, 
+                'list_peaks': self.list_peaks,
+                }
 
 
 class EmpiricalCompound:
@@ -208,14 +264,13 @@ class EmpiricalCompound:
     Similar concepts are 'pseudo spectrum' in CAMERA, and 'feature group' in mz.Unity.
     '''
 
-    @property
-    def __init__(self):
+    def __init__(self, id=''):
         '''
         An empCpd is the result of annotation.
         It has one and only one base neutral mass.
         Many attributes are optional.
         '''
-        self.id = 'E00001234'
+        self.id = id                            # e.g. 'E00001234'
         self.neutral_base_mass = 0.0000
 
         # Experiment specific.
@@ -272,6 +327,19 @@ class EmpiricalCompound:
             # updated probability after mummichog analysis
         ]
 
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'neutral_base_mass': self.neutral_base_mass,
+                'experiment_belonged': self.experiment_belonged,
+                'candidate_formulae': self.candidate_formulae,
+                'identity_table_value': self.identity_table_value,
+                'identity_table': self.identity_table,
+                # to add spectra when needed
+                }
+
 
 
 #
@@ -288,7 +356,7 @@ class Compound:
         and incorporates HMDB ID (less ambiguous than KEGG) whereas possible.
         
         '''
-        self.internal_id = ''
+        self.internal_id = self.id = ''
         self.name = ''          # common name
         self.db_ids = {
             'KEGG': '',
@@ -303,21 +371,32 @@ class Compound:
 
         self.SMILES = ''
         self.inchi = ''
-        
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'name': self.name, 
+                'identifiers': self.db_ids,
+                'neutral_formula': self.neutral_formula,
+                'neutral_mono_mass': self.neutral_mono_mass,
+                'SMILES': self.SMILES,
+                'inchi': self.inchi,
+                }
 
 
 class Reaction:
     '''
     A reaction is defined by reactants and products, each a list of compounds.
     There is directionality of a reaction. A forward reaction is different from reverse reaction.
-    We can treat the reactions catalyzed by different enzymes as the same 
-
+    We can treat the reactions catalyzed by different enzymes as the same reactions.
 
     Reactions are species specific, 
     because genes are species specific.
     '''
     def __init__(self):
-        self.azimuth_id = ''
+        self.azimuth_id = self.id = ''
         self.source = []
         self.version = ''
         # status, one of ['active', 'under review', 'obsolete']
@@ -340,6 +419,14 @@ class Reaction:
         self.cell_types = []
         self.tissues = []
 
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'reactants': self.reactants, 
+                'products': self.products, 
+                }
 
 
 class Pathway:
@@ -347,12 +434,20 @@ class Pathway:
     A pathway is defined by connected biochemical reactions, according to human definition.
     '''
     def __init__(self):
-        self.azimuth_id = ''
+        self.azimuth_id = self.id = ''
         self.name = ''
         self.source = []
         self.list_of_reactions = []
         self.status = ''
 
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'name': self.name, 
+                'list_of_reactions': self.list_of_reactions, 
+                }
 
 
 class Network:
@@ -367,8 +462,45 @@ class Network:
     This class does not include correlation networks and as such.
     '''
     def __init__(self):
-        self.azimuth_id = ''
+        self.azimuth_id = self.id = ''
         self.name = ''
         self.source = []
         self.list_of_reactions = []
         self.status = ''
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'list_of_reactions': self.list_of_reactions, 
+                }
+
+
+class metabolicModel:
+    '''
+    A metabolic model, minimal information is list_of_reactions.
+    Pathway definition isn't always available.
+    Compounds are union of all reactants and products in reactions.
+    Genes and proteins correspond to enzymes in reactions.
+    '''
+    def __init__(self):
+        self.id = ''
+        self.meta_data = {
+            'species': '',
+            'version': '',
+            'sources': [],
+            'status': '',
+            'last_update': '',
+        }
+        self.list_of_reactions = []
+        self.list_of_pathways = []
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'list_of_reactions': self.list_of_reactions, 
+                'meta_data': self.meta_data,
+                }

@@ -22,6 +22,7 @@ from .JSON_metabolicModels import metabolicModels
 import numpy as np
 import networkx as nx
 
+import json
 
 class metabolicPathway:
     def __init__(self):

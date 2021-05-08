@@ -39,25 +39,6 @@ compound example in mummichog 2:
 
 from metDataModel.core import Experiment, Compound
 
-class metabolicModel:
-    '''
-    A metabolic model, minimal information is list_of_reactions.
-    Pathway definition isn't always available.
-    Compounds are union of all reactants and products in reactions.
-    Genes and proteins correspond to enzymes in reactions.
-    '''
-    id = ''
-    species = ''
-    source = ''                 # where the model comes from
-    version = ''
-
-    list_of_reactions = []      # using core.Reaction 
-    list_of_pathways = []
-
-    # these can be derived from Reactions 
-    list_of_compounds = []
-    network = None
-
 
 class userData(Experiment):
     '''

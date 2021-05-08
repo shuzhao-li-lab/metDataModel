@@ -23,7 +23,7 @@ Many software programs already have excellent data models and data structures. B
 
     experimental data model
         
-        peak
+        peak (spectrum)
         feature
         empirical compound
         experiment
@@ -47,6 +47,21 @@ Leave index functions in util or applications.
         }
     }
 
+In Python:
+```
+        self.neutral_base_mass = 0.0000
+        self.identity_table_value = 'score' # or 'probability'
+        self.identity_table = [
+                  # score or probability, (compound or mixtures)
+                  [0.0, ('Compound x')],
+                  [0.0, ('Compound y', 'Compound z')],
+          ]
+        self.MS1_pseudo_Spectra = [
+            {'feature': 'row23', 'ion': 'M+H[1+]', 'm/z': 169.0013, 'rtime': 55},
+            {},
+            # ...
+        ]
+```
 
 ## The mummichog suite 
 
