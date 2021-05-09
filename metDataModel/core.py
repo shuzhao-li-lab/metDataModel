@@ -223,6 +223,10 @@ class Feature:
         self.list_peaks = self.including_peaks = []
         self.experiment_belonged = ''
 
+        # place holder. Will have separate annotation class/method
+        self.annotation = {
+        }
+
         # statistics across samples
         self.statistics = {
             'intensity_sample_mean': None,
@@ -269,6 +273,11 @@ class EmpiricalCompound:
         An empCpd is the result of annotation.
         It has one and only one base neutral mass.
         Many attributes are optional.
+
+        In a specific Experiment, an EmpiricalCompound consists of a set of features across a set of samples.
+        They can be list of MS1 features, either using pointers to Features in the database.
+        Features can include MS1 and MSn data.
+        How to group Features into empCpd depends on annotation method.
         '''
         self.id = id                            # e.g. 'E00001234'
         self.neutral_base_mass = 0.0000
@@ -280,6 +289,13 @@ class EmpiricalCompound:
         # after annotation, not ruling out an empCpd can be mixture (isomers, etc)
         # neutral formulae
         self.candidate_formulae = []
+
+        self.list_features = []
+        # place holder. Will have separate annotation class/method, 
+        # e.g. Annotation, AnnotationResult from mass2chem
+        self.annotation = {
+            #e.g. 'feature_row23': 'M+H[1+]'
+        }
 
         #
         # Scores or probabilities is expected after annotation
@@ -297,7 +313,7 @@ class EmpiricalCompound:
         self.identity_probability = []
         self.identity_scores = []
 
-    def get_intensities():
+    def get_intensities(self):
         # Representative intensity values, can base on the MS1 feature of highest intensity
         self.intensities = {
             "sample1": 0, "sample2": 0, # etc
@@ -305,21 +321,7 @@ class EmpiricalCompound:
         # more efficient version of self.intensities
         self.intensities_by_ordered_samples = []
 
-    def get_MS1_pseudo_Spectra():
-        # this is list of MS1 features, either using pointers to Features in the database,
-        # or shorthanding everything here.
-        # How to group ions into empCpd depends on annotation method
-        self.MS1_pseudo_Spectra = [
-            {'feature': 'row23', 'ion': 'M+H[1+]', 'm/z': 169.0013, 'rtime': 55},
-            {},
-            # ...
-        ]
-
-    def get_spectra():
-        # this is list of  MS2 features, derived.Spectrum is derived on Peak.
-        self.MS2_Spectra = []
-
-    def mummichog_annotation():
+    def mummichog_annotation(self):
         '''
         Updated identity table by mummichog
         '''
@@ -337,6 +339,7 @@ class EmpiricalCompound:
                 'candidate_formulae': self.candidate_formulae,
                 'identity_table_value': self.identity_table_value,
                 'identity_table': self.identity_table,
+                'list_features': self.list_features,
                 # to add spectra when needed
                 }
 

@@ -97,6 +97,10 @@ to keep shallow data structures, which are more portable.
 
 More abstracted, detailed, extended classess are used for more specific projects.
 
+For end users, there has to be a serialized output at each level, which should be concise but adequate.
+For developers, the classes/objects can have all details, but their presentation is on demand not by default.
+I.e. be specific to what users need not what you have.
+
 Use Wiki pages for detailed discussions of ideas.
 
 
