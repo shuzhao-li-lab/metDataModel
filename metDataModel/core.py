@@ -371,6 +371,9 @@ class Compound:
             }
         self.neutral_formula = ''
         self.neutral_mono_mass = 0.0000
+        # Often in metabolic models, compounds are in charged form
+        self.charge = 0
+        self.charged_formula = ''
 
         self.SMILES = ''
         self.inchi = ''
@@ -383,6 +386,8 @@ class Compound:
                 'name': self.name, 
                 'identifiers': self.db_ids,
                 'neutral_formula': self.neutral_formula,
+                'charge': self.charge,
+                'charged_formula': self.charged_formula,
                 'neutral_mono_mass': self.neutral_mono_mass,
                 'SMILES': self.SMILES,
                 'inchi': self.inchi,
@@ -498,6 +503,8 @@ class metabolicModel:
         }
         self.list_of_reactions = []
         self.list_of_pathways = []
+        # list_of_compounds can be inferred from reactions, but good to keep annotation in cpds
+        self.list_of_compounds = []
 
     def serialize(self):
         '''
@@ -505,5 +512,7 @@ class metabolicModel:
         '''
         return {'id': self.id, 
                 'list_of_reactions': self.list_of_reactions, 
+                'list_of_compounds': self.list_of_compounds,
+                'list_of_pathways': self.list_of_pathways,
                 'meta_data': self.meta_data,
                 }
