@@ -4,14 +4,23 @@ These try to be simple so that complex and specialized classes can be derived fr
 
 For experimental data,
 The hierarchy is Experiment -> empCpd -> Features -> Peaks
+-> massTrace
+-> MSnSpectrum
+
+A peak is usually chromatographic peak (elution peak) in LC-MS, 
+but people may use 3-D detection or higher dimension e.g. IM-LC-MS.
+
+A spectrum is a list of masses.
+LC-MS is a composite of many spectra. MS^n is spectrum as product of a precursor, which is a peak.
+
+After peaks are asigned to a feature or an empCpd, the annotation is transferred to the latter.
 
 For theoretical data,
 The hierarchy is Network/pathway -> reactions -> compounds
+-> enzyme -> gene
 
 Not all concepts have to be explicitly modeled in a project (e.g. expt, peak, network).
 Use derived/inherited classes for more explict or specialized data.
-
-Spectrum is derived from Peak.
 
 We try be explicit in source code, and Python supports introspection.
 Therefore, getters and setters are voided.
@@ -28,8 +37,8 @@ https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19
 '''
 
 #
-# Experimental concepts: experiment, peak, spectrum, feature, empirical compound
-# only considering mass spec data here
+# Experimental concepts: experiment, peak, feature, empirical compound; massTrace, MSnSpectrum
+# only considering mass spec not NMR data here
 #
 
 class Experiment:
@@ -164,7 +173,7 @@ class Peak:
                 }
 
 
-class Spectrum(Peak):
+class MSnSpectrum(Peak):
     '''
     Spectrum provide data points as measured on instrument, 
     to support the concept of Peak.
@@ -199,6 +208,22 @@ class Spectrum(Peak):
                 'rtime': self.rtime, 
                 'ms_level': self.ms_level,
                 'ionization': self.ionization,
+                'list_intensity': self.list_intensity,
+                }
+
+
+class massTrace(Peak):
+    '''
+    equivalent to EIC or XIC for LC-MS data; using concept from OpenMS.
+    '''
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'mz': self.mz, 
+                'list_mz': self.list_mz,
+                'list_retention_time': self.list_retention_time,
                 'list_intensity': self.list_intensity,
                 }
 
@@ -346,7 +371,7 @@ class EmpiricalCompound:
 
 
 #
-# Theoretical concepts (metabolic model): compound, reaction, pathway, network
+# Theoretical concepts (metabolic model): compound, reaction, pathway, network; enzyme, gene
 #
 
 class Compound:
@@ -436,7 +461,6 @@ class Reaction:
                 'products': self.products, 
                 }
 
-
 class Pathway:
     '''
     A pathway is defined by connected biochemical reactions, according to human definition.
@@ -516,3 +540,17 @@ class metabolicModel:
                 'list_of_pathways': self.list_of_pathways,
                 'meta_data': self.meta_data,
                 }
+
+# ---------------------------------------------------------
+# To extend later
+#
+
+class enzyme:
+    ec_num = ''
+    description  = ''
+    rxns = []
+    genes = []
+
+class gene:
+    ensembl_id = ''
+    description = ''

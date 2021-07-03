@@ -23,7 +23,7 @@ Many software programs already have excellent data models and data structures. B
 
     experimental data model
         
-        peak (spectrum)
+        peak
         feature
         empirical compound
         experiment
@@ -31,7 +31,28 @@ Many software programs already have excellent data models and data structures. B
 Try to keep the core models minimal. 
 Leave index functions in util or applications.
 
-## empCpd format (JSON)
+## Expanded data structure
+
+    experimental data model
+
+        massTrace: equivalent to EIC or XIC for LC-MS data
+        MSnSpectrum: MS^n data to annotate peak or feature
+
+    metabolic model
+
+        enzyme
+        gene
+
+Peaks are extracted from massTrace.
+
+A spectrum is a list of masses.
+LC-MS is a composite of many spectra. MS^n is spectrum as product of a precursor, which is a peak.
+
+After peaks are asigned to a feature or an empCpd, the annotation is transferred to the latter.
+
+## Serialized empCpd format 
+
+In JSON
  
     {"neutral_base_mass": 0, 
       "list_of_features": [
