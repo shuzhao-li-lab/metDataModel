@@ -14,40 +14,34 @@ Many software programs already have excellent data models and data structures. B
 
 ![Core data Structure](docs/datastru.png)
 
-    metabolic model
+    Metabolic model
 
-        compound
-        reaction
-        pathway
-        network
+        Compound (metabolite is a compound)
+        Reaction
+        Pathway
+        Network
 
-    experimental data model
+        Enzyme
+        Gene
+
+    Experiment
         
-        peak
-        feature
-        empirical compound
+        Peak
+        Feature
+        Empirical compound
+
+        massTrace: equivalent to EIC or XIC for LC-MS data
+        NSn: MS^n data to annotate peak or feature
+
+
         experiment
 
 Try to keep the core models minimal. 
-Leave index functions in util or applications.
+Leave index and query functions in applications.
 
-## Expanded data structure
-
-    experimental data model
-
-        massTrace: equivalent to EIC or XIC for LC-MS data
-        MSnSpectrum: MS^n data to annotate peak or feature
-
-    metabolic model
-
-        enzyme
-        gene
-
-Peaks are extracted from massTrace.
-
+Peaks are extracted from massTrace. A peak is specific to a sample, while a feature is specific to an experiment. 
 A spectrum is a list of masses.
 LC-MS is a composite of many spectra. MS^n is spectrum as product of a precursor, which is a peak.
-
 After peaks are asigned to a feature or an empCpd, the annotation is transferred to the latter.
 
 ## Serialized empCpd format 
