@@ -91,26 +91,21 @@ class Compound_spectra(Compound):
     MS2_CID_neg = []
 
 
-
-
-
-class Contaminant(Compound):
+class Contaminant:
     '''
-    A class for common contaminants according to manufacturers or community. E.g.
-    https://github.com/stanstrup/commonMZ
-    ion_ID	mz	ion_type	molecular_formula	compound_ID	origin	ESI	MALDI	references
-    1	33.03349	[M+H]+	CH3OH	Methanol	Acetonitrile, solvent	X		A
-    2	42.03383	[M+H]+	CH3CN	ACN	Acetonitrile, solvent	X		A
-    3	59.06037	[M+NH4]+	CH3CN	ACN	Acetonitrile, solvent	X		A, F
-
-    https://www.maconda.bham.ac.uk/
-    name	formula	exact_mass	std_inchi	std_inchi_key	id	type_of_contaminant	pubchem_cid	reference	ion_mode	mz	exact_adduct_mass	ion_form	instrument_type	instrument	chromatography	ion_source_type
-    Acetic Acid	C2H4O2	60.02113	InChI=1S/C2H4O2/c1-2(3)4/h1H3,(H,3,4)	QTBSBXVTEAMEQO-UHFFFAOYSA-N	CON00001	Solvent	176	Tong, H., Bell, D., Tabei, K., & Siegel, M. M. (1999). Automated data massaging, interpretation, and E-mailing modules for high throughput open access mass spectrometry. Journal of the American Society for Mass Spectrometry, 10(11), 1174-1187, doi:10.1016/s1044-0305(99)00090-2.	NEG	59	59.0138536	[M-H]-	Ion trap	Micromass Platform II	LC	ESI
-    Acetic Acid	C2H4O2	60.02113	InChI=1S/C2H4O2/c1-2(3)4/h1H3,(H,3,4)	QTBSBXVTEAMEQO-UHFFFAOYSA-N	CON00001	Solvent	176	Ijames, C. F., Dutky, R. C., & Fales, H. M. (1995). Iron carboxylate oxygen-centered-triangle complexes detected during electrospray use of organic acid modifiers with a comment on the Finnigan TSQ-700 electrospray inlet system. Journal of the American Society for Mass Spectrometry, 6(12), 1226-1231, doi:10.1016/1044-0305(95)00579-x.	POS	537.88	537.8790134	[M6-H6+Fe3+O]+	Triple quadrupole	Finnigan TSQ-700		ESI
-
+    # mass, good_name, name, formula, ion_form, possible origin
+    contaminants_pos = [
+        [537.8790134, 'C2H4O2_[M6-H6+Fe3+O]+_537.879013', 'Acetic Acid', 'C2H4O2', '[M6-H6+Fe3+O]+', 'Solvent'], 
+        [555.8895784, 'C2H4O2_[M6-H6+H2O+Fe3+O]+_555.889578', 'Acetic Acid', 'C2H4O2', '[M6-H6+H2O+Fe3+O]+', 'Solvent'], 
+        [597.9001434, 'C2H4O2_[M7-H6+Fe3+O]+_597.900143', 'Acetic Acid', 'C2H4O2', '[M7-H6+Fe3+O]+', 'Solvent'], 
+        [102.0549554, 'C4H7NO2_[M+H]+_102.054955', 'Acetonitrile.1.Acetic acid.1', 'C4H7NO2', '[M+H]+', 'Solvent'],...
+    ]
     '''
-    type_of_contaminant = ''
+    possible_origin = type_of_contaminant = ''
+    mass = 0
+    good_name = ''
+    name = ''
+    formula = ''
+    ion_form = ''
     references = []
-
-
 
