@@ -212,7 +212,7 @@ class MSnSpectrum(Peak):
                 }
 
 
-class massTrace(Peak):
+class MassTrace(Peak):
     '''
     equivalent to EIC or XIC for LC-MS data; using concept from OpenMS.
     '''
@@ -509,7 +509,7 @@ class Network:
                 }
 
 
-class metabolicModel:
+class MetabolicModel:
     '''
     A metabolic model, minimal information is list_of_reactions.
     Pathway definition isn't always available.
@@ -545,12 +545,12 @@ class metabolicModel:
 # To extend later
 #
 
-class enzyme:
+class Enzyme:
     ec_num = ''
     description  = ''
     rxns = []
     genes = []
 
-class gene:
+class Gene:
     ensembl_id = ''
     description = ''

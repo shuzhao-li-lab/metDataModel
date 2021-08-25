@@ -33,7 +33,6 @@ Many software programs already have excellent data models and data structures. B
         massTrace: equivalent to EIC or XIC for LC-MS data
         NSn: MS^n data to annotate peak or feature
 
-
         experiment
 
 Try to keep the core models minimal. 
@@ -43,6 +42,9 @@ Peaks are extracted from massTrace. A peak is specific to a sample, while a feat
 A spectrum is a list of masses.
 LC-MS is a composite of many spectra. MS^n is spectrum as product of a precursor, which is a peak.
 After peaks are asigned to a feature or an empCpd, the annotation is transferred to the latter.
+
+Internal structures of each class are not meant to be final. 
+As long as a workflow is adhered to these core concepts, interoperability is easy to achieve.
 
 ## Serialized empCpd format 
 
