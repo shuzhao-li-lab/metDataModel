@@ -215,6 +215,8 @@ class MSnSpectrum(Peak):
 class MassTrace(Peak):
     '''
     equivalent to EIC or XIC for LC-MS data; using concept from OpenMS.
+
+    Inheriting from Peak for class properties, no bearing on their conceptual relationship in science.
     '''
     def serialize(self):
         '''
@@ -544,6 +546,18 @@ class MetabolicModel:
 # ---------------------------------------------------------
 # To extend later
 #
+
+class Sample:
+    def __init__(self):
+        self.input_file = ''
+        self.experiment = ''    # parent Experiment instance
+        self.name = ''
+        self.mode = 'pos'
+        
+        self.list_MassTraces = []       # fixed sequence
+        self.number_MassTraces = 0
+        self.mz_list = []   
+        self.peak_table = {}           
 
 class Enzyme:
     ec_num = ''
