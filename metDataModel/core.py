@@ -25,6 +25,8 @@ Use derived/inherited classes for more explict or specialized data.
 We try be explicit in source code, and Python supports introspection.
 Therefore, getters and setters are voided.
 A serialize function is made available for easy JSON export. 
+For simple cases, these classes can be simplified as Python NamedTuples, 
+which allow easy access to attributes but have no additional methods.
 
 To learn about mass spectrometry concepts and pre-processing:
 https://pyopenms.readthedocs.io/en/latest/datastructures.html
