@@ -463,6 +463,8 @@ class Reaction:
         return {'id': self.id, 
                 'reactants': self.reactants, 
                 'products': self.products, 
+                'genes': self.genes,
+                'enzymes': self.enzymes,
                 }
 
 class Pathway:
