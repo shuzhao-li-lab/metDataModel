@@ -14,26 +14,20 @@ Many software programs already have excellent data models and data structures. B
 
 ![Core data Structure](docs/datastru.png)
 
-    Metabolic model
-
+    Metabolic model:
         Compound (metabolite is a compound)
         Reaction
         Pathway
         Network
-
         Enzyme
         Gene
-
-    Experiment
-        
-        Peak
+    Experimental data:
+        Experiment
+        massTrace: equivalent to EIC or XIC for LC-MS data
+        Peak (Elution peak)
         Feature
         Empirical compound
-
-        massTrace: equivalent to EIC or XIC for LC-MS data
-        NSn: MS^n data to annotate peak or feature
-
-        experiment
+        MSn spectra: MS^n data to annotate peak or feature
 
 Try to keep the core models minimal. 
 Leave index and query functions in applications.

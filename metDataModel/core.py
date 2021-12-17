@@ -306,41 +306,24 @@ class EmpiricalCompound:
         In a specific Experiment, an EmpiricalCompound consists of a set of features across a set of samples.
         They can be list of MS1 features, either using pointers to Features in the database.
         Features can include MS1 and MSn data.
-        How to group Features into empCpd depends on annotation method.
+        How to group Features into empCpd depends on annotation method, e.g. Annotation, AnnotationResult from mass2chem
+        After annotation, not ruling out an empCpd can be mixture (isomers, etc)
+
         '''
         self.id = id                            # e.g. 'E00001234'
-        self.neutral_base_mass = 0.0000
-
+        self.interim_id = ''
         # Experiment specific.
         self.experiment_belonged = ''
         self.annotation_method = ''
+        
+        self.neutral_base_mass = self.neutral_formula_mass = 0.0000
+        self.neutral_formula = ''
+        self.Database_referred = []
 
-        # after annotation, not ruling out an empCpd can be mixture (isomers, etc)
-        # neutral formulae
-        self.candidate_formulae = []
+        self.MS1_pseudo_Spectra = self.list_features = []            # list of features that belong to this empCpd
+        self.MS2_Spectra = []                   # MS2 identifiers can be universal (e.g. hashed ids)
 
-        self.list_features = []
-        # place holder. Will have separate annotation class/method, 
-        # e.g. Annotation, AnnotationResult from mass2chem
-        self.annotation = {
-            #e.g. 'feature_row23': 'M+H[1+]'
-        }
-
-        #
-        # Scores or probabilities is expected after annotation
-        # How to assign probability depends on annotation method
-        # Using list not dictionary, as these are tables not easy keys 
-        #
-        self.identity_table_value = 'score' # or 'probability'
-        self.identity_table = [
-                  # score or probability, (compound or mixtures)
-                  [0.0, ('Compound x')],
-                  [0.0, ('Compound y', 'Compound z')],
-          ]
-
-        # short-hand notions of identity_table
-        self.identity_probability = []
-        self.identity_scores = []
+        self.identity = self.annotation = []    # see desired serialize() output; also in README
 
     def get_intensities(self):
         # Representative intensity values, can base on the MS1 feature of highest intensity
@@ -358,19 +341,43 @@ class EmpiricalCompound:
             # updated probability after mummichog analysis
         ]
 
+    def write_identity(self):
+        pass
+    def write_MS1_pseudo_Spectra(self):
+        pass
+
     def serialize(self):
         '''
-        return dictionary of key variables.
+        return dictionary of key variables, e.g.
+            {
+            "neutral_formula_mass": 268.08077, 
+            "neutral_formula": C10H12N4O5,
+            "interim_id": C10H12N4O5_268.08077,
+            "identity": [
+                    {'compounds': ['HMDB0000195'], 'names': ['Inosine'], 'score': 0.6, 'probability': null},
+                    {'compounds': ['HMDB0000195', 'HMDB0000481'], 'names': ['Inosine', 'Allopurinol riboside'], 'score': 0.1, 'probability': null},
+                    {'compounds': ['HMDB0000481'], 'names': ['Allopurinol riboside'], 'score': 0.1, 'probability': null},
+                    {'compounds': ['HMDB0003040''], 'names': ['Arabinosylhypoxanthine'], 'score': 0.05, 'probability': null},
+                    ],
+            "MS1_pseudo_Spectra": [
+                    {'feature_id': 'FT1705', 'mz': 269.0878, 'rtime': 99.90, 'charged_formula': '', 'ion_relation': 'M+H[1+]'},
+                    {'feature_id': 'FT1876', 'mz': 291.0697, 'rtime': 99.53, 'charged_formula': '', 'ion_relation': 'M+Na[1+]'},
+                    {'feature_id': 'FT1721', 'mz': 270.0912, 'rtime': 99.91, 'charged_formula': '', 'ion_relation': 'M(C13)+H[1+]'},
+                    {'feature_id': 'FT1993', 'mz': 307.0436, 'rtime': 99.79, 'charged_formula': '', 'ion_relation': 'M+K[1+]'},
+                    ],
+            "MS2_Spectra": ['AZ0000711', 'AZ0002101'],
+            "Database_referred": ["Azimuth", "HMDB", "MONA"],
+            }
         '''
-        return {'id': self.id, 
-                'neutral_base_mass': self.neutral_base_mass,
-                'experiment_belonged': self.experiment_belonged,
-                'candidate_formulae': self.candidate_formulae,
-                'identity_table_value': self.identity_table_value,
-                'identity_table': self.identity_table,
-                'list_features': self.list_features,
-                # to add spectra when needed
+        return {'interim_id': self.interim_id, 
+                'neutral_formula_mass': self.neutral_formula_mass,
+                'neutral_formula': self.neutral_formula,
+                'Database_referred': self.Database_referred,
+                'identity': self.write_identity(),
+                'MS1_pseudo_Spectra': self.write_MS1_pseudo_Spectra(),
+                'MS2_Spectra': self.MS2_Spectra,
                 }
+
 
 
 
