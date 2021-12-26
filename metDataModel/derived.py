@@ -1,34 +1,11 @@
 """
-Classes derived from the 8 basic classes.
-
-# ideas to consider
-class mzCompound(Compound):
-    '''
-    Not used now. Possibly intermediate format
-
-    Ions are precomputed as a dictionary.
-        Take into consideration of charge state; adjust adduct calculation based on charge
-
-    '''
-    'peaks': {
-                'M+H[1+]': 0,
-                'M[1+]': 0,
-                'M+Na[1+]': 0,
-                #
-                'M-H[1-]': 0,
-                'M-H2O-H[-]': 0,
-                'M-2H[2-]': 0,
-            },
-    
-    self.inferred_formula = ''
-    self.class = ''  # refer to Classifire ontology or lipid ontology
+Classes derived from the basic classes.
 
 # not necessary, simple lists will do:
 class metaboliteSet:
     self.members = []
 class similarityGroup:
     self.members = []
-
 
 compound example in mummichog 2: 
 'formula': 'C45H70N7O18P3S', 'mw': 1121.3710887012, 'name': '3(S)-hydroxy-tetracosa-12,15,18,21-all-cis-tetraenoyl-CoA', 
@@ -46,11 +23,160 @@ compound example in mummichog 2:
 'M+HCOONa[1+]': 1190.36576516797, 'M+3H[3+]': 374.79763936717, 'M(C13)+H[1+]': 1123.3817651679701, 
 'M-CO+H[1+]': 1094.3833651679702}
 
+Isotopes:
+    '39K', 38.963706487, 
+    '41K', 40.961825258,        # 39K ~ 93.3%, 41K ~ 6.7%
+    (1.99812, 'M(41K', 0, 0.2),
+    ...
+34S and 37Cl are close, but should have diff ratios and are formula dependent
+More detailed modeling of epdTree will be useful.
+
+
+from itertools import combinations
+
+for x,y in combinations(ETS, 2):
+    print( (x[0]+y[0], x[1] +','+ y[1], 0, 1) )
+
+ETS = [
+    (1.003355, 'M(13C)', 0, 0.8),      # 13C-12C, 12C~99%, 13C ~ 1%
+    (0.997035, 'M(15N)', 0, 0.2),     # 15N-14N, 14N ~ 99.64%, 15N ~ 0.36%
+    (2.004245, 'M(18O)', 0, 0.2),      # 18O-16O, 16O ~ 99.76, 16O ~ 0.2%
+    (1.995796, 'M(34S)', 0, 0.4),      # 32S (95.02%), 33S (0.75%), 34S (4.21%)
+    (0.999388, 'M(33S)', 0, 0.1), 
+    (-0.0005, 'M[1+]', 0, 1),
+    (1.0073, 'M+H[1+]', 0, 1),
+    (19.0179, 'M+H2O+H[1+]', 0, 1),
+    (22.9893, 'M+Na', 0, 1),
+]
+
+    (2.00039, 'M(13C),M(15N)', 0, 1)
+    (3.0076, 'M(13C),M(18O)', 0, 1)
+    (2.999151, 'M(13C),M(34S)', 0, 1)
+    (2.002743, 'M(13C),M(33S)', 0, 1)
+    (1.002855, 'M(13C),M[1+]', 0, 1)
+    (2.010655, 'M(13C),M+H[1+]', 0, 1)
+    (20.021255, 'M(13C),M+H2O+H[1+]', 0, 1)
+    (23.992655, 'M(13C),M+Na', 0, 1)
+    (3.00128, 'M(15N),M(18O)', 0, 1)
+    (2.992831, 'M(15N),M(34S)', 0, 1)
+    (1.996423, 'M(15N),M(33S)', 0, 1)
+    (0.9965350000000001, 'M(15N),M[1+]', 0, 1)
+    (2.004335, 'M(15N),M+H[1+]', 0, 1)
+    (20.014935, 'M(15N),M+H2O+H[1+]', 0, 1)
+    (23.986335, 'M(15N),M+Na', 0, 1)
+    (4.0000409999999995, 'M(18O),M(34S)', 0, 1)
+    (3.003633, 'M(18O),M(33S)', 0, 1)
+    (2.003745, 'M(18O),M[1+]', 0, 1)
+    (3.011545, 'M(18O),M+H[1+]', 0, 1)
+    (21.022145000000002, 'M(18O),M+H2O+H[1+]', 0, 1)
+    (24.993545, 'M(18O),M+Na', 0, 1)
+    (2.995184, 'M(34S),M(33S)', 0, 1)
+    (1.995296, 'M(34S),M[1+]', 0, 1)
+    (3.003096, 'M(34S),M+H[1+]', 0, 1)
+    (21.013696, 'M(34S),M+H2O+H[1+]', 0, 1)
+    (24.985096, 'M(34S),M+Na', 0, 1)
+    (0.9988880000000001, 'M(33S),M[1+]', 0, 1)
+    (2.006688, 'M(33S),M+H[1+]', 0, 1)
+    (20.017288, 'M(33S),M+H2O+H[1+]', 0, 1)
+    (23.988688, 'M(33S),M+Na', 0, 1)
+    (1.0068000000000001, 'M[1+],M+H[1+]', 0, 1)
+    (19.017400000000002, 'M[1+],M+H2O+H[1+]', 0, 1)
+    (22.9888, 'M[1+],M+Na', 0, 1)
+    (20.0252, 'M+H[1+],M+H2O+H[1+]', 0, 1)
+    (23.9966, 'M+H[1+],M+Na', 0, 1)
+    (42.0072, 'M+H2O+H[1+],M+Na', 0, 1)
+
 
 """
 
-from metDataModel.core import Experiment, Compound
+from metDataModel.core import Experiment, Compound, EmpiricalCompound
 
+
+isotopic_patterns = [
+    # (mz difference, notion, ratio low limit, ratio high limit), relative to an anchor ion
+    (1.003355, 'M(13C)', 0, 0.8),      # 13C-12C, 12C~99%, 13C ~ 1%
+    (0.997035, 'M(15N)', 0, 0.2),     # 15N-14N, 14N ~ 99.64%, 15N ~ 0.36%
+    (2.004245, 'M(18O)', 0, 0.2),      # 18O-16O, 16O ~ 99.76, 16O ~ 0.2%
+    (1.995796, 'M(34S)', 0, 0.4),      # 32S (95.02%), 33S (0.75%), 34S (4.21%)
+    (0.999388, 'M(33S)', 0, 0.1), 
+    ]
+
+# ratio in adducts is not used now, but future possible.
+primary_pos_adducts = [
+    (-0.0005, 'M[1+]', 0, 1),
+    (1.0073, 'M+H[1+]', 0, 1),
+    (19.0179, 'M+H2O+H[1+]', 0, 1),
+    (22.9893, 'M+Na', 0, 1),
+    ]
+
+primary_neg_adducts = [
+    (0.0005, 'M[-]', 0, 1),
+    (-1.0073, 'M-H[-]', 0, 1),
+    (-19.0179, 'M-H2O-H[-]', 0, 1),
+    (34.9689, 'M+Cl[-]', 0, 1),
+    (36.9664, 'M+Cl37[-]', 0, 1),       # 35Cl (75.77%) and 37Cl (24.23%).
+    ]
+
+isotopic_patterns_double_charged = [
+    # double charged, 
+    (0.5017, 'double charged with C13', 0, 0.8),
+    (0.4985, 'double charged with N15', 0, 0.2),
+]
+
+#-------------------------------------------------
+
+mzdiff_pos_signature = [
+    (1.003355, 'M(13C)', 0, 0.8),      # 13C-12C, 12C~99%, 13C ~ 1%
+    (0.997035, 'M(15N)', 0, 0.2),     # 15N-14N, 14N ~ 99.64%, 15N ~ 0.36%
+    (2.004245, 'M(18O)', 0, 0.2),      # 18O-16O, 16O ~ 99.76, 16O ~ 0.2%
+    (1.995796, 'M(34S)', 0, 0.4),      # 32S (95.02%), 33S (0.75%), 34S (4.21%)
+    (0.999388, 'M(33S)', 0, 0.1), 
+    (-0.0005, 'M[1+]', 0, 1),
+    (1.0073, 'M+H[1+]', 0, 1),
+    (19.0179, 'M+H2O+H[1+]', 0, 1),
+    (22.9893, 'M+Na', 0, 1),
+    (2.010655, 'M(13C),M+H[1+]', 0, 1),
+    (20.021255, 'M(13C),M+H2O+H[1+]', 0, 1),
+    (23.992655, 'M(13C),M+Na', 0, 1),
+    (2.00039, 'M(13C),M(15N)', 0, 1),
+    (2.999151, 'M(13C),M(34S)', 0, 1),
+    (2.004335, 'M(15N),M+H[1+]', 0, 1),
+    (20.014935, 'M(15N),M+H2O+H[1+]', 0, 1),
+    (23.986335, 'M(15N),M+Na', 0, 1),
+    (0.5017, 'double charged with C13', 0, 0.8),
+    (0.4985, 'double charged with N15', 0, 0.2),
+]
+
+#-------------------------------------------------
+
+class epdTree:
+    '''
+    An epdTree is a representation of how an empirical compound is observed in MS1 data,
+    a list of isotopic peaks, each of possible adducts.
+    This is used in both directions:
+    1) for a known compound, probable peaks are calculated;
+    2) from experimental MS1 data, paired mass differences (e.g. 12C/13C) can be used as a signature to organize empCpds. 
+    '''
+
+    def __init__(self, mode='pos', charge=1):
+        '''
+        For unknown compound, base formula (neutral chemical formula with most abundant isotopes) may be unknown.
+        But mz signature may help infer the base formula.
+        '''
+        self.base_mass = None
+        self.base_formula = None
+        self.tree = {}
+        self.signature = mzdiff_pos_signature
+    
+    def get_extended_adducts(self):
+        pass
+
+
+
+
+#
+# in progress
+#
 
 class userData(Experiment):
     '''
@@ -61,7 +187,6 @@ class userData(Experiment):
     meta_data = {}              # from Experiment attributes
     list_of_empCpds = []
     list_of_features = []
-
 
 
 class annotatedCompound(EmpiricalCompound):
