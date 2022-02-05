@@ -23,7 +23,7 @@ Many software programs already have excellent data models and data structures. B
         Gene
     Experimental data:
         Experiment
-        massTrace: equivalent to EIC or XIC for LC-MS data
+        EIC or XIC, i.e. massTrace or massTrack in LC-MS data
         Peak (Elution peak)
         Feature
         Empirical compound
