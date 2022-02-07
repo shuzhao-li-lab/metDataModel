@@ -322,29 +322,16 @@ class EmpiricalCompound:
 
         self.MS1_pseudo_Spectra = self.list_features = []            # list of features that belong to this empCpd
         self.MS2_Spectra = []                   # MS2 identifiers can be universal (e.g. hashed ids)
-
         self.identity = self.annotation = []    # see desired serialize() output; also in README
 
-    def get_intensities(self):
-        # Representative intensity values, can base on the MS1 feature of highest intensity
-        self.intensities = {
-            "sample1": 0, "sample2": 0, # etc
-        }
-        # more efficient version of self.intensities
-        self.intensities_by_ordered_samples = []
-
-    def mummichog_annotation(self):
-        '''
-        Updated identity table by mummichog
-        '''
-        self.identity_probability_mummichog = [
-            # updated probability after mummichog analysis
-        ]
-
-    def write_identity(self):
-        pass
-    def write_MS1_pseudo_Spectra(self):
-        pass
+    def read_json_model(self, jmodel):
+        self.interim_id = jmodel['interim_id']
+        self.neutral_formula_mass = jmodel['neutral_formula_mass']
+        self.neutral_formula = jmodel['neutral_formula']
+        self.Database_referred = jmodel['Database_referred']
+        self.identity = jmodel['identity']
+        self.MS1_pseudo_Spectra  = jmodel['MS1_pseudo_Spectra']
+        self.MS2_Spectra = jmodel['MS2_Spectra']    
 
     def serialize(self):
         '''
@@ -369,14 +356,40 @@ class EmpiricalCompound:
             "Database_referred": ["Azimuth", "HMDB", "MONA"],
             }
         '''
+        features = []
+        for peak in self.MS1_pseudo_Spectra:
+                features.append(        # this is given as example; one may need to modify the mapping variable names
+                   {"feature_id": peak['id'], "mz": peak['mz'], "rtime": peak['rtime'], "charged_formula": "",  "ion_relation": peak['ion_relation'],}
+                )
         return {'interim_id': self.interim_id, 
                 'neutral_formula_mass': self.neutral_formula_mass,
                 'neutral_formula': self.neutral_formula,
                 'Database_referred': self.Database_referred,
                 'identity': self.write_identity(),
-                'MS1_pseudo_Spectra': self.write_MS1_pseudo_Spectra(),
+                'MS1_pseudo_Spectra': features,
                 'MS2_Spectra': self.MS2_Spectra,
                 }
+
+    def write_identity(self):
+        '''Place holder'''
+        return self.identity
+
+    def get_intensities(self):
+        ''' Representative intensity values, can base on the MS1 feature of highest intensity
+        self.intensities = { "sample1": 0, "sample2": 0, ... }
+        # more efficient version of self.intensities
+        self.intensities_by_ordered_samples = []
+        '''
+        pass
+
+    def mummichog_annotation(self):
+        '''
+        Updated identity table by mummichog
+        '''
+        self.identity_probability_mummichog = [
+            # updated probability after mummichog analysis
+        ]
+
 
 
 

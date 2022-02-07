@@ -40,7 +40,7 @@ After peaks are asigned to a feature or an empCpd, the annotation is transferred
 Internal structures of each class are not meant to be final. 
 As long as a workflow is adhered to these core concepts, interoperability is easy to achieve.
 
-## Serialized empCpd format (in JSON and can be impplemented in any language)
+## Serialized empCpd format (in JSON and can be implemented in any language)
  
     empCpd = {
     "neutral_formula_mass": 268.08077, 
@@ -72,9 +72,9 @@ Additional fields can be added as needed.
 
 This package is used in mummichog 3.
 
-* mummichog(3): core algorithm package for pathway/network analysis
+* mummichog3: core algorithm package for pathway/network analysis
 
-* cloud-mummichog: server and worker (RESTful) implementations
+* mummichog3-api: server and worker (RESTful) implementations
 
 * Azimuth DB: the chemical database for biology, including metabolic models
 
