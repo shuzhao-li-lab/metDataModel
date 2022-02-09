@@ -339,6 +339,7 @@ class EmpiricalCompound:
             {
             "neutral_formula_mass": 268.08077, 
             "neutral_formula": C10H12N4O5,
+            "alternative_formulas": [],
             "interim_id": C10H12N4O5_268.08077,
             "identity": [
                     {'compounds': ['HMDB0000195'], 'names': ['Inosine'], 'score': 0.6, 'probability': null},
