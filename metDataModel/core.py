@@ -78,7 +78,7 @@ class Experiment:
             'preprocess_parameters': {
                 'version': '0.0',
                 'ppm': 1,
-                'SNR': 1.5,
+                'SNR': 10,
             },
         }
         self.instrumentation = {
@@ -235,18 +235,33 @@ class MassTrace(Peak):
 class Feature:
     '''
     A feature is a set of peaks that are aligned across samples.
-    So this is experiment specific.
+    This is experiment specific.
     The m/z and retention_time of a feature is summarized on the member peaks.
     The variation between samples is reflected in data at peak level.
 
+    Selectivity is defined in asari (https://github.com/shuzhao-li/asari):
+        mSelectivity, how distinct are m/z measurements
+        cSelectivity, how distinct are chromatograhic elution peaks
+        dSelectivity, how distinct are database records
+
     The default is LC-MS feature. Derivative classes include MS2feature, etc.
     '''
-
     def __init__(self, id=''):
         self.id = id                # e.g. 'F00001234'
         self.ms_level = 1           # MS levle - 1, 2. 3, etc.
+        # These attributes are used in asari, but some are optional
         self.mz = 0
+        self.parent_masstrack_id = None
         self.rtime = 0
+        self.left_base = None
+        self.right_base = None
+        self.height = 0
+        self.peak_area = 0
+        self.goodness_fitting = 0
+        self.snr = 0
+        self.mSelectivity = 0
+        self.cSelectivity = 0
+        self.dSelectivity = 0
 
         # other attributes of interest
         self.list_peaks = self.including_peaks = []
@@ -274,6 +289,15 @@ class Feature:
         return {'id': self.id, 
                 'mz': self.mz, 
                 'rtime': self.rtime, 
+                'apex': self.rtime,
+                'parent_masstrack_id': self.parent_masstrack_id,
+                'peak_area': self.peak_area,
+                'height': self.height,
+                'left_base': self.left_base, 
+                'right_base': self.right_base,   
+                'mSelectivity': self.mSelectivity,
+                'cSelectivity': self.cSelectivity,
+                'dSelectivity': self.dSelectivity,
                 'list_peaks': self.list_peaks,
                 }
 
@@ -318,6 +342,8 @@ class EmpiricalCompound:
         
         self.neutral_base_mass = self.neutral_formula_mass = 0.0000
         self.neutral_formula = ''
+        self.charge = 0
+        self.charged_formula = ''
         self.Database_referred = []
 
         self.MS1_pseudo_Spectra = self.list_features = []            # list of features that belong to this empCpd
@@ -325,6 +351,8 @@ class EmpiricalCompound:
         self.identity = self.annotation = []    # see desired serialize() output; also in README
 
     def read_json_model(self, jmodel):
+        '''Modify as needed
+        '''
         self.interim_id = jmodel['interim_id']
         self.neutral_formula_mass = jmodel['neutral_formula_mass']
         self.neutral_formula = jmodel['neutral_formula']
@@ -360,7 +388,8 @@ class EmpiricalCompound:
         features = []
         for peak in self.MS1_pseudo_Spectra:
                 features.append(        # this is given as example; one may need to modify the mapping variable names
-                   {"feature_id": peak['id'], "mz": peak['mz'], "rtime": peak['rtime'], "charged_formula": "",  "ion_relation": peak['ion_relation'],}
+                   {"feature_id": peak['id'], "mz": peak['mz'], "rtime": peak['rtime'], "charged_formula": "",  
+                        "ion_relation": peak['ion_relation'],}
                 )
         return {'interim_id': self.interim_id, 
                 'neutral_formula_mass': self.neutral_formula_mass,
@@ -393,8 +422,6 @@ class EmpiricalCompound:
 
 
 
-
-
 #
 # Theoretical concepts (metabolic model): compound, reaction, pathway, network; enzyme, gene
 #
@@ -403,22 +430,14 @@ class Compound:
     def __init__(self):
         '''
         All metabolites are compounds, but the reverse is not true.
-        Thus, compound is a basic class.
-
-        Azimuth ID starts with `az`, 
-        and incorporates HMDB ID (less ambiguous than KEGG) whereas possible.
-        
+        The identifiers from databases are a list of lists in self.db_ids. Because multiple identifiers
+        can be found in one DB: [['KEGG', 'C0000'], ['HMDB', 'HMDB01858'], ['HMDB', 'HMDB13762'], ...].
+        Use lists not tuple for JSON compatibility.
         '''
         self.internal_id = self.id = ''
         self.name = ''          # common name
-        self.db_ids = {
-            'KEGG': '',
-            'HMDB': '',
-            'Azimuth': '',
-            'PubChem': '',
-            'MetaNetX': '',
-            # etc.
-            }
+        self.db_ids = []        # use list of lists, 
+                                # e.g. [['KEGG', ''], ['HMDB', ''], ['Azimuth', 'HMDB13762'], ['PubChem', ''], ]
         self.neutral_formula = ''
         self.neutral_mono_mass = 0.0000
         # Often in metabolic models, compounds are in charged form
