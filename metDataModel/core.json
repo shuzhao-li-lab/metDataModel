@@ -1,0 +1,154 @@
+# This is minimal defition of a metabolic model, with Compounds, Reactions, Pathways.
+# We start the implementation in the core.py, 
+# so the Python classes are the primary reference,
+# and please update this file as needed. 
+
+# core.Experiment
+Experiment: {
+    'id': '',
+    'list_of_samples': [],
+}
+
+# core.Sample
+Sample: {
+    input_file: '',
+    name: '',
+    ion_mode: '',
+    # status
+    'status:mzml_parsing': '',
+    'status:eic': '',
+    'mass_aligned': '',
+    'rtime_aligned': '',
+    'peaks_extracted': '',
+    #
+    list_scan_numbers = [],
+    list_retention_time: [],
+    list_mass_tracks: [
+        {'id_number': ii, 
+                'mz': float,
+                'rt_scan_numbers': [],
+                'intensity': [],
+                }, ...
+    ], 
+    anchor_mz_pairs: [],                    # mostly isotopic pairs to establish m/z anchors (landmarks)
+    number_anchor_mz_pairs: int,
+    }
+
+
+# core.Peak
+Peak:   {
+    'id_number': 0,
+    'ms_level': 1,
+    'mz': '',
+    'retention_time': '',
+    'apex', 'left_base', 'right_base', 'height',
+
+    'intensity': '',
+    'peak_area',
+    'cSelectivity',  
+    'goodness_fitting'
+
+    }
+
+
+isotopic_patterns: [
+    (1.003355, 'M(13C)', 0, 0.2), 
+    ...]
+
+    
+
+# core.Feature
+Feature: {
+    'id': '',
+    
+    mz = 0
+    rtime = 0
+    including_peaks = []
+}
+
+
+# mapping of EmpiricalCompounds and Compounds is 
+# generated after annotation, which should be done separately but mummichog contains a fallback function
+# This is stored in "identity"
+# Note that an empCpd can be a mixture of real compounds
+
+# core.EmpiricalCompound
+EmpiricalCompound: {
+    "neutral_formula_mass": 268.08077, 
+    "neutral_formula": C10H12N4O5,
+    "alternative_formulas": [],
+    "interim_id": C10H12N4O5_268.08077,
+    "identity": [
+            {'compounds': ['HMDB0000195'], 'names': ['Inosine'], 'score': 0.6, 'probability': null},
+            {'compounds': ['HMDB0000195', 'HMDB0000481'], 'names': ['Inosine', 'Allopurinol riboside'], 'score': 0.1, 'probability': null},
+            {'compounds': ['HMDB0000481'], 'names': ['Allopurinol riboside'], 'score': 0.1, 'probability': null},
+            {'compounds': ['HMDB0003040''], 'names': ['Arabinosylhypoxanthine'], 'score': 0.05, 'probability': null},
+            ],
+    "MS1_pseudo_Spectra": [
+            {'feature_id': 'FT1705', 'mz': 269.0878, 'rtime': 99.90, 'charged_formula': '', 'ion_relation': 'M+H[1+]'},
+            {'feature_id': 'FT1876', 'mz': 291.0697, 'rtime': 99.53, 'charged_formula': '', 'ion_relation': 'M+Na[1+]'},
+            {'feature_id': 'FT1721', 'mz': 270.0912, 'rtime': 99.91, 'charged_formula': '', 'ion_relation': 'M(C13)+H[1+]'},
+            {'feature_id': 'FT1993', 'mz': 307.0436, 'rtime': 99.79, 'charged_formula': '', 'ion_relation': 'M+K[1+]'},
+            ],
+    "MS2_Spectra": ['AZ0000711', 'AZ0002101'],
+    "Database_referred": ["Azimuth", "HMDB", "MONA"],
+    }
+
+
+
+# 
+# a Compound 'id'=azimuth_id, 'mw'=neutral mass
+# other DB IDs, structure are desired but not in minimal requirement
+#
+
+Compound: {
+    'id':'', 
+    'name':'',
+    'external_ids': [],
+    'neutral_formula': '',
+    'neutral_mono_mass': 0.0000,
+    'SMILES': '',
+    'inchi_key': '',
+}
+    
+
+#
+# enzyme is a protein to link to genes, not in minimal requirement
+#
+
+Reaction: {
+        'reactants': [compound1, compound2,],
+        'products': [compound3, compound4,],
+        'enzyme': '',
+    }
+
+
+#
+# A Pathway is defined by a list of reactions
+# Network needs no explicit definition. All reactions link to the total network.
+#
+
+Pathway: {
+        'id': '',
+        'list_of_reactions': [reaction1, reaction2, ],
+    }
+
+# Metabolic network, same as pathway but without conventional definition
+Network: {
+        'id': '',
+        'list_of_reactions': [reaction1, reaction2, ],
+    }
+
+
+
+# A metabolic model needs minimal meta data
+# list of reactions and compounds
+
+metabolicModel: {
+    'version': '',
+    'source': '',
+    'id': '',
+    species: '', 
+    list_of_reactions: [],
+    list_of_pathways: [],
+}
