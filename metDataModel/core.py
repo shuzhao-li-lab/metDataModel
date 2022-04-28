@@ -474,6 +474,7 @@ class Reaction:
     '''
     def __init__(self):
         self.azimuth_id = self.id = ''
+        self.name = ''    # common name of the reaction; ontologies should be higher level
         self.source = []
         self.version = ''
         # status, one of ['active', 'under review', 'obsolete']
@@ -501,6 +502,7 @@ class Reaction:
         return dictionary of key variables.
         '''
         return {'id': self.id, 
+                'name': self.name,
                 'reactants': self.reactants, 
                 'products': self.products, 
                 'genes': self.genes,
