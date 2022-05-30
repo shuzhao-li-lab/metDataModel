@@ -111,76 +111,86 @@ class Experiment:
 
 class Sample:
     '''
-            sam['status:mzml_parsing'], sam['status:eic'], sam['data_location'
-            ], sam['max_scan_number'], sam['list_scan_numbers'], sam['list_retention_time'
-            ], sam['track_mzs'
-            ], sam['number_anchor_mz_pairs'], sam['anchor_mz_pairs'
-            ], sam['sample_data']
-    
-    '''
-    def __init__(self):
-        self.input_file = ''
-        self.experiment = ''    # parent Experiment instance
-        self.name = ''
-        self.mode = 'pos'
-        
-        self.list_MassTracks = []       # fixed sequence
-        self.number_MassTrakes = 0
-        self.mz_list = []   
-        self.peak_table = {}           
-
-        self.input_file = registry['input_file']
-        self.name = registry['name']
-        self.sample_id = registry['sample_id']
+    This is an analytical sample subjected to a single metabolomic method and associated with a single data file.
+    Elution peaks are defined at sample level. A feature is defined at experiment level.
+    One can extend to many attributes via registry dictionary, e.g.
         self.data_location = registry['data_location']
         self.track_mzs = registry['track_mzs']
         self.max_scan_number = registry['max_scan_number']
         self.anchor_mz_pairs = registry['anchor_mz_pairs']
         self.rt_numbers = registry['list_scan_numbers']
+    '''
+    def __init__(self, registry={}, experiment=None, mode='pos'):
+        self.experiment = experiment    # parent Experiment instance
+        self.mode = mode
+
+        # A number of attributes can be passed via registry dictionary
+        self.input_file = registry['input_file']
+        self.name = registry['name']
+        self.id = registry['sample_id']
         self.list_retention_time = registry['list_retention_time']
+        
+        self.list_MassTracks = []
+        self.list_peaks = []
 
-
+    def serialize(self):
+        '''
+        return dictionary of key variables. Extend as needed.
+        '''
+        return {'id': self.id, 
+                'list_peaks': self.list_peaks,
+                }
 
 
 class Peak:
     '''
-    The default is a chromatographic peak (called EIC or XIC) in LC-MS, 
-    specific to a sample in an experiment.
-    This can be extended to other type of peaks, and include more detailed data as needed.
+    This refers to an elution peak in chromatography.
+    The m/z peaks are handled by centroiding algorithms these days and are not part of this.
 
-    Preprocessing software extracts peaks per sample, then performs alignment/correspondence.
-    For high-resolution data, m/z alignment isn't a major concern.
-    Retention time alignment shifts the data values.
-    For this class, pre-alignment data is preferred, 
-    so that people can use different methods for their own alignment.
-    
-    When data tables come as post-alignment data, 
-    which are accommodated in list_retention_time_corrected.
+    Most software, e.g. XCMS, MZmine, OpenMS, does peak detection per sample then align them.
+    Asari detects peaks on composite signals not on individual samples.
+
+    Example peak in asari:    
+        {"apex": 315,
+        "peak_area": 3456351,
+        "height": 471023,
+        "left_base": 311,
+        "right_base": 323,
+        "cSelectivity": 1.0,
+        "parent_masstrack_id": 902,
+        "mz": 134.10852813720703,
+        "snr": 74,
+        "goodness_fitting": 0.8357564804888509,
+        "id_number": "F97",
+        "rtime": 121.099636272,
+        "rtime_left_base": 119.5951254229998,
+        "rtime_right_base": 124.12197382300019,}
+
     '''    
     
-    def __init__(self, id=''):
+    def __init__(self, id='', mode='pos'):
+        '''
+        EIC and peak_shape are defined by intensity as the the function of rtime.
+        If mz is of little variation, it's not always necesssary to show list_mz.
+        # other attributes of interest
+        # e.g. for IM data
+        # collision_cross_section = 0
+        '''
         self.id = id
-        self.ms_level = 1                    # MS levle - 1, 2. 3, etc.
-        self.ionization = 'positive'
-        # XIC and peak_shape are defined by intensity as the the function of rtime.
-        # If mz is of little variation, it's not always necesssary to show list_mz.
+        self.ms_level = 1                   # MS levle 1, 2. 3, etc.
+        self.mode = mode                    # ionization mode
+        self.sample = ''                    # if back track to sample
+
         self.list_mz = []
         self.list_retention_time = []
         self.list_intensity = []
+
         # if RT aligned/adjusted
         self.list_retention_time_corrected = []
 
         # derivative to XIC
         self.mz, self.min_mz, self.max_mz = 0, 0, 0
         self.rtime, self.min_rtime, self.max_rtime = 0, 0, 0
-
-        # other attributes of interest
-        # e.g. for IM data
-        # collision_cross_section = 0
-
-        # optional as this can be reverse indexed
-        self.corresponding_feature_id = ''   # belong to which feature after correspondence
-        self.experiment_belonged = ''
 
     def serialize(self):
         '''
@@ -190,10 +200,9 @@ class Peak:
                 'mz': self.mz, 
                 'rtime': self.rtime, 
                 'ms_level': self.ms_level,
-                'ionization': self.ionization,
+                'mode': self.mode,
                 'list_mz': self.list_mz,
                 'list_retention_time': self.list_retention_time,
-                'list_retention_time_corrected': self.list_retention_time_corrected,
                 'list_intensity': self.list_intensity,
                 }
 
@@ -239,18 +248,22 @@ class MSnSpectrum(Peak):
 
 class MassTrack:
     '''
-    equivalent to EIC or XIC for LC-MS data; using concept from OpenMS.
-
-    Inheriting from Peak for class properties, no bearing on their conceptual relationship in science.
+    Same as extracted ion chromatogram. This is used in place of EIC (or XIC, mass trace), 
+    defined by m/z, list_retention_time, list_intensity.
+    Computationally equivalent to EIC for LC-MS data, but spanning for full RT range in asari.
     '''
-    
+    def __init__(self, id=''):
+        self.id = id 
+        self.mz = 0
+        self.list_retention_time = []
+        self.list_intensity = []
+
     def serialize(self):
         '''
         return dictionary of key variables.
         '''
         return {'id': self.id, 
                 'mz': self.mz, 
-                'list_mz': self.list_mz,
                 'list_retention_time': self.list_retention_time,
                 'list_intensity': self.list_intensity,
                 }
@@ -268,7 +281,7 @@ class Feature:
         cSelectivity, how distinct are chromatograhic elution peaks
         dSelectivity, how distinct are database records
 
-    The default is LC-MS feature. Derivative classes include MS2feature, etc.
+    The default is LC-MS feature. Derivative classes can be MS2feature, etc.
     '''
     def __init__(self, id=''):
         self.id = id                # e.g. 'F00001234'
@@ -513,6 +526,7 @@ class Reaction:
                 'enzymes': self.enzymes,
                 }
 
+
 class Pathway:
     '''
     A pathway is defined by connected biochemical reactions, according to human definition.
@@ -536,14 +550,12 @@ class Pathway:
 
 class Network:
     '''
-    Metabolic network 
-    is defined by connected biochemical reactions.
+    This refers to a metabolic network, defined by connected biochemical reactions.
 
     Network is mathematically identical to pathway, but not limited by pathway definition.
     Edges and nodes are computed based on reactions.
 
-    All based on prior knowledge.
-    This class does not include correlation networks and as such.
+    Based on prior knowledge. This class does not include correlation networks etc.
     '''
     def __init__(self):
         self.azimuth_id = self.id = ''
@@ -567,6 +579,7 @@ class MetabolicModel:
     Pathway definition isn't always available.
     Compounds are union of all reactants and products in reactions.
     Genes and proteins correspond to enzymes in reactions.
+    The JMS package (https://github.com/shuzhao-li/JMS) handles the conversion of genome scale metabolic models.
     '''
     def __init__(self):
         self.id = ''
@@ -593,17 +606,56 @@ class MetabolicModel:
                 'meta_data': self.meta_data,
                 }
 
+
 # ---------------------------------------------------------
 # To extend later
 #
 
-
 class Enzyme:
-    ec_num = ''
-    description  = ''
-    rxns = []
-    genes = []
+    '''
+    An enzyme is a protein that catalyzes biochemical reactions.
+    '''
+    def __init__(self):
+        self.id = ''
+        self.name = ''
+        self.ec_num = ''
+        self.url = ''
+        self.genes = []
+        self.reactions = []
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'name': self.name,
+                'reactions': self.reactions
+                }
+
 
 class Gene:
-    ensembl_id = ''
-    description = ''
+    '''
+    A gene is defined by polynucleotide sequence in a genome.
+    Not a detailed model fo gene structure here. Main objective is to link to enzyme and biochemistry.
+    '''
+    def __init__(self):
+        self.id = ''
+        self.name = ''
+        self.symbol = ''
+        self.ensembl_id = ''
+        self.description = ''
+        self.proteins = []              # can be enzymes
+
+        self.linked_metabolites = []
+        self.linked_dieases = []
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'name': self.name,
+                'symbol': self.symbol,
+                'proteins': self.proteins
+                }
+
