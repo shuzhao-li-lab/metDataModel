@@ -69,45 +69,35 @@ How to compute the score or probability will be dependent on external algorithms
 Additional fields can be added as needed.
 
 
-## The mummichog suite 
+## This package is used in asari and mummichog 3.
 
-This package is used in mummichog 3.
+* asari: Trackable and scalable metabolomics data preprocessing - https://github.com/shuzhao-li/asari
 
 * mummichog3: core algorithm package for pathway/network analysis
 
 * mummichog3-api: server and worker (RESTful) implementations
 
-* Azimuth DB: the chemical database for biology, including metabolic models
-
-* metDataModel: data models for metabolomics, used by mummichog and Azimuth DB
-
 * mass2chem: common utilities in interpreting mass spectrometry data, annotation
 
-* massBrowser: visualization using js
 
 
 ## For developers
 
-This should be language neutral. We start using Python code, and it'd be the primary reference. 
-But we encourage the adaptation/update/extension in other languages.
+The data structures should be language neutral. 
 
-YAML should be equivalent to JSON. Since Python classes are where we started, please use them as primary reference.
+We edit primarily in the Python code, as JSON and YAML can be exported automatically.
+Each Python class has a serialization function to export JSON, which is selective.
+I.e., concise information for users' need is exported, but not all class details.
 
-Minimal JSON formats should be used for mummichog project.
+Adaptation/update/extension is encouraged in other languages. 
 
 We strive for the right level of abstraction.
 For the core classes, it's more important to have transparent, extensible structure.
-Therefore, it's a design decision not to have getter or setter functions; 
-to leave out JSON methods to elsewhere;
-to keep shallow data structures, which are more portable.
+Therefore, it's a design decision not to have getter or setter functions. 
+Shallow data structures are more portable.
+MetDataModel provides a template, and application projects can extend it to fit their specific needs.
 
-More abstracted, detailed, extended classess are used for more specific projects.
-
-For end users, there has to be a serialized output at each level, which should be concise but adequate.
-For developers, the classes/objects can have all details, but their presentation is on demand not by default.
-I.e. be specific to what users need not what you have.
-
-Use Wiki pages for detailed discussions of ideas.
+Please feel free to submit issues, and write Wiki pages for discussions.
 
 
 ### Related community resources
@@ -134,3 +124,4 @@ To learn about genome scale metabolic models:
 ## History
 
 This repo was renamed from Azimuth-metabolomics. All annotation functions are moved to mass2chem package.
+

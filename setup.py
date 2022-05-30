@@ -1,5 +1,8 @@
 from setuptools import setup, find_packages
 
+with open("metDataModel/__init__.py") as f:
+    exec([x for x in f.readlines() if '__version__' in x][0])
+
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
@@ -10,6 +13,8 @@ setup_requirements = [ ]
 test_requirements = [ ]
 
 setup(
+    name='metDataModel',
+    version=__version__,
     author="Shuzhao Li",
     author_email='shuzhao.li@gmail.com',
     python_requires='>=3.5',
@@ -31,7 +36,7 @@ setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     keywords='metDataModel',
-    name='metDataModel',
+    
     packages=find_packages(
         include=['*', "metDataModel"],
     ),
@@ -39,6 +44,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/shuzhao-li/metDataModel',
-    version='0.4.15',
+
     zip_safe=False,
 )

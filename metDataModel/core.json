@@ -1,26 +1,27 @@
-# This is minimal defition of a metabolic model, with Compounds, Reactions, Pathways.
-# We start the implementation in the core.py, 
-# so the Python classes are the primary reference,
-# and please update this file as needed. 
+// This is minimal defition of a metabolic model, with Compounds, Reactions, Pathways.
+// We start the implementation in the core.py, 
+// so the Python classes are the primary reference,
+// and please update this file as needed. 
 
-# core.Experiment
+// core.Experiment
+
 Experiment: {
     'id': '',
     'list_of_samples': [],
 }
 
-# core.Sample
+// core.Sample
 Sample: {
     input_file: '',
     name: '',
     ion_mode: '',
-    # status
+    // status
     'status:mzml_parsing': '',
     'status:eic': '',
     'mass_aligned': '',
     'rtime_aligned': '',
     'peaks_extracted': '',
-    #
+    //
     list_scan_numbers = [],
     list_retention_time: [],
     list_mass_tracks: [
@@ -30,12 +31,12 @@ Sample: {
                 'intensity': [],
                 }, ...
     ], 
-    anchor_mz_pairs: [],                    # mostly isotopic pairs to establish m/z anchors (landmarks)
+    anchor_mz_pairs: [],                    // mostly isotopic pairs to establish m/z anchors (landmarks)
     number_anchor_mz_pairs: int,
     }
 
 
-# core.Peak
+// core.Peak
 Peak:   {
     'id_number': 0,
     'ms_level': 1,
@@ -57,7 +58,7 @@ isotopic_patterns: [
 
     
 
-# core.Feature
+// core.Feature
 Feature: {
     'id': '',
     
@@ -67,12 +68,12 @@ Feature: {
 }
 
 
-# mapping of EmpiricalCompounds and Compounds is 
-# generated after annotation, which should be done separately but mummichog contains a fallback function
-# This is stored in "identity"
-# Note that an empCpd can be a mixture of real compounds
+// mapping of EmpiricalCompounds and Compounds is 
+// generated after annotation, which should be done separately but mummichog contains a fallback function
+// This is stored in "identity"
+// Note that an empCpd can be a mixture of real compounds
 
-# core.EmpiricalCompound
+// core.EmpiricalCompound
 EmpiricalCompound: {
     "neutral_formula_mass": 268.08077, 
     "neutral_formula": C10H12N4O5,
@@ -96,10 +97,10 @@ EmpiricalCompound: {
 
 
 
-# 
-# a Compound 'id'=azimuth_id, 'mw'=neutral mass
-# other DB IDs, structure are desired but not in minimal requirement
-#
+// 
+// a Compound 'id'=azimuth_id, 'mw'=neutral mass
+// other DB IDs, structure are desired but not in minimal requirement
+//
 
 Compound: {
     'id':'', 
@@ -112,9 +113,9 @@ Compound: {
 }
     
 
-#
-# enzyme is a protein to link to genes, not in minimal requirement
-#
+//
+// enzyme is a protein to link to genes, not in minimal requirement
+//
 
 Reaction: {
         'reactants': [compound1, compound2,],
@@ -123,17 +124,17 @@ Reaction: {
     }
 
 
-#
-# A Pathway is defined by a list of reactions
-# Network needs no explicit definition. All reactions link to the total network.
-#
+//
+// A Pathway is defined by a list of reactions
+// Network needs no explicit definition. All reactions link to the total network.
+//
 
 Pathway: {
         'id': '',
         'list_of_reactions': [reaction1, reaction2, ],
     }
 
-# Metabolic network, same as pathway but without conventional definition
+// Metabolic network, same as pathway but without conventional definition
 Network: {
         'id': '',
         'list_of_reactions': [reaction1, reaction2, ],
@@ -141,8 +142,8 @@ Network: {
 
 
 
-# A metabolic model needs minimal meta data
-# list of reactions and compounds
+// A metabolic model needs minimal meta data
+// list of reactions and compounds
 
 metabolicModel: {
     'version': '',

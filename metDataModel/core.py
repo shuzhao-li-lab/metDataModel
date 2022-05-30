@@ -1,41 +1,32 @@
 '''
-General data models for metabolomics data.
-These try to be simple so that complex and specialized classes can be derived from these.
+General data models for metabolomics.
+Simple is good, and complex and specialized classes can be derived from these.
 
-For experimental data,
-The hierarchy is Experiment -> empCpd -> Features -> Peaks
--> massTrace
--> MSnSpectrum
+A spectrum is a list of masses. 
+MS1 is direct scan of ions to generate intensity values.
+MS^2 and MS^n refers to spectrum to measure fragmentation products of a precursor ion from lower MS level.
 
-A peak is usually chromatographic peak (elution peak) in LC-MS, 
+LC-MS is a composite of many spectra, each being a scan at a specific elution time. 
+A peak can refer to either peak on the m/z axis, or peak on the LC axis.
+The former is less common now as high-resolution mass spectrometry data 
+require little attention in identifying (centroiding) the m/z peaks.
+A peak on the LC axis is a chromatographic peak (elution peak) in LC-MS, 
 but people may use 3-D detection or higher dimension e.g. IM-LC-MS.
 
-A spectrum is a list of masses.
-LC-MS is a composite of many spectra. MS^n is spectrum as product of a precursor, which is a peak.
-
-After peaks are asigned to a feature or an empCpd, the annotation is transferred to the latter.
-
-For theoretical data,
-The hierarchy is Network/pathway -> reactions -> compounds
--> enzyme -> gene
+Empirical compound is a key concept proposed by Shuzhao Li lab to connect 
+experimental measurements and database records, including metabolic models.
 
 Not all concepts have to be explicitly modeled in a project (e.g. expt, peak, network).
 Use derived/inherited classes for more explict or specialized data.
 
 We try be explicit in source code, and Python supports introspection.
-Therefore, getters and setters are voided.
+Therefore, getters and setters are avoided.
 A serialize function is made available for easy JSON export. 
 For simple cases, these classes can be simplified as Python NamedTuples, 
 which allow easy access to attributes but have no additional methods.
 
-To learn about mass spectrometry concepts and pre-processing:
-https://pyopenms.readthedocs.io/en/latest/datastructures.html
-https://github.com/jorainer/metabolomics2018
-
-To learn about genome scale metabolic models:
-https://link.springer.com/article/10.1186/s13059-019-1730-3
-https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19
-
+It is preferred to edit the core.py,
+and export JSON and YAML automatically.
 '''
 
 #
@@ -117,6 +108,38 @@ class Experiment:
                 'chromatography': self.chromatography,
                 }
         
+
+class Sample:
+    '''
+            sam['status:mzml_parsing'], sam['status:eic'], sam['data_location'
+            ], sam['max_scan_number'], sam['list_scan_numbers'], sam['list_retention_time'
+            ], sam['track_mzs'
+            ], sam['number_anchor_mz_pairs'], sam['anchor_mz_pairs'
+            ], sam['sample_data']
+    
+    '''
+    def __init__(self):
+        self.input_file = ''
+        self.experiment = ''    # parent Experiment instance
+        self.name = ''
+        self.mode = 'pos'
+        
+        self.list_MassTracks = []       # fixed sequence
+        self.number_MassTrakes = 0
+        self.mz_list = []   
+        self.peak_table = {}           
+
+        self.input_file = registry['input_file']
+        self.name = registry['name']
+        self.sample_id = registry['sample_id']
+        self.data_location = registry['data_location']
+        self.track_mzs = registry['track_mzs']
+        self.max_scan_number = registry['max_scan_number']
+        self.anchor_mz_pairs = registry['anchor_mz_pairs']
+        self.rt_numbers = registry['list_scan_numbers']
+        self.list_retention_time = registry['list_retention_time']
+
+
 
 
 class Peak:
@@ -214,12 +237,13 @@ class MSnSpectrum(Peak):
                 }
 
 
-class MassTrace(Peak):
+class MassTrack:
     '''
     equivalent to EIC or XIC for LC-MS data; using concept from OpenMS.
 
     Inheriting from Peak for class properties, no bearing on their conceptual relationship in science.
     '''
+    
     def serialize(self):
         '''
         return dictionary of key variables.
@@ -363,27 +387,7 @@ class EmpiricalCompound:
 
     def serialize(self):
         '''
-        return dictionary of key variables, e.g.
-            {
-            "neutral_formula_mass": 268.08077, 
-            "neutral_formula": C10H12N4O5,
-            "alternative_formulas": [],
-            "interim_id": C10H12N4O5_268.08077,
-            "identity": [
-                    {'compounds': ['HMDB0000195'], 'names': ['Inosine'], 'score': 0.6, 'probability': null},
-                    {'compounds': ['HMDB0000195', 'HMDB0000481'], 'names': ['Inosine', 'Allopurinol riboside'], 'score': 0.1, 'probability': null},
-                    {'compounds': ['HMDB0000481'], 'names': ['Allopurinol riboside'], 'score': 0.1, 'probability': null},
-                    {'compounds': ['HMDB0003040''], 'names': ['Arabinosylhypoxanthine'], 'score': 0.05, 'probability': null},
-                    ],
-            "MS1_pseudo_Spectra": [
-                    {'feature_id': 'FT1705', 'mz': 269.0878, 'rtime': 99.90, 'charged_formula': '', 'ion_relation': 'M+H[1+]'},
-                    {'feature_id': 'FT1876', 'mz': 291.0697, 'rtime': 99.53, 'charged_formula': '', 'ion_relation': 'M+Na[1+]'},
-                    {'feature_id': 'FT1721', 'mz': 270.0912, 'rtime': 99.91, 'charged_formula': '', 'ion_relation': 'M(C13)+H[1+]'},
-                    {'feature_id': 'FT1993', 'mz': 307.0436, 'rtime': 99.79, 'charged_formula': '', 'ion_relation': 'M+K[1+]'},
-                    ],
-            "MS2_Spectra": ['AZ0000711', 'AZ0002101'],
-            "Database_referred": ["Azimuth", "HMDB", "MONA"],
-            }
+        return dictionary of key variables. See README for an example.
         '''
         features = []
         for peak in self.MS1_pseudo_Spectra:
@@ -593,17 +597,6 @@ class MetabolicModel:
 # To extend later
 #
 
-class Sample:
-    def __init__(self):
-        self.input_file = ''
-        self.experiment = ''    # parent Experiment instance
-        self.name = ''
-        self.mode = 'pos'
-        
-        self.list_MassTraces = []       # fixed sequence
-        self.number_MassTraces = 0
-        self.mz_list = []   
-        self.peak_table = {}           
 
 class Enzyme:
     ec_num = ''
