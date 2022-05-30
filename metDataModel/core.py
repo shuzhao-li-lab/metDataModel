@@ -25,8 +25,6 @@ A serialize function is made available for easy JSON export.
 For simple cases, these classes can be simplified as Python NamedTuples, 
 which allow easy access to attributes but have no additional methods.
 
-It is preferred to edit the core.py,
-and export JSON and YAML automatically.
 '''
 
 #

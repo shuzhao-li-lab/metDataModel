@@ -23,6 +23,20 @@ import numpy as np
 import networkx as nx
 
 import json
+import yaml
+
+def covert_json_to_yaml(jfile, yfile):
+    '''
+    Convert JSON file jfile to YAML file yfile.
+    '''
+    with open(jfile, 'rb') as O:
+        jj = json.load(O)
+    with open(yfile, 'w') as O:
+        yaml.dump(jj, O)
+
+
+
+
 
 class metabolicPathway:
     def __init__(self):

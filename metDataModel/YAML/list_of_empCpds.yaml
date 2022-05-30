@@ -1,0 +1,406 @@
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 37.009442608000015
+    id_number: F5
+    ion_relation: anchor
+    mz: 69.04472721315787
+    rtime: 37.009442608000015
+  - apex: 37.68229591999998
+    id_number: F7
+    ion_relation: 13C/12C
+    mz: 70.04809928112864
+    rtime: 37.68229591999998
+  MS2_Spectra: []
+  identity: []
+  interim_id: 0
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 26.54101436800002
+    id_number: F9
+    ion_relation: anchor
+    mz: 70.06513275873985
+    rtime: 26.54101436800002
+  - apex: 26.54101436800002
+    id_number: F13
+    ion_relation: 13C/12C
+    mz: 71.06850810918073
+    rtime: 26.54101436800002
+  - apex: 28.37722321600002
+    id_number: F2320
+    ion_relation: 13C/12C,Acetonitrile
+    mz: 112.09511134935462
+    rtime: 28.37722321600002
+  MS2_Spectra: []
+  identity: []
+  interim_id: 1
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 24.53233395100002
+    id_number: F17
+    ion_relation: anchor
+    mz: 72.08078305742407
+    rtime: 24.53233395100002
+  - &id001
+    apex: 24.753668031
+    id_number: F24
+    ion_relation: 13C/12C
+    mz: 73.08415705437261
+    rtime: 24.753668031
+  - &id002
+    apex: 28.61006329600002
+    id_number: F25
+    ion_relation: 13C/12C
+    mz: 73.08415705437261
+    rtime: 28.61006329600002
+  - &id003
+    apex: 21.85602164800002
+    id_number: F219
+    ion_relation: anchor,+H2O
+    mz: 90.09138687577965
+    rtime: 21.85602164800002
+  MS2_Spectra: []
+  identity: []
+  interim_id: 2
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 28.84210227199998
+    id_number: F18
+    ion_relation: anchor
+    mz: 72.08078305742407
+    rtime: 28.84210227199998
+  - *id001
+  - *id002
+  - *id003
+  MS2_Spectra: []
+  identity: []
+  interim_id: 3
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 30.898364223
+    id_number: F34
+    ion_relation: anchor
+    mz: 97.07457194326923
+    rtime: 30.898364223
+  - apex: 31.338157936000016
+    id_number: F52
+    ion_relation: 13C/12C
+    mz: 98.07775301357995
+    rtime: 31.338157936000016
+  MS2_Spectra: []
+  identity: []
+  interim_id: 4
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 18.3164856
+    id_number: F57
+    ion_relation: anchor
+    mz: 98.97538713101844
+    rtime: 18.3164856
+  - apex: 18.08352352000002
+    id_number: F1817
+    ion_relation: 13C/12C
+    mz: 99.97875444593762
+    rtime: 18.08352352000002
+  - apex: 18.08352352000002
+    id_number: F578
+    ion_relation: anchor,+H2O
+    mz: 116.98592547825459
+    rtime: 18.08352352000002
+  - apex: 18.08352352000002
+    id_number: F288
+    ion_relation: anchor,Acetonitrile
+    mz: 140.0020028033652
+    rtime: 18.08352352000002
+  MS2_Spectra: []
+  identity: []
+  interim_id: 5
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 28.84210227199998
+    id_number: F64
+    ion_relation: anchor
+    mz: 80.13102947421419
+    rtime: 28.84210227199998
+  - apex: 28.84210227199998
+    id_number: F76
+    ion_relation: 13C/12C
+    mz: 81.13437337780164
+    rtime: 28.84210227199998
+  MS2_Spectra: []
+  identity: []
+  interim_id: 6
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 26.08911484699998
+    id_number: F68
+    ion_relation: anchor
+    mz: 118.0862993025024
+    rtime: 26.08911484699998
+  - &id004
+    apex: 26.08911484699998
+    id_number: F108
+    ion_relation: anchor
+    mz: 119.08961112728196
+    rtime: 26.08911484699998
+  - *id004
+  - apex: 25.85871091099998
+    id_number: F1558
+    ion_relation: Na/H
+    mz: 140.06826766837133
+    rtime: 25.85871091099998
+  - apex: 25.85871091099998
+    id_number: F425
+    ion_relation: anchor,39K/H
+    mz: 156.04224549839506
+    rtime: 25.85871091099998
+  MS2_Spectra: []
+  identity: []
+  interim_id: 7
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - *id004
+  - &id006
+    apex: 25.638380079
+    id_number: F133
+    ion_relation: 13C/12C
+    mz: 120.09306785834558
+    rtime: 25.638380079
+  MS2_Spectra: []
+  identity: []
+  interim_id: 8
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 24.97544769499998
+    id_number: F89
+    ion_relation: anchor
+    mz: 84.04441503764944
+    rtime: 24.97544769499998
+  - apex: 24.753668031
+    id_number: F100
+    ion_relation: 13C/12C
+    mz: 85.04779448501142
+    rtime: 24.753668031
+  MS2_Spectra: []
+  identity: []
+  interim_id: 9
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 19.95047867200002
+    id_number: F91
+    ion_relation: anchor
+    mz: 84.08079790924123
+    rtime: 19.95047867200002
+  - apex: 19.717260096
+    id_number: F106
+    ion_relation: 13C/12C
+    mz: 85.08416937663821
+    rtime: 19.717260096
+  MS2_Spectra: []
+  identity: []
+  interim_id: 10
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 18.3164856
+    id_number: F93
+    ion_relation: anchor
+    mz: 119.01896404409095
+    rtime: 18.3164856
+  - apex: 18.3164856
+    id_number: F1384
+    ion_relation: 13C/12C
+    mz: 120.02232234606265
+    rtime: 18.3164856
+  - apex: 18.08352352000002
+    id_number: F144
+    ion_relation: anchor,+H2O
+    mz: 137.02960004886768
+    rtime: 18.08352352000002
+  - &id005
+    apex: 18.08352352000002
+    id_number: F529
+    ion_relation: anchor,+H2O
+    mz: 160.0455450481639
+    rtime: 18.08352352000002
+  - *id005
+  MS2_Spectra: []
+  identity: []
+  interim_id: 11
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 18.3164856
+    id_number: F98
+    ion_relation: anchor
+    mz: 84.9597238408692
+    rtime: 18.3164856
+  - apex: 18.78239771200002
+    id_number: F2086
+    ion_relation: 13C/12C
+    mz: 85.9631250554865
+    rtime: 18.78239771200002
+  - apex: 18.54940211200002
+    id_number: F211
+    ion_relation: anchor,+H2O
+    mz: 102.97032972136029
+    rtime: 18.54940211200002
+  MS2_Spectra: []
+  identity: []
+  interim_id: 12
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 25.85871091099998
+    id_number: F105
+    ion_relation: anchor
+    mz: 119.08334950964233
+    rtime: 25.85871091099998
+  - apex: 26.54101436800002
+    id_number: F132
+    ion_relation: H
+    mz: 120.09057831298355
+    rtime: 26.54101436800002
+  MS2_Spectra: []
+  identity: []
+  interim_id: 13
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 128.00228785600018
+    id_number: F107
+    ion_relation: anchor
+    mz: 119.0855775080341
+    rtime: 128.00228785600018
+  - apex: 128.00228785600018
+    id_number: F131
+    ion_relation: 13C/12C
+    mz: 120.08894835659859
+    rtime: 128.00228785600018
+  MS2_Spectra: []
+  identity: []
+  interim_id: 14
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - *id004
+  - *id006
+  MS2_Spectra: []
+  identity: []
+  interim_id: 15
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 18.08352352000002
+    id_number: F112
+    ion_relation: anchor
+    mz: 120.01976936665073
+    rtime: 18.08352352000002
+  - apex: 18.08352352000002
+    id_number: F1387
+    ion_relation: 13C/12C
+    mz: 121.02322741977895
+    rtime: 18.08352352000002
+  - &id007
+    apex: 18.08352352000002
+    id_number: F1827
+    ion_relation: anchor,+H2O
+    mz: 161.04625553564256
+    rtime: 18.08352352000002
+  - *id007
+  MS2_Spectra: []
+  identity: []
+  interim_id: 16
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 31.119090847999978
+    id_number: F117
+    ion_relation: anchor
+    mz: 86.09644398442768
+    rtime: 31.119090847999978
+  - apex: 31.119090847999978
+    id_number: F141
+    ion_relation: 13C/12C
+    mz: 87.0998207825024
+    rtime: 31.119090847999978
+  MS2_Spectra: []
+  identity: []
+  interim_id: 17
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 31.338157936000016
+    id_number: F124
+    ion_relation: anchor
+    mz: 120.08082654454147
+    rtime: 31.338157936000016
+  - apex: 30.898364223
+    id_number: F336
+    ion_relation: 13C/12C
+    mz: 142.06265341394393
+    rtime: 30.898364223
+  - apex: 34.064680975999984
+    id_number: F2437
+    ion_relation: anchor,Na/H, double charged
+    mz: 131.07177920301422
+    rtime: 34.064680975999984
+  - apex: 35.46235057600002
+    id_number: F2438
+    ion_relation: anchor,Na/H, double charged
+    mz: 131.07177920301422
+    rtime: 35.46235057600002
+  MS2_Spectra: []
+  identity: []
+  interim_id: 18
+  neutral_formula: null
+  neutral_formula_mass: null
+- Database_referred: []
+  MS1_pseudo_Spectra:
+  - apex: 71.8805698720002
+    id_number: F126
+    ion_relation: anchor
+    mz: 120.08082654454147
+    rtime: 71.8805698720002
+  - apex: 71.8805698720002
+    id_number: F1388
+    ion_relation: 13C/12C
+    mz: 121.08427592783806
+    rtime: 71.8805698720002
+  - apex: 71.4013481110002
+    id_number: F259
+    ion_relation: 13C/12C,+H2O
+    mz: 139.09532809691578
+    rtime: 71.4013481110002
+  MS2_Spectra: []
+  identity: []
+  interim_id: 19
+  neutral_formula: null
+  neutral_formula_mass: null

@@ -1,0 +1,780 @@
+- enzymes: []
+  genes: []
+  id: EX_cm_e
+  products: []
+  reactants:
+  - cm_e
+- enzymes: []
+  genes: []
+  id: EX_cmp_e
+  products: []
+  reactants:
+  - cmp_e
+- enzymes: []
+  genes: []
+  id: EX_co2_e
+  products: []
+  reactants:
+  - co2_e
+- enzymes: []
+  genes: []
+  id: EX_cobalt2_e
+  products: []
+  reactants:
+  - cobalt2_e
+- enzymes: []
+  genes: []
+  id: DM_4crsol_c
+  products: []
+  reactants:
+  - 4crsol_c
+- enzymes: []
+  genes: []
+  id: DM_5drib_c
+  products: []
+  reactants:
+  - 5drib_c
+- enzymes: []
+  genes: []
+  id: DM_aacald_c
+  products: []
+  reactants:
+  - aacald_c
+- enzymes: []
+  genes: []
+  id: DM_amob_c
+  products: []
+  reactants:
+  - amob_c
+- enzymes: []
+  genes: []
+  id: DM_mththf_c
+  products: []
+  reactants:
+  - mththf_c
+- enzymes: []
+  genes: []
+  id: EX_colipa_e
+  products: []
+  reactants:
+  - colipa_e
+- enzymes: []
+  genes: []
+  id: DM_oxam_c
+  products: []
+  reactants:
+  - oxam_c
+- enzymes: []
+  genes: []
+  id: EX_glc__D_e
+  products: []
+  reactants:
+  - glc__D_e
+- enzymes: []
+  genes: []
+  id: EX_glcn_e
+  products: []
+  reactants:
+  - glcn_e
+- enzymes: []
+  genes: []
+  id: BIOMASS_Ec_iJO1366_WT_53p95M
+  products:
+  - adp_c
+  - h_c
+  - pi_c
+  - ppi_c
+  reactants:
+  - 10fthf_c
+  - 2dmmql8_c
+  - 2fe2s_c
+  - 4fe4s_c
+  - 5mthf_c
+  - accoa_c
+  - adocbl_c
+  - ala__L_c
+  - amet_c
+  - arg__L_c
+  - asn__L_c
+  - asp__L_c
+  - atp_c
+  - bmocogdp_c
+  - btn_c
+  - ca2_c
+  - chor_c
+  - cl_c
+  - clpn160_p
+  - clpn161_p
+  - clpn181_p
+  - coa_c
+  - cobalt2_c
+  - colipa_e
+  - ctp_c
+  - cu2_c
+  - cys__L_c
+  - datp_c
+  - dctp_c
+  - dgtp_c
+  - dttp_c
+  - enter_c
+  - fad_c
+  - fe2_c
+  - fe3_c
+  - gln__L_c
+  - glu__L_c
+  - gly_c
+  - glycogen_c
+  - gthrd_c
+  - gtp_c
+  - h2o_c
+  - hemeO_c
+  - his__L_c
+  - ile__L_c
+  - k_c
+  - leu__L_c
+  - lipopb_c
+  - lys__L_c
+  - malcoa_c
+  - met__L_c
+  - mg2_c
+  - mlthf_c
+  - mn2_c
+  - mobd_c
+  - mococdp_c
+  - mocogdp_c
+  - mql8_c
+  - murein3p3p_p
+  - murein3px4p_p
+  - murein4p4p_p
+  - murein4px4p_p
+  - murein4px4px4p_p
+  - nad_c
+  - nadh_c
+  - nadp_c
+  - nadph_c
+  - nh4_c
+  - ni2_c
+  - pe160_c
+  - pe160_p
+  - pe161_c
+  - pe161_p
+  - pe181_c
+  - pe181_p
+  - pg160_c
+  - pg160_p
+  - pg161_c
+  - pg161_p
+  - pg181_c
+  - pg181_p
+  - phe__L_c
+  - pheme_c
+  - pro__L_c
+  - ptrc_c
+  - pydx5p_c
+  - q8h2_c
+  - ribflv_c
+  - ser__L_c
+  - sheme_c
+  - so4_c
+  - spmd_c
+  - succoa_c
+  - thf_c
+  - thmpp_c
+  - thr__L_c
+  - trp__L_c
+  - tyr__L_c
+  - udcpdp_c
+  - utp_c
+  - val__L_c
+  - zn2_c
+  signature_formula_diff: null
+  signature_mass_diff: -3744.7577021150496
+- enzymes: []
+  genes: []
+  id: EX_glcr_e
+  products: []
+  reactants:
+  - glcr_e
+- enzymes: []
+  genes: []
+  id: EX_colipap_e
+  products: []
+  reactants:
+  - colipap_e
+- enzymes: []
+  genes: []
+  id: EX_glcur_e
+  products: []
+  reactants:
+  - glcur_e
+- enzymes: []
+  genes: []
+  id: EX_glcur1p_e
+  products: []
+  reactants:
+  - glcur1p_e
+- enzymes: []
+  genes: []
+  id: BIOMASS_Ec_iJO1366_core_53p95M
+  products:
+  - adp_c
+  - h_c
+  - pi_c
+  - ppi_c
+  reactants:
+  - 10fthf_c
+  - 2fe2s_c
+  - 2ohph_c
+  - 4fe4s_c
+  - ala__L_c
+  - amet_c
+  - arg__L_c
+  - asn__L_c
+  - asp__L_c
+  - atp_c
+  - bmocogdp_c
+  - btn_c
+  - ca2_c
+  - cl_c
+  - coa_c
+  - cobalt2_c
+  - ctp_c
+  - cu2_c
+  - cys__L_c
+  - datp_c
+  - dctp_c
+  - dgtp_c
+  - dttp_c
+  - fad_c
+  - fe2_c
+  - fe3_c
+  - gln__L_c
+  - glu__L_c
+  - gly_c
+  - gtp_c
+  - h2o_c
+  - his__L_c
+  - ile__L_c
+  - k_c
+  - kdo2lipid4_e
+  - leu__L_c
+  - lys__L_c
+  - met__L_c
+  - mg2_c
+  - mlthf_c
+  - mn2_c
+  - mobd_c
+  - murein5px4p_p
+  - nad_c
+  - nadp_c
+  - nh4_c
+  - ni2_c
+  - pe160_c
+  - pe160_p
+  - pe161_c
+  - pe161_p
+  - phe__L_c
+  - pheme_c
+  - pro__L_c
+  - pydx5p_c
+  - ribflv_c
+  - ser__L_c
+  - sheme_c
+  - so4_c
+  - thf_c
+  - thmpp_c
+  - thr__L_c
+  - trp__L_c
+  - tyr__L_c
+  - udcpdp_c
+  - utp_c
+  - val__L_c
+  - zn2_c
+  signature_formula_diff: null
+  signature_mass_diff: -1467.75228301556
+- enzymes: []
+  genes: []
+  id: EX_12ppd__R_e
+  products: []
+  reactants:
+  - 12ppd__R_e
+- enzymes: []
+  genes: []
+  id: EX_gln__L_e
+  products: []
+  reactants:
+  - gln__L_e
+- enzymes: []
+  genes: []
+  id: EX_cpgn_e
+  products: []
+  reactants:
+  - cpgn_e
+- enzymes: []
+  genes: []
+  id: EX_glu__L_e
+  products: []
+  reactants:
+  - glu__L_e
+- enzymes: []
+  genes: []
+  id: EX_gly_e
+  products: []
+  reactants:
+  - gly_e
+- enzymes: []
+  genes: []
+  id: EX_glyald_e
+  products: []
+  reactants:
+  - glyald_e
+- enzymes: []
+  genes: []
+  id: EX_glyb_e
+  products: []
+  reactants:
+  - glyb_e
+- enzymes: []
+  genes: []
+  id: EX_glyc_e
+  products: []
+  reactants:
+  - glyc_e
+- enzymes: []
+  genes: []
+  id: EX_12ppd__S_e
+  products: []
+  reactants:
+  - 12ppd__S_e
+- enzymes: []
+  genes: []
+  id: EX_14glucan_e
+  products: []
+  reactants:
+  - 14glucan_e
+- enzymes: []
+  genes: []
+  id: EX_cpgn_un_e
+  products: []
+  reactants:
+  - cpgn_un_e
+- enzymes: []
+  genes: []
+  id: EX_15dap_e
+  products: []
+  reactants:
+  - 15dap_e
+- enzymes: []
+  genes: []
+  id: EX_glyc__R_e
+  products: []
+  reactants:
+  - glyc__R_e
+- enzymes: []
+  genes: []
+  id: EX_glyc2p_e
+  products: []
+  reactants:
+  - glyc2p_e
+- enzymes: []
+  genes: []
+  id: EX_23camp_e
+  products: []
+  reactants:
+  - 23camp_e
+- enzymes: []
+  genes: []
+  id: EX_23ccmp_e
+  products: []
+  reactants:
+  - 23ccmp_e
+- enzymes: []
+  genes: []
+  id: EX_23cgmp_e
+  products: []
+  reactants:
+  - 23cgmp_e
+- enzymes: []
+  genes: []
+  id: EX_23cump_e
+  products: []
+  reactants:
+  - 23cump_e
+- enzymes: []
+  genes: []
+  id: EX_23dappa_e
+  products: []
+  reactants:
+  - 23dappa_e
+- enzymes: []
+  genes: []
+  id: EX_26dap__M_e
+  products: []
+  reactants:
+  - 26dap__M_e
+- enzymes: []
+  genes: []
+  id: EX_glyc3p_e
+  products: []
+  reactants:
+  - glyc3p_e
+- enzymes: []
+  genes: []
+  id: EX_glyclt_e
+  products: []
+  reactants:
+  - glyclt_e
+- enzymes: []
+  genes: []
+  id: EX_gmp_e
+  products: []
+  reactants:
+  - gmp_e
+- enzymes: []
+  genes: []
+  id: EX_gsn_e
+  products: []
+  reactants:
+  - gsn_e
+- enzymes: []
+  genes: []
+  id: EX_gthox_e
+  products: []
+  reactants:
+  - gthox_e
+- enzymes: []
+  genes: []
+  id: EX_gthrd_e
+  products: []
+  reactants:
+  - gthrd_e
+- enzymes: []
+  genes: []
+  id: EX_gtp_e
+  products: []
+  reactants:
+  - gtp_e
+- enzymes: []
+  genes: []
+  id: EX_gua_e
+  products: []
+  reactants:
+  - gua_e
+- enzymes: []
+  genes: []
+  id: EX_h_e
+  products: []
+  reactants:
+  - h_e
+- enzymes: []
+  genes: []
+  id: EX_h2_e
+  products: []
+  reactants:
+  - h2_e
+- enzymes: []
+  genes: []
+  id: EX_h2o_e
+  products: []
+  reactants:
+  - h2o_e
+- enzymes: []
+  genes: []
+  id: EX_h2o2_e
+  products: []
+  reactants:
+  - h2o2_e
+- enzymes: []
+  genes: []
+  id: EX_h2s_e
+  products: []
+  reactants:
+  - h2s_e
+- enzymes: []
+  genes: []
+  id: EX_hacolipa_e
+  products: []
+  reactants:
+  - hacolipa_e
+- enzymes: []
+  genes: []
+  id: EX_halipa_e
+  products: []
+  reactants:
+  - halipa_e
+- enzymes: []
+  genes: []
+  id: EX_hdca_e
+  products: []
+  reactants:
+  - hdca_e
+- enzymes: []
+  genes: []
+  id: EX_hdcea_e
+  products: []
+  reactants:
+  - hdcea_e
+- enzymes: []
+  genes: []
+  id: EX_hg2_e
+  products: []
+  reactants:
+  - hg2_e
+- enzymes: []
+  genes: []
+  id: EX_his__L_e
+  products: []
+  reactants:
+  - his__L_e
+- enzymes: []
+  genes: []
+  id: EX_2ddglcn_e
+  products: []
+  reactants:
+  - 2ddglcn_e
+- enzymes: []
+  genes: []
+  id: EX_34dhpac_e
+  products: []
+  reactants:
+  - 34dhpac_e
+- enzymes: []
+  genes: []
+  id: EX_3amp_e
+  products: []
+  reactants:
+  - 3amp_e
+- enzymes: []
+  genes: []
+  id: EX_3cmp_e
+  products: []
+  reactants:
+  - 3cmp_e
+- enzymes: []
+  genes: []
+  id: EX_3gmp_e
+  products: []
+  reactants:
+  - 3gmp_e
+- enzymes: []
+  genes: []
+  id: EX_3hcinnm_e
+  products: []
+  reactants:
+  - 3hcinnm_e
+- enzymes: []
+  genes: []
+  id: EX_3hpp_e
+  products: []
+  reactants:
+  - 3hpp_e
+- enzymes: []
+  genes: []
+  id: EX_3hpppn_e
+  products: []
+  reactants:
+  - 3hpppn_e
+- enzymes: []
+  genes: []
+  id: EX_hom__L_e
+  products: []
+  reactants:
+  - hom__L_e
+- enzymes: []
+  genes: []
+  id: EX_hxa_e
+  products: []
+  reactants:
+  - hxa_e
+- enzymes: []
+  genes: []
+  id: EX_hxan_e
+  products: []
+  reactants:
+  - hxan_e
+- enzymes: []
+  genes: []
+  id: EX_idon__L_e
+  products: []
+  reactants:
+  - idon__L_e
+- enzymes: []
+  genes: []
+  id: EX_3ump_e
+  products: []
+  reactants:
+  - 3ump_e
+- enzymes: []
+  genes: []
+  id: EX_4abut_e
+  products: []
+  reactants:
+  - 4abut_e
+- enzymes: []
+  genes: []
+  id: EX_4hoxpacd_e
+  products: []
+  reactants:
+  - 4hoxpacd_e
+- enzymes: []
+  genes: []
+  id: EX_5dglcn_e
+  products: []
+  reactants:
+  - 5dglcn_e
+- enzymes: []
+  genes: []
+  id: EX_5mtr_e
+  products: []
+  reactants:
+  - 5mtr_e
+- enzymes: []
+  genes: []
+  id: EX_LalaDglu_e
+  products: []
+  reactants:
+  - LalaDglu_e
+- enzymes: []
+  genes: []
+  id: EX_ile__L_e
+  products: []
+  reactants:
+  - ile__L_e
+- enzymes: []
+  genes: []
+  id: EX_imp_e
+  products: []
+  reactants:
+  - imp_e
+- enzymes: []
+  genes: []
+  id: EX_indole_e
+  products: []
+  reactants:
+  - indole_e
+- enzymes: []
+  genes: []
+  id: EX_inost_e
+  products: []
+  reactants:
+  - inost_e
+- enzymes: []
+  genes: []
+  id: EX_ins_e
+  products: []
+  reactants:
+  - ins_e
+- enzymes: []
+  genes: []
+  id: EX_isetac_e
+  products: []
+  reactants:
+  - isetac_e
+- enzymes: []
+  genes: []
+  id: EX_k_e
+  products: []
+  reactants:
+  - k_e
+- enzymes: []
+  genes: []
+  id: EX_LalaDgluMdap_e
+  products: []
+  reactants:
+  - LalaDgluMdap_e
+- enzymes: []
+  genes: []
+  id: EX_LalaDgluMdapDala_e
+  products: []
+  reactants:
+  - LalaDgluMdapDala_e
+- enzymes: []
+  genes: []
+  id: EX_LalaLglu_e
+  products: []
+  reactants:
+  - LalaLglu_e
+- enzymes: []
+  genes: []
+  id: EX_kdo2lipid4_e
+  products: []
+  reactants:
+  - kdo2lipid4_e
+- enzymes: []
+  genes: []
+  id: EX_ac_e
+  products: []
+  reactants:
+  - ac_e
+- enzymes: []
+  genes: []
+  id: EX_crn_e
+  products: []
+  reactants:
+  - crn_e
+- enzymes: []
+  genes: []
+  id: EX_acac_e
+  products: []
+  reactants:
+  - acac_e
+- enzymes: []
+  genes: []
+  id: EX_acald_e
+  products: []
+  reactants:
+  - acald_e
+- enzymes: []
+  genes: []
+  id: EX_lac__D_e
+  products: []
+  reactants:
+  - lac__D_e
+- enzymes: []
+  genes: []
+  id: EX_lac__L_e
+  products: []
+  reactants:
+  - lac__L_e
+- enzymes: []
+  genes: []
+  id: EX_crn__D_e
+  products: []
+  reactants:
+  - crn__D_e
+- enzymes: []
+  genes: []
+  id: EX_lcts_e
+  products: []
+  reactants:
+  - lcts_e
+- enzymes: []
+  genes: []
+  id: EX_acgal_e
+  products: []
+  reactants:
+  - acgal_e
+- enzymes: []
+  genes: []
+  id: EX_acgal1p_e
+  products: []
+  reactants:
+  - acgal1p_e
+- enzymes: []
+  genes: []
+  id: EX_acgam_e
+  products: []
+  reactants:
+  - acgam_e
+- enzymes: []
+  genes: []
+  id: EX_leu__L_e
+  products: []
+  reactants:
+  - leu__L_e
+- enzymes: []
+  genes: []
+  id: EX_csn_e
+  products: []
+  reactants:
+  - csn_e

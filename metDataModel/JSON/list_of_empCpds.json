@@ -1,0 +1,1296 @@
+{
+    "0": {
+      "interim_id": 0,
+      "neutral_formula_mass": null,
+      "neutral_formula": null,
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 315,
+          "peak_area": 310970465,
+          "height": 22270846,
+          "left_base": 309,
+          "right_base": 323,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 871,
+          "mz": 133.10523223876953,
+          "snr": 737,
+          "goodness_fitting": 0.9327601089065244,
+          "id_number": "F5",
+          "rtime": 121.099636272,
+          "rtime_left_base": 118.8523015189998,
+          "rtime_right_base": 124.12197382300019,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 453
+        },
+        {
+          "apex": 315,
+          "peak_area": 3456351,
+          "height": 471023,
+          "left_base": 311,
+          "right_base": 323,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 902,
+          "mz": 134.10852813720703,
+          "snr": 74,
+          "goodness_fitting": 0.8357564804888509,
+          "id_number": "F97",
+          "rtime": 121.099636272,
+          "rtime_left_base": 119.5951254229998,
+          "rtime_right_base": 124.12197382300019,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 0
+        }
+      ],
+      "MS2_Spectra": []
+    },
+    "1": {
+      "interim_id": 1,
+      "neutral_formula_mass": null,
+      "neutral_formula": null,
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 328,
+          "peak_area": 163278202,
+          "height": 18555391,
+          "left_base": 323,
+          "right_base": 375,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 871,
+          "mz": 133.10523223876953,
+          "snr": 614,
+          "goodness_fitting": 0.9482573335413478,
+          "id_number": "F6",
+          "rtime": 126.04635315100019,
+          "rtime_left_base": 124.12197382300019,
+          "rtime_right_base": 143.9329572160002,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 454
+        },
+        {
+          "apex": 328,
+          "peak_area": 6721834,
+          "height": 480832,
+          "left_base": 323,
+          "right_base": 347,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 902,
+          "mz": 134.10852813720703,
+          "snr": 75,
+          "goodness_fitting": 0.9641614767495137,
+          "id_number": "F98",
+          "rtime": 126.04635315100019,
+          "rtime_left_base": 124.12197382300019,
+          "rtime_right_base": 133.32164859100018,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 1
+        }
+      ],
+      "MS2_Spectra": []
+    },
+    "2": {
+      "interim_id": 2,
+      "neutral_formula_mass": 166.049075456,
+      "neutral_formula": "C6H6N4O2",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 626,
+          "peak_area": 18235947,
+          "height": 1112785,
+          "left_base": 603,
+          "right_base": 673,
+          "cSelectivity": 0.7058823529411765,
+          "parent_masstrack_id": 1751,
+          "mz": 166.0489101409912,
+          "snr": 242,
+          "goodness_fitting": 0.7987499735819958,
+          "id_number": "F45",
+          "rtime": 240.5166602080002,
+          "rtime_left_base": 231.766141455,
+          "rtime_right_base": 258.8839187989998,
+          "ion_relation": "anchor",
+          "parent_epd_id": 2
+        },
+        {
+          "apex": 626,
+          "peak_area": 6062419,
+          "height": 326180,
+          "left_base": 613,
+          "right_base": 671,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1782,
+          "mz": 167.05604934692383,
+          "snr": 64,
+          "goodness_fitting": 0.8423612275491421,
+          "id_number": "F165",
+          "rtime": 240.5166602080002,
+          "rtime_left_base": 235.5897111679998,
+          "rtime_right_base": 258.0939735190002,
+          "ion_relation": "H",
+          "parent_epd_id": 2
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C6H6N4O2_166.049075",
+          "M[1+]",
+          2
+        ]
+      ]
+    },
+    "3": {
+      "interim_id": 3,
+      "neutral_formula_mass": 134.057908808,
+      "neutral_formula": "C5H10O4",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 459,
+          "peak_area": 817737,
+          "height": 141070,
+          "left_base": 455,
+          "right_base": 465,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 888,
+          "mz": 134.05780029296875,
+          "snr": 29,
+          "goodness_fitting": 0.9201851037893122,
+          "id_number": "F50",
+          "rtime": 176.17749363199982,
+          "rtime_left_base": 174.6494651839998,
+          "rtime_right_base": 178.479162783,
+          "ion_relation": "anchor",
+          "parent_epd_id": 3
+        },
+        {
+          "apex": 458,
+          "peak_area": 403183,
+          "height": 92418,
+          "left_base": 455,
+          "right_base": 462,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 917,
+          "mz": 135.06493377685547,
+          "snr": 20,
+          "goodness_fitting": 0.9599382128510391,
+          "id_number": "F153",
+          "rtime": 175.79558256,
+          "rtime_left_base": 174.6494651839998,
+          "rtime_right_base": 177.3221020159998,
+          "ion_relation": "H",
+          "parent_epd_id": 3
+        },
+        {
+          "apex": 451,
+          "peak_area": 371491,
+          "height": 44717,
+          "left_base": 448,
+          "right_base": 464,
+          "cSelectivity": 0.8317757009345794,
+          "parent_masstrack_id": 2056,
+          "mz": 176.0918426513672,
+          "snr": 11,
+          "goodness_fitting": 0.32836920857212415,
+          "id_number": "F1232",
+          "rtime": 173.1227812639998,
+          "rtime_left_base": 171.99039985600018,
+          "rtime_right_base": 178.0970413750002,
+          "ion_relation": "H,Acetonitrile",
+          "parent_epd_id": 3
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C5H10O4_134.057909",
+          "M[1+]",
+          2
+        ],
+        [
+          "C6H9NO_111.068414",
+          "M+Na[1+]",
+          1
+        ]
+      ]
+    },
+    "4": {
+      "interim_id": 4,
+      "neutral_formula_mass": 165.045964392,
+      "neutral_formula": "C5H11NO3S",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 456,
+          "peak_area": 52628422,
+          "height": 6398408,
+          "left_base": 450,
+          "right_base": 474,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1753,
+          "mz": 166.05396270751953,
+          "snr": 647,
+          "goodness_fitting": 0.9122810278582871,
+          "id_number": "F52",
+          "rtime": 175.0307226400002,
+          "rtime_left_base": 172.741963344,
+          "rtime_right_base": 181.8450942709998,
+          "ion_relation": "anchor",
+          "parent_epd_id": 4
+        },
+        {
+          "apex": 456,
+          "peak_area": 14057003,
+          "height": 1996047,
+          "left_base": 449,
+          "right_base": 467,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 2416,
+          "mz": 188.03528594970703,
+          "snr": 260,
+          "goodness_fitting": 0.9755747305033106,
+          "id_number": "F2596",
+          "rtime": 175.0307226400002,
+          "rtime_left_base": 172.36101579199982,
+          "rtime_right_base": 179.23114926300002,
+          "ion_relation": "anchor",
+          "parent_epd_id": 396
+        },
+        {
+          "apex": 457,
+          "peak_area": 309447,
+          "height": 60732,
+          "left_base": 453,
+          "right_base": 462,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 2889,
+          "mz": 204.00915145874023,
+          "snr": 11,
+          "goodness_fitting": 0.8416160615800626,
+          "id_number": "F1212",
+          "rtime": 175.41207910399982,
+          "rtime_left_base": 173.886864432,
+          "rtime_right_base": 177.3221020159998,
+          "ion_relation": "anchor,39K/H",
+          "parent_epd_id": 4
+        },
+        {
+          "apex": 456,
+          "peak_area": 2642709,
+          "height": 343316,
+          "left_base": 450,
+          "right_base": 466,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1810,
+          "mz": 168.0491943359375,
+          "snr": 58,
+          "goodness_fitting": 0.9190358036894704,
+          "id_number": "F257",
+          "rtime": 175.0307226400002,
+          "rtime_left_base": 172.741963344,
+          "rtime_right_base": 178.8606005599998,
+          "ion_relation": "M(S34)+H[1+]"
+        },
+        {
+          "apex": 460,
+          "peak_area": 747527,
+          "height": 91505,
+          "left_base": 449,
+          "right_base": 466,
+          "cSelectivity": 0.88,
+          "parent_masstrack_id": 1218,
+          "mz": 148.04271697998047,
+          "snr": 15,
+          "goodness_fitting": 0.6846527535054019,
+          "id_number": "F1238",
+          "rtime": 176.5592704000002,
+          "rtime_left_base": 172.36101579199982,
+          "rtime_right_base": 178.8606005599998,
+          "ion_relation": "M-H2O+H[1+]"
+        },
+        {
+          "apex": 456,
+          "peak_area": 7832574,
+          "height": 1057356,
+          "left_base": 450,
+          "right_base": 467,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1244,
+          "mz": 149.02669143676758,
+          "snr": 146,
+          "goodness_fitting": 0.9315914833520693,
+          "id_number": "F1336",
+          "rtime": 175.0307226400002,
+          "rtime_left_base": 172.741963344,
+          "rtime_right_base": 179.23114926300002,
+          "ion_relation": "M-NH3+H[1+]"
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C5H11NO3S_165.045964",
+          "M+H[1+]",
+          3
+        ],
+        [
+          "C5H9NO2S_147.035399",
+          "M+H2O+H[1+]",
+          1
+        ]
+      ]
+    },
+    "5": {
+      "interim_id": 5,
+      "neutral_formula_mass": 133.052763851,
+      "neutral_formula": "C8H7NO",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 47,
+          "peak_area": 357972784,
+          "height": 61891814,
+          "left_base": 42,
+          "right_base": 53,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 889,
+          "mz": 134.06005859375,
+          "snr": 6474,
+          "goodness_fitting": 0.990171939963254,
+          "id_number": "F57",
+          "rtime": 18.497411391,
+          "rtime_left_base": 16.595170512,
+          "rtime_right_base": 20.79621559900002,
+          "ion_relation": "H",
+          "parent_epd_id": 460
+        },
+        {
+          "apex": 47,
+          "peak_area": 30536065,
+          "height": 6478417,
+          "left_base": 43,
+          "right_base": 54,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 916,
+          "mz": 135.0633888244629,
+          "snr": 892,
+          "goodness_fitting": 0.9880817647226868,
+          "id_number": "F151",
+          "rtime": 18.497411391,
+          "rtime_left_base": 16.976384784,
+          "rtime_right_base": 21.17878982299998,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 5
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C8H7NO_133.052764",
+          "M+H[1+]",
+          2
+        ]
+      ]
+    },
+    "6": {
+      "interim_id": 6,
+      "neutral_formula_mass": 133.052763851,
+      "neutral_formula": "C8H7NO",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 58,
+          "peak_area": 76364900,
+          "height": 14515233,
+          "left_base": 53,
+          "right_base": 81,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 889,
+          "mz": 134.06005859375,
+          "snr": 1519,
+          "goodness_fitting": 0.9977805359265755,
+          "id_number": "F58",
+          "rtime": 22.70699859100002,
+          "rtime_left_base": 20.79621559900002,
+          "rtime_right_base": 31.52337734299998,
+          "ion_relation": "H",
+          "parent_epd_id": 461
+        },
+        {
+          "apex": 58,
+          "peak_area": 6081069,
+          "height": 1239291,
+          "left_base": 54,
+          "right_base": 63,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 916,
+          "mz": 135.0633888244629,
+          "snr": 171,
+          "goodness_fitting": 0.9857140996330346,
+          "id_number": "F152",
+          "rtime": 22.70699859100002,
+          "rtime_left_base": 21.17878982299998,
+          "rtime_right_base": 24.59775875200002,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 6
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C8H7NO_133.052764",
+          "M+H[1+]",
+          2
+        ]
+      ]
+    },
+    "7": {
+      "interim_id": 7,
+      "neutral_formula_mass": 83.037114,
+      "neutral_formula": "C4H5NO",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 448,
+          "peak_area": 1126979838,
+          "height": 50067259,
+          "left_base": 418,
+          "right_base": 472,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 23,
+          "mz": 84.04436111450195,
+          "snr": 215,
+          "goodness_fitting": 0.8792202178770662,
+          "id_number": "F64",
+          "rtime": 171.99039985600018,
+          "rtime_left_base": 160.471650447,
+          "rtime_right_base": 181.09277895900001,
+          "ion_relation": "anchor",
+          "parent_epd_id": 7
+        },
+        {
+          "apex": 448,
+          "peak_area": 17668957,
+          "height": 2294627,
+          "left_base": 441,
+          "right_base": 469,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 36,
+          "mz": 85.04769897460938,
+          "snr": 489,
+          "goodness_fitting": 0.8580701837012947,
+          "id_number": "F120",
+          "rtime": 171.99039985600018,
+          "rtime_left_base": 169.3355245600002,
+          "rtime_right_base": 179.973696192,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 7
+        }
+      ],
+      "MS2_Spectra": []
+    },
+    "8": {
+      "interim_id": 8,
+      "neutral_formula_mass": 83.037114,
+      "neutral_formula": "C4H5NO",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 509,
+          "peak_area": 716102767,
+          "height": 34236976,
+          "left_base": 472,
+          "right_base": 750,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 23,
+          "mz": 84.04436111450195,
+          "snr": 147,
+          "goodness_fitting": 0.8365265173827414,
+          "id_number": "F65",
+          "rtime": 195.267822687,
+          "rtime_left_base": 181.09277895900001,
+          "rtime_right_base": 288.7183099669998,
+          "ion_relation": "anchor",
+          "parent_epd_id": 8
+        },
+        {
+          "apex": 509,
+          "peak_area": 26889154,
+          "height": 1669129,
+          "left_base": 475,
+          "right_base": 582,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 36,
+          "mz": 85.04769897460938,
+          "snr": 356,
+          "goodness_fitting": 0.8357854939671623,
+          "id_number": "F121",
+          "rtime": 195.267822687,
+          "rtime_left_base": 182.2151955829998,
+          "rtime_right_base": 223.685252415,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 8
+        },
+        {
+          "apex": 509,
+          "peak_area": 9014682,
+          "height": 648526,
+          "left_base": 479,
+          "right_base": 558,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 264,
+          "mz": 103.05826759338379,
+          "snr": 127,
+          "goodness_fitting": 0.9253215932254724,
+          "id_number": "F794",
+          "rtime": 195.267822687,
+          "rtime_left_base": 183.7202462869998,
+          "rtime_right_base": 214.289573391,
+          "ion_relation": "13C/12C,+H2O",
+          "parent_epd_id": 8
+        },
+        {
+          "apex": 574,
+          "peak_area": 238368,
+          "height": 55124,
+          "left_base": 571,
+          "right_base": 581,
+          "cSelectivity": 0.9658119658119658,
+          "parent_masstrack_id": 264,
+          "mz": 103.05826759338379,
+          "snr": 11,
+          "goodness_fitting": 0.8389427173425623,
+          "id_number": "F795",
+          "rtime": 220.5367582240002,
+          "rtime_left_base": 219.3526183360002,
+          "rtime_right_base": 223.29985531099982,
+          "ion_relation": "13C/12C,+H2O",
+          "parent_epd_id": 8
+        }
+      ],
+      "MS2_Spectra": []
+    },
+    "9": {
+      "interim_id": 9,
+      "neutral_formula_mass": 165.065059871,
+      "neutral_formula": "C6H7N5O",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 196,
+          "peak_area": 73648297,
+          "height": 10894734,
+          "left_base": 188,
+          "right_base": 219,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1756,
+          "mz": 166.07236862182617,
+          "snr": 2542,
+          "goodness_fitting": 0.9857141786509893,
+          "id_number": "F67",
+          "rtime": 75.3745338880002,
+          "rtime_left_base": 72.3976011199998,
+          "rtime_right_base": 84.1765437910002,
+          "ion_relation": "Na/H",
+          "parent_epd_id": 141
+        },
+        {
+          "apex": 196,
+          "peak_area": 3658710,
+          "height": 606821,
+          "left_base": 192,
+          "right_base": 203,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1785,
+          "mz": 167.07568359375,
+          "snr": 93,
+          "goodness_fitting": 0.9908224295603318,
+          "id_number": "F174",
+          "rtime": 75.3745338880002,
+          "rtime_left_base": 73.8858796960002,
+          "rtime_right_base": 78.0378024799998,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 9
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C6H7N5O_165.06506",
+          "M+H[1+]",
+          2
+        ]
+      ]
+    },
+    "10": {
+      "interim_id": 10,
+      "neutral_formula_mass": null,
+      "neutral_formula": null,
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 432,
+          "peak_area": 37691956,
+          "height": 176775,
+          "left_base": 412,
+          "right_base": 470,
+          "cSelectivity": 0.9212598425196851,
+          "parent_masstrack_id": 896,
+          "mz": 134.09073638916016,
+          "snr": 12,
+          "goodness_fitting": 0.373719961788871,
+          "id_number": "F76",
+          "rtime": 165.8368540639998,
+          "rtime_left_base": 158.1948603670002,
+          "rtime_right_base": 180.35347124800018,
+          "ion_relation": "anchor",
+          "parent_epd_id": 10
+        },
+        {
+          "apex": 434,
+          "peak_area": 134387607,
+          "height": 1590827,
+          "left_base": 385,
+          "right_base": 556,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1438,
+          "mz": 156.07216262817383,
+          "snr": 267,
+          "goodness_fitting": 0.9204941692845283,
+          "id_number": "F1986",
+          "rtime": 166.6237726879998,
+          "rtime_left_base": 147.64850270399998,
+          "rtime_right_base": 213.49925332699982,
+          "ion_relation": "Na/H",
+          "parent_epd_id": 10
+        }
+      ],
+      "MS2_Spectra": []
+    },
+    "11": {
+      "interim_id": 11,
+      "neutral_formula_mass": 166.084123558,
+      "neutral_formula": "C6H14O5",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 353,
+          "peak_area": 526670363,
+          "height": 89955980,
+          "left_base": 344,
+          "right_base": 377,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1758,
+          "mz": 166.08395957946777,
+          "snr": 16856,
+          "goodness_fitting": 0.981160528822742,
+          "id_number": "F77",
+          "rtime": 135.66820827100022,
+          "rtime_left_base": 132.1586779990002,
+          "rtime_right_base": 144.6719095360002,
+          "ion_relation": "Na/H",
+          "parent_epd_id": 142
+        },
+        {
+          "apex": 353,
+          "peak_area": 22721417,
+          "height": 4689728,
+          "left_base": 347,
+          "right_base": 359,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1789,
+          "mz": 167.08726501464844,
+          "snr": 820,
+          "goodness_fitting": 0.9722033155528187,
+          "id_number": "F186",
+          "rtime": 135.66820827100022,
+          "rtime_left_base": 133.32164859100018,
+          "rtime_right_base": 137.93449135999978,
+          "ion_relation": "Na/H",
+          "parent_epd_id": 153
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C6H14O5_166.084124",
+          "M[1+]",
+          2
+        ],
+        [
+          "C7H13NO2_143.094629",
+          "M+Na[1+]",
+          1
+        ]
+      ]
+    },
+    "12": {
+      "interim_id": 12,
+      "neutral_formula_mass": 166.084123558,
+      "neutral_formula": "C6H14O5",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 388,
+          "peak_area": 10314681,
+          "height": 1368523,
+          "left_base": 382,
+          "right_base": 408,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1758,
+          "mz": 166.08395957946777,
+          "snr": 257,
+          "goodness_fitting": 0.9438111506001605,
+          "id_number": "F78",
+          "rtime": 148.7904667360002,
+          "rtime_left_base": 146.5389681439998,
+          "rtime_right_base": 156.7008673270002,
+          "ion_relation": "anchor",
+          "parent_epd_id": 12
+        },
+        {
+          "apex": 387,
+          "peak_area": 371756,
+          "height": 86030,
+          "left_base": 384,
+          "right_base": 393,
+          "cSelectivity": 0.5897435897435898,
+          "parent_masstrack_id": 1789,
+          "mz": 167.08726501464844,
+          "snr": 16,
+          "goodness_fitting": 0.9450128795428264,
+          "id_number": "F187",
+          "rtime": 148.4088687520002,
+          "rtime_left_base": 147.2772391999998,
+          "rtime_right_base": 150.7578766720002,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 12
+        },
+        {
+          "apex": 389,
+          "peak_area": 1957515,
+          "height": 541172,
+          "left_base": 386,
+          "right_base": 395,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 2316,
+          "mz": 184.09444427490234,
+          "snr": 97,
+          "goodness_fitting": 0.9739420454838237,
+          "id_number": "F2153",
+          "rtime": 149.1726090880002,
+          "rtime_left_base": 148.028147376,
+          "rtime_right_base": 151.54759691200022,
+          "ion_relation": "anchor,+H2O",
+          "parent_epd_id": 12
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C6H14O5_166.084124",
+          "M[1+]",
+          2
+        ],
+        [
+          "C7H13NO2_143.094629",
+          "M+Na[1+]",
+          1
+        ]
+      ]
+    },
+    "13": {
+      "interim_id": 13,
+      "neutral_formula_mass": 134.094294314,
+      "neutral_formula": "C6H14O3",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 589,
+          "peak_area": 6199321,
+          "height": 447658,
+          "left_base": 582,
+          "right_base": 622,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 897,
+          "mz": 134.09415435791016,
+          "snr": 115,
+          "goodness_fitting": 0.9003250798535768,
+          "id_number": "F80",
+          "rtime": 226.367241999,
+          "rtime_left_base": 223.685252415,
+          "rtime_right_base": 238.9942299040002,
+          "ion_relation": "anchor",
+          "parent_epd_id": 13
+        },
+        {
+          "apex": 589,
+          "peak_area": 3176277,
+          "height": 260657,
+          "left_base": 583,
+          "right_base": 613,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 925,
+          "mz": 135.1013412475586,
+          "snr": 59,
+          "goodness_fitting": 0.9257364900236466,
+          "id_number": "F189",
+          "rtime": 226.367241999,
+          "rtime_left_base": 224.07763481500018,
+          "rtime_right_base": 235.5897111679998,
+          "ion_relation": "H",
+          "parent_epd_id": 13
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C6H14O3_134.094294",
+          "M[1+]",
+          2
+        ]
+      ]
+    },
+    "14": {
+      "interim_id": 14,
+      "neutral_formula_mass": 84.081324325,
+      "neutral_formula": "C5H10N",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 334,
+          "peak_area": 51926544,
+          "height": 7235105,
+          "left_base": 320,
+          "right_base": 345,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 28,
+          "mz": 84.08073806762695,
+          "snr": 29,
+          "goodness_fitting": 0.9402438778456195,
+          "id_number": "F81",
+          "rtime": 128.3433004309998,
+          "rtime_left_base": 122.97516342400021,
+          "rtime_right_base": 132.54267649500002,
+          "ion_relation": "anchor",
+          "parent_epd_id": 14
+        },
+        {
+          "apex": 334,
+          "peak_area": 2199412,
+          "height": 351147,
+          "left_base": 327,
+          "right_base": 344,
+          "cSelectivity": 0.9615384615384616,
+          "parent_masstrack_id": 44,
+          "mz": 85.08409118652344,
+          "snr": 84,
+          "goodness_fitting": 0.9332798030659937,
+          "id_number": "F159",
+          "rtime": 128.3433004309998,
+          "rtime_left_base": 125.66379345499979,
+          "rtime_right_base": 132.1586779990002,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 14
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C5H10N_84.081324",
+          "M[1+]",
+          2
+        ],
+        [
+          "C5H9N_83.073499",
+          "M+H[1+]",
+          2
+        ]
+      ]
+    },
+    "15": {
+      "interim_id": 15,
+      "neutral_formula_mass": 84.081324325,
+      "neutral_formula": "C5H10N",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 352,
+          "peak_area": 23196848,
+          "height": 3434733,
+          "left_base": 345,
+          "right_base": 356,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 28,
+          "mz": 84.08073806762695,
+          "snr": 14,
+          "goodness_fitting": 0.9467840719425399,
+          "id_number": "F82",
+          "rtime": 135.2835266389998,
+          "rtime_left_base": 132.54267649500002,
+          "rtime_right_base": 136.813756863,
+          "ion_relation": "anchor",
+          "parent_epd_id": 15
+        },
+        {
+          "apex": 349,
+          "peak_area": 403945,
+          "height": 69223,
+          "left_base": 344,
+          "right_base": 354,
+          "cSelectivity": 0.9365079365079365,
+          "parent_masstrack_id": 44,
+          "mz": 85.08409118652344,
+          "snr": 17,
+          "goodness_fitting": 0.6316916265901833,
+          "id_number": "F160",
+          "rtime": 134.111435295,
+          "rtime_left_base": 132.1586779990002,
+          "rtime_right_base": 136.050698751,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 15
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C5H10N_84.081324",
+          "M[1+]",
+          2
+        ],
+        [
+          "C5H9N_83.073499",
+          "M+H[1+]",
+          2
+        ]
+      ]
+    },
+    "16": {
+      "interim_id": 16,
+      "neutral_formula_mass": 84.081324325,
+      "neutral_formula": "C5H10N",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 588,
+          "peak_area": 318201180,
+          "height": 16987818,
+          "left_base": 575,
+          "right_base": 774,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 28,
+          "mz": 84.08073806762695,
+          "snr": 68,
+          "goodness_fitting": 0.8841285128787433,
+          "id_number": "F83",
+          "rtime": 225.98569172700002,
+          "rtime_left_base": 220.931169375,
+          "rtime_right_base": 298.196701311,
+          "ion_relation": "anchor",
+          "parent_epd_id": 16
+        },
+        {
+          "apex": 588,
+          "peak_area": 11695870,
+          "height": 923066,
+          "left_base": 579,
+          "right_base": 626,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 44,
+          "mz": 85.08409118652344,
+          "snr": 220,
+          "goodness_fitting": 0.9115905632254565,
+          "id_number": "F161",
+          "rtime": 225.98569172700002,
+          "rtime_left_base": 222.5115512629998,
+          "rtime_right_base": 240.5166602080002,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 16
+        },
+        {
+          "apex": 626,
+          "peak_area": 41941478,
+          "height": 1773507,
+          "left_base": 547,
+          "right_base": 733,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 657,
+          "mz": 123.04030227661133,
+          "snr": 145,
+          "goodness_fitting": 0.869499212904947,
+          "id_number": "F2285",
+          "rtime": 240.5166602080002,
+          "rtime_left_base": 209.9624417119998,
+          "rtime_right_base": 282.013676751,
+          "ion_relation": "13C/12C,39K/H",
+          "parent_epd_id": 16
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C5H10N_84.081324",
+          "M[1+]",
+          2
+        ],
+        [
+          "C5H9N_83.073499",
+          "M+H[1+]",
+          2
+        ]
+      ]
+    },
+    "17": {
+      "interim_id": 17,
+      "neutral_formula_mass": 165.078978601,
+      "neutral_formula": "C9H11NO2",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 297,
+          "peak_area": 2777987496,
+          "height": 390812029,
+          "left_base": 288,
+          "right_base": 358,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1759,
+          "mz": 166.08631134033203,
+          "snr": 169,
+          "goodness_fitting": 0.9492851670879291,
+          "id_number": "F86",
+          "rtime": 114.30527980800001,
+          "rtime_left_base": 110.8743752320002,
+          "rtime_right_base": 137.56497048,
+          "ion_relation": "anchor",
+          "parent_epd_id": 17
+        },
+        {
+          "apex": 297,
+          "peak_area": 286867175,
+          "height": 37126759,
+          "left_base": 285,
+          "right_base": 357,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1790,
+          "mz": 167.0896224975586,
+          "snr": 854,
+          "goodness_fitting": 0.950732732521879,
+          "id_number": "F192",
+          "rtime": 114.30527980800001,
+          "rtime_left_base": 109.6644112789998,
+          "rtime_right_base": 137.1936516949998,
+          "ion_relation": "anchor",
+          "parent_epd_id": 33
+        },
+        {
+          "apex": 297,
+          "peak_area": 2729090,
+          "height": 332536,
+          "left_base": 287,
+          "right_base": 306,
+          "cSelectivity": 0.9428571428571428,
+          "parent_masstrack_id": 3001,
+          "mz": 207.1128692626953,
+          "snr": 16,
+          "goodness_fitting": 0.9039501730593471,
+          "id_number": "F1609",
+          "rtime": 114.30527980800001,
+          "rtime_left_base": 110.4712059349998,
+          "rtime_right_base": 117.732437967,
+          "ion_relation": "anchor,Acetonitrile",
+          "parent_epd_id": 17
+        },
+        {
+          "apex": 330,
+          "peak_area": 11466087,
+          "height": 431186,
+          "left_base": 306,
+          "right_base": 353,
+          "cSelectivity": 0.9583333333333334,
+          "parent_masstrack_id": 3001,
+          "mz": 207.1128692626953,
+          "snr": 21,
+          "goodness_fitting": 0.8777583827044567,
+          "id_number": "F1610",
+          "rtime": 126.8103580630002,
+          "rtime_left_base": 117.732437967,
+          "rtime_right_base": 135.66820827100022,
+          "ion_relation": "anchor,Acetonitrile",
+          "parent_epd_id": 17
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C9H11NO2_165.078979",
+          "M+H[1+]",
+          2
+        ],
+        [
+          "C9H9NO_147.068414",
+          "M+H2O+H[1+]",
+          1
+        ]
+      ]
+    },
+    "18": {
+      "interim_id": 18,
+      "neutral_formula_mass": 165.078978601,
+      "neutral_formula": "C9H11NO2",
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 444,
+          "peak_area": 160443435,
+          "height": 10643235,
+          "left_base": 387,
+          "right_base": 466,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1759,
+          "mz": 166.08631134033203,
+          "snr": 18,
+          "goodness_fitting": 0.5806628606379574,
+          "id_number": "F87",
+          "rtime": 170.4954523999998,
+          "rtime_left_base": 148.4088687520002,
+          "rtime_right_base": 178.8606005599998,
+          "ion_relation": "anchor",
+          "parent_epd_id": 18
+        },
+        {
+          "apex": 443,
+          "peak_area": 14511654,
+          "height": 948172,
+          "left_base": 387,
+          "right_base": 466,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1790,
+          "mz": 167.0896224975586,
+          "snr": 22,
+          "goodness_fitting": 0.6238576446664861,
+          "id_number": "F193",
+          "rtime": 170.112382416,
+          "rtime_left_base": 148.4088687520002,
+          "rtime_right_base": 178.8606005599998,
+          "ion_relation": "13C/12C",
+          "parent_epd_id": 18
+        },
+        {
+          "apex": 440,
+          "peak_area": 1543977,
+          "height": 301272,
+          "left_base": 436,
+          "right_base": 449,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 2989,
+          "mz": 207.043212890625,
+          "snr": 44,
+          "goodness_fitting": 0.9833980223367659,
+          "id_number": "F1590",
+          "rtime": 168.95381174399998,
+          "rtime_left_base": 167.41170190399978,
+          "rtime_right_base": 172.36101579199982,
+          "ion_relation": "13C/12C,41K/H",
+          "parent_epd_id": 18
+        }
+      ],
+      "MS2_Spectra": [],
+      "list_matches": [
+        [
+          "C9H11NO2_165.078979",
+          "M+H[1+]",
+          2
+        ],
+        [
+          "C9H9NO_147.068414",
+          "M+H2O+H[1+]",
+          1
+        ]
+      ]
+    },
+    "19": {
+      "interim_id": 19,
+      "neutral_formula_mass": null,
+      "neutral_formula": null,
+      "Database_referred": [],
+      "identity": [],
+      "MS1_pseudo_Spectra": [
+        {
+          "apex": 329,
+          "peak_area": 8518995,
+          "height": 1063508,
+          "left_base": 322,
+          "right_base": 353,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 901,
+          "mz": 134.1061019897461,
+          "snr": 207,
+          "goodness_fitting": 0.9625386747108455,
+          "id_number": "F96",
+          "rtime": 126.42836143900021,
+          "rtime_left_base": 123.74000496,
+          "rtime_right_base": 135.66820827100022,
+          "ion_relation": "anchor",
+          "parent_epd_id": 19
+        },
+        {
+          "apex": 330,
+          "peak_area": 814585,
+          "height": 44423,
+          "left_base": 320,
+          "right_base": 338,
+          "cSelectivity": 0.7307692307692307,
+          "parent_masstrack_id": 1442,
+          "mz": 156.08773040771484,
+          "snr": 11,
+          "goodness_fitting": 0.4248372403485874,
+          "id_number": "F1998",
+          "rtime": 126.8103580630002,
+          "rtime_left_base": 122.97516342400021,
+          "rtime_right_base": 129.8731723990002,
+          "ion_relation": "Na/H",
+          "parent_epd_id": 19
+        },
+        {
+          "apex": 352,
+          "peak_area": 26005534,
+          "height": 3328834,
+          "left_base": 319,
+          "right_base": 356,
+          "cSelectivity": 1.0,
+          "parent_masstrack_id": 1150,
+          "mz": 145.09717559814453,
+          "snr": 25,
+          "goodness_fitting": 0.9098330142131116,
+          "id_number": "F966",
+          "rtime": 135.2835266389998,
+          "rtime_left_base": 122.59413587200021,
+          "rtime_right_base": 136.813756863,
+          "ion_relation": "anchor,Na/H, double charged",
+          "parent_epd_id": 19
+        }
+      ],
+      "MS2_Spectra": []
+    },
+}
