@@ -1,38 +1,15 @@
-# Steps in metabolomics data processing and analysis
+# Designing the data structures
 
-Here, we try to define the major steps in mass spectrometry based metabolomics data processing and analysis, intended functions and goals.
+Generic data structures are key for different computational steps or software tools to work with each other, 
+and for testing and reproducibility.
 
+The empirical compound definition is central to our works in metabolomics.
 
-## LC-MS
+The data structures are used by 
+- asari, tackable and scalable tool for LC-MS metabolomics processing
+- mass2chem, utilities of chemical calculations, including annoTree
+- Json's Metabolite Services
 
-Conversion of raw data to open formats
-
-feature extraction
-
-  construction of chromatogram
-  
-  Peak picking ()
-
-  alignment
-
-Annotation
-
-  grouping ions
-  
-  computational annotation
-  
-  identification
+Develoeprs and data analysts are encouraged to write own classes to extend metDataModel.
 
 
-
-## LC-MS/MS
-
-To-do.
-
-
-
-
-
-## GC-MS
-
-To-do.

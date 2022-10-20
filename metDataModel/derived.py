@@ -1,5 +1,9 @@
 """
-Classes derived from the basic classes.
+Classes derived from the basic classes, or constructed to extend functions.
+
+They allow developers to use the core data structures as building blocks,
+to serve customized applications.
+
 
 # not necessary, simple lists will do:
 class metaboliteSet:
@@ -147,21 +151,19 @@ mzdiff_pos_signature = [
     (0.4985, 'double charged with N15', 0, 0.2),
 ]
 
+
 #-------------------------------------------------
+#
+# in progress, place hoders
+#
 
-class epdTree:
-    '''
-    An epdTree is a representation of how an empirical compound is observed in MS1 data,
-    a list of isotopic peaks, each of possible adducts.
-    This is used in both directions:
-    1) for a known compound, probable peaks are calculated;
-    2) from experimental MS1 data, paired mass differences (e.g. 12C/13C) can be used as a signature to organize empCpds. 
-    '''
 
+class computed_compound_tree:
+    '''
+    for a known compound, probable peaks are calculated;
+    '''
     def __init__(self, mode='pos', charge=1):
         '''
-        For unknown compound, base formula (neutral chemical formula with most abundant isotopes) may be unknown.
-        But mz signature may help infer the base formula.
         '''
         self.base_mass = None
         self.base_formula = None
@@ -172,11 +174,29 @@ class epdTree:
         pass
 
 
+class empTree:
+    '''
+    Tree representation of an empirical compound.
+    The basic functions are in mass2chem.annotree, which uses treelib for tree computing.
+
+    It's not always easy or feasible to compute unambiguous tree for an empirical compound, e.g. one may need to consolidate 
+
+        118.0652@109.9
+        ├── 119.0685@109.2
+        └── 159.0917@109.9
+            └── 160.0952@110.4
+
+        159.0917@110.4
+        └── 160.0952@110.4
+
+    This class can be used future research to improve the tree constructions. 
+    '''
+    def __init__(self) -> None:
+        self.ambiguous = False
+        self.uniqe_nodes = []
+        self.trees = []
 
 
-#
-# in progress
-#
 
 class userData(Experiment):
     '''
