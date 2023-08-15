@@ -81,7 +81,7 @@ Additional fields can be added as needed.
 
 ## This package is used in asari and mummichog 3.
 
-* asari: Trackable and scalable metabolomics data preprocessing - https://github.com/shuzhao-li/asari
+* asari: Trackable and scalable metabolomics data preprocessing - https://github.com/shuzhao-li/asari, https://www.nature.com/articles/s41467-023-39889-1
 
 * mummichog3: core algorithm package for pathway/network analysis
 
@@ -124,6 +124,8 @@ To learn about mass spectrometry concepts and pre-processing:
 
 - XCMS tutorial by Johannes Rainer (https://github.com/jorainer/metabolomics2018)
 
+- Our asari paper https://www.nature.com/articles/s41467-023-39889-1 and documentation https://asari.readthedocs.io/en/latest/?badge=latest
+
 To learn about genome scale metabolic models:
 
 - review by Gu et al, 2019 (https://link.springer.com/article/10.1186/s13059-019-1730-3)
@@ -131,7 +133,7 @@ To learn about genome scale metabolic models:
 - our book chapter to explain metabolic models in the context of metabolomic pathway analysis (https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19)
 
 
-## History
+## Note
 
-This repo was renamed from Azimuth-metabolomics. All annotation functions are moved to mass2chem package.
+Annotation functions were moved to mass2chem, khipu and JMS packages.
 

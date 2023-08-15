@@ -32,6 +32,27 @@ which allow easy access to attributes but have no additional methods.
 # only considering mass spec not NMR data here
 #
 
+class Study:
+    '''
+    A study can include multiple experiments and datasets by different methods.
+    '''
+    def __init__(self, id=''):
+        '''
+        Equivalent to a study found in public repositories, e.g. MetaboLights or Metabolomics Workbench.
+        '''
+        self.id = id
+        self.url = ''
+        self.time_retrieval = None
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'url': self.url,
+                'time_retrieval': self.time_retrieval,
+                }
+
 class Experiment:
     '''
     An experiment of LC-MS, LC-MS/MS, GC-MS, LC-IMS, etc.
@@ -59,6 +80,11 @@ class Experiment:
         Additional fields can be added to the dictionaries.
         '''
         self.id = id                    # e.g. 'EXP00001234'
+        self.parent_study = ''
+        self.number_samples = None
+        self.species = 'hsa'
+        self.tissue = 'plasma'
+
         self.provenance = {
             'generated_time': '',       # day of experiment
             'generated_by': '',         # operator of experiment
@@ -74,9 +100,10 @@ class Experiment:
             'type': 'LC-MS',
             'spectrometer': '',         # mass spectrometer model
             'method_file': '',          # method file used
+            'ionization': 'pos',        # positive or negative ionization
         }
         self.chromatography = {
-            'system': '',               # LC model
+            'system': '',               # chromatograph model
             'total_time': 300,          # seconds
             'method_file': '',
             'column_model': '',
@@ -101,6 +128,10 @@ class Experiment:
         return dictionary of key variables.
         '''
         return {'id': self.id, 
+                'study_id': self.parent_study,
+                'number_samples': self.number_samples,
+                'species': self.species,
+                'tissue': self.tissue,
                 'provenance': self.provenance,
                 'instrumentation': self.instrumentation,
                 'chromatography': self.chromatography,
@@ -121,6 +152,7 @@ class Sample:
     def __init__(self, registry={}, experiment=None, mode='pos'):
         self.experiment = experiment    # parent Experiment instance
         self.mode = mode
+        self.sample_type = ''           # QC, blank, study_sample, pooled_study_sample, ...
 
         # A number of attributes can be passed via registry dictionary
         self.input_file = registry['input_file']
@@ -137,6 +169,7 @@ class Sample:
         '''
         return {'id': self.id, 
                 'list_peaks': self.list_peaks,
+                'sample_type': self.sample_type
                 }
 
 
