@@ -60,7 +60,7 @@ class Experiment:
 
     The XCMSnExp class in the XCMS R package, or MSExperiment in the OpenMS software,
     may refer to a subset of experiment by the same method.
-    We will use `monoExperiment` to refer a subset of experiment by the same method.
+    We can use `monoExperiment` to refer a subset of experiment by the same method.
     Then the `Experiment` contains multiple monoExperiments.
 
     `Method` has its own class only if needed.
@@ -324,6 +324,7 @@ class MassTrack:
     Same as extracted ion chromatogram. This is used in place of EIC (or XIC, mass trace), 
     defined by m/z, list_retention_time, list_intensity.
     Computationally equivalent to EIC for LC-MS data, but spanning for full RT range in asari.
+    See https://github.com/shuzhao-li/asari for application in data preprocessing.
     '''
     def __init__(self, id=''):
         self.id = id 
