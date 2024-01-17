@@ -2,7 +2,7 @@
 General data models for metabolomics.
 Simple is good, and complex and specialized classes can be derived from these.
 
-A spectrum is a list of masses. 
+A mass spectrum is a list of masses. 
 MS1 is direct scan of ions to generate intensity values.
 MS^2 and MS^n refers to spectrum to measure fragmentation products of a precursor ion from lower MS level.
 
@@ -193,7 +193,7 @@ class Sample:
     '''
     def __init__(self, registry={}, experiment=None, mode='pos'):
         self.experiment = experiment    # parent Experiment instance
-        self.mode = mode
+        self.mode = mode                # pos or neg, but can be mixed in a Method
         self.sample_type = ''           # QC, blank, study_sample, pooled_study_sample, ...
 
         # A number of attributes can be passed via registry dictionary
@@ -212,6 +212,77 @@ class Sample:
         return {'id': self.id, 
                 'list_peaks': self.list_peaks,
                 'sample_type': self.sample_type
+                }
+
+
+class Spectrum:
+    '''
+    A list of values on a property in analytical chemistry.
+    A mass spectrum is a list of m/z values with corresponding intensity values. 
+    The "Spectrum" here is generic enough for LC-MS, GC-MS, LC-IMS-MS, etc. 
+    It can be used for NMR and other technologies with minor modifications. 
+    
+    Mass Spectrum provide data points as measured on instrument, 
+    This can be MS level 1, 2 or n.
+    
+    Example of a MS2 spectrum from MONA:
+            {"instrument": "",
+            "precursor type": "M+H[1+]",
+            "precursor m/z": 169,
+            "collision energy": "30V",
+            "score": 5.5,
+            "spectrum": "59.000:0.615142 72.600:0.031546 74.600:0.015773 78.900:0.086751 85.200:1.490536 150.500:0.055205 166.000:0.055205 167.200:100.000000",
+            },
+            {},
+            {}
+    '''
+    def __init__(self, id=''):
+        '''
+        Default to mass spectrum level 2, but easy to be used for level 1 and other data types.
+        '''
+        self.id = id
+        self.ms_level = 2
+        self.precursor_ion = self.precursor_ion_mz = 0
+
+        self.list_mz = []
+        self.list_intensity = []
+        self.retention_time = self.rtime = 0
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'precursor_ion': self.precursor_ion, 
+                'rtime': self.rtime, 
+                'ms_level': self.ms_level,
+                'ionization': self.ionization,
+                'list_intensity': self.list_intensity,
+                }
+
+
+class ArrayOfSpectra:
+    '''
+    Metabolomic experiments usually employ some chromatography as separation technique. 
+    Therefore, analysis of a "Sample" by a "Method" generates a series of spectra.
+    The "Array of Spectra" is composed by linking separation parameters with spectra.
+    '''
+    def __init__(self, id=''):
+        '''
+        This class is a conceptual abstraction, but can be wrapped into a "Sample" in practice. 
+        '''
+        self.id = id
+        self.sample = None
+        self.parameters = []        # typically for LC-MS: m/z, retention time, intensity
+        self.list_values = []
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'sample': self.sample, 
+                'list_values': self.list_values,
                 }
 
 
@@ -238,9 +309,7 @@ class Peak:
         "rtime": 121.099636272,
         "rtime_left_base": 119.5951254229998,
         "rtime_right_base": 124.12197382300019,}
-
-    '''    
-    
+    '''
     def __init__(self, id='', mode='pos'):
         '''
         EIC and peak_shape are defined by intensity as the the function of rtime.
@@ -278,46 +347,6 @@ class Peak:
                 'list_retention_time': self.list_retention_time,
                 'list_intensity': self.list_intensity,
                 }
-
-
-class MSnSpectrum(Peak):
-    '''
-    Spectrum provide data points as measured on instrument, 
-    to support the concept of Peak.
-    This can be MS level 1, 2 or n.
-    
-    templated on MONA JSON
-            {"instrument": "",
-            "precursor type": "M+H[1+]",
-            "precursor m/z": 169,
-            "collision energy": "30V",
-            "score": 5.5,
-            "spectrum": "59.000:0.615142 72.600:0.031546 74.600:0.015773 78.900:0.086751 85.200:1.490536 150.500:0.055205 166.000:0.055205 167.200:100.000000",
-            },
-            {},
-            {}
-    '''
-    def __init__(self, id=''):
-        self.id = id
-        self.ms_level = 2
-        self.precursor_ion = self.precursor_ion_mz = 0
-
-        self.list_mz = []
-        self.list_intensity = []
-        self.retention_time = self.rtime = 0
-
-    def serialize(self):
-        '''
-        return dictionary of key variables.
-        '''
-        return {'id': self.id, 
-                'precursor_ion': self.precursor_ion, 
-                'rtime': self.rtime, 
-                'ms_level': self.ms_level,
-                'ionization': self.ionization,
-                'list_intensity': self.list_intensity,
-                }
-
 
 class MassTrack:
     '''

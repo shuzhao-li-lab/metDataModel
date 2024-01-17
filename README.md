@@ -1,44 +1,52 @@
 # metDataModel, data models for mass spectrometry based metabolomics
 
 Our goal is to define a minimal set of data models to promote interoperability in computational metabolomics.
-This package will lay out the basic concepts and data structures, then we can import them to other projects, and extend to more specialized classes via inheritance. 
-
-There's been extensive software development in related areas. 
-The XCMS ecosystem (https://www.bioconductor.org/packages/release/bioc/html/xcms.html) is a leading example of data preprocessing.
-The modeling of metabolism is exemplified by the Escher project (https://github.com/zakandrewking/escher).
-The advancing of science relies on the close interaction of experimental measurements and theoretical modeling, and the two should feed on each other. However, a clear gap exists between the two in metabolomics. E.g., the elemental mass table in Escher (retrieved on version 1.7.3) are of average mass, but mass spectrometers measure isotopic mass. 
-Many software programs already have excellent data models and data structures. But the reuse of data models is much easier to start from basics, hence this project, where complexity is an option.
-
+This package contains the basic concepts and data structures,
+which can then be imported to other projects, and extended to more specialized classes. 
 
 ## Core data Structure
 
-![Core data Structure](docs/datastru.png)
+![Core data Structure](docs/datastru2024.png)
 
     Metabolic model:
-        Compound (metabolite is a compound)
+        Compound (metabolite is compound)
         Reaction
         Pathway
         Network
         Enzyme
         Gene
-    Experimental data:
-        Experiment
-        EIC or XIC, i.e. massTrace or massTrack in LC-MS data
-        Peak (Elution peak)
+    Metabolomic measurement:
+        Spectrum
+        Array of Spectra
+        Mass track (EIC)
+        Elution peak
         Feature
         Empirical compound
-        MSn spectra: MS^n data to annotate peak or feature
+    Meta data:
+        Study
+        Experiment
+        Sample
+        Method
 
-Try to keep the core models minimal. 
-Leave index and query functions in applications.
+We try to keep the core models minimal. 
+The index and query functions can be left to applications.
 
-Peaks are extracted from massTrace. A peak is specific to a sample, while a feature is specific to an experiment. 
-A spectrum is a list of masses.
-LC-MS is a composite of many spectra. MS^n is spectrum as product of a precursor, which is a peak.
-After peaks are asigned to a feature or an empCpd, the annotation is transferred to the latter.
+A mass spectrum is a list of m/z values with corresponding intensity values. The "Spectrum" here is generic enough for LC-MS, GC-MS, LC-IMS-MS, etc. It can be used for NMR and other technologies with minor modifications. The "Array of Spectra" is composed by linking separation parameters with spectra.
+
+Mass track is a concept started in Asari (https://www.nature.com/articles/s41467-023-39889-1), as extracted ion chromatogram spanning the full retention time.
+
+A peak is specific to a sample, while a feature is specific to an experiment. 
+
+An empirical compound (empCpd) is a computational unit for a tentative metabolite, based on the experimental measurement. If the experiment does not resolve isomers, the empirical compound can be any or a mixture of the isomers. The step of assigning features to empirical compound is called pre-annotation (https://pubs.acs.org/doi/10.1021/acs.analchem.2c05810); annotation assigns compound identification to empirical compound, which accommodates different levels or probable scores. The structure of empCpd is JSON compatible and chainable (see below).
+
+"Compound" is preferred over "metabolite", because the experimental data often contain molecules other than metabolites (contaminants, xenobiotics, etc.).
 
 Internal structures of each class are not meant to be final. 
 As long as a workflow is adhered to these core concepts, interoperability is easy to achieve.
+
+**An alternative presentation of these concepts:**
+![Alternative presentation](docs/datastru.png)
+
 
 ## Serialized empCpd format (in JSON and can be implemented in any language)
  
@@ -79,16 +87,21 @@ How to compute the score or probability will be dependent on external algorithms
 Additional fields can be added as needed.
 
 
-## This package is used in asari and mummichog 3.
+## Scientific background
+There's been extensive software development in related areas. 
+The XCMS ecosystem (https://www.bioconductor.org/packages/release/bioc/html/xcms.html) is a leading example of data preprocessing in R language. 
+A Python ecosystem is now viable with the Asari package for preprocessing (https://www.nature.com/articles/s41467-023-39889-1).
+The modeling of metabolism is exemplified by the Escher project (https://github.com/zakandrewking/escher).
 
+The advancing of science relies on the close interaction of experimental measurements and theoretical modeling, and the two should feed on each other. However, a clear gap exists between the two in metabolomics. E.g., the elemental mass table in Escher (retrieved on version 1.7.3) are of average mass, but mass spectrometers measure isotopic mass. 
+Many software programs already have excellent data models and data structures. But the reuse of data models is much easier to start from basics, hence this project, where complexity is an option.
+
+This metDataModel package is used in:
 * asari: Trackable and scalable metabolomics data preprocessing - https://github.com/shuzhao-li/asari, https://www.nature.com/articles/s41467-023-39889-1
+* khipu: generalized tree structure for pre-annotation - https://github.com/shuzhao-li-lab/khipu, https://pubs.acs.org/doi/10.1021/acs.analchem.2c05810
+* pcpfm: Python Centric Pipeline For Metabolomics - https://github.com/shuzhao-li-lab/PythonCentricPipelineForMetabolomics
 
-* mummichog3: core algorithm package for pathway/network analysis
-
-* mummichog3-api: server and worker (RESTful) implementations
-
-* mass2chem: common utilities in interpreting mass spectrometry data, annotation
-
+Our mass2chem, khipu and JMS packages house the annotation functions.
 
 
 ## For developers
@@ -108,6 +121,8 @@ Shallow data structures are more portable.
 MetDataModel provides a template, and application projects can extend it to fit their specific needs.
 
 Please feel free to submit issues, and write Wiki pages for discussions.
+
+Pypi install: https://pypi.org/project/metDataModel/
 
 
 ### Related community resources
@@ -132,8 +147,5 @@ To learn about genome scale metabolic models:
 
 - our book chapter to explain metabolic models in the context of metabolomic pathway analysis (https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19)
 
-
-## Note
-
-Annotation functions were moved to mass2chem, khipu and JMS packages.
-
+### Citation
+Mitchell et al, Common data models to streamline metabolomics processing and annotation, and implementation in a Python pipeline  (to come).
