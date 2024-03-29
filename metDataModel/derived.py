@@ -105,3 +105,6 @@ class xenobiotic_signature(EmpiricalCompound):
         Score the signature. Simplest method being count of matched ions.
         '''
         return 0
+    
+x = userData()
+print(x.serialize())

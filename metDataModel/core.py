@@ -36,6 +36,11 @@ import abc
 import pandas as pd
 import inspect
 from dataclasses import dataclass, field
+from functools import reduce  # forward compatibility for Python 3
+import operator
+
+def getFromDict(dataDict, mapList):
+    return reduce(operator.getitem, mapList, dataDict)
 
 # this is a master list of serializable primitives, i.e., not iterable.
 serializable_primitive_type = Union[str, float, int, tuple]
@@ -80,10 +85,61 @@ class metDataMember(abc.ABC):
             return {metDataMember.__recursive_serialize(key): metDataMember.__recursive_serialize(value) for key, value in to_serialize.items()}
         elif isinstance(to_serialize, (list, tuple)):
             return [metDataMember.__recursive_serialize(x) for x in to_serialize]
-        elif inspect.isclass(to_serialize) and issubclass(to_serialize, metDataMember) and not isinstance(to_serialize, abc.ABC) and hasattr(to_serialize, "serialize"):
+        elif hasattr(to_serialize, "serialize"):
             return to_serialize.serialize()
-        else:
-            pass
+    
+    @staticmethod
+    def __DAG_deserialize(to_deserialize) -> dict:
+        """
+        A serialized metDataObject may contain other metDataObjects, as such, we must first identify any 
+        nested objects and create them before setting their encomposing object's datamembers to point
+        at them. 
+
+        This can be achieved by topological sorting if we assume that the serialized data can be modeled
+        as a directed acyclic graph (DAG). We can then traverse said graph, find all values that should
+        be metDataObjects and replace them with their metDataObject equivalent. If performed in the correct
+        order, starting at the deepest, furthest object from the root of the dict, we can update the dict
+        in place. The instantiation of the final metDataObject will convert the dictionary into the proper
+        object, complete with any nested metDataObjects. 
+
+        Args:
+            to_deserialize (dict): the dictionary representation of the serialized object
+
+        Returns:
+            metDataObject: the deserialized, instantiated metDataObject
+        """        
+
+        # find all constructors and map their constructors to their name for the metDataMember ABC
+        constructor_map = {x().__class__.__name__: x for x in metDataMember.__subclasses__()}
+        
+        def find_metDataObjects(to_deserialize):
+            # this will traverse all paths of keys in the dictionary to and associate them 
+            # to the values they point to, if a metDataMember_subclass key is encountered.
+
+            all_paths_to_values = []
+            def topo_sort(dictionary, prefix=None):
+                # this does the 
+                prefix = prefix if prefix is not None else []
+                for key, value in dictionary.items():
+                    if isinstance(value, dict) and value:
+                        topo_sort(value, [*prefix, key])
+                    elif key == "metDataMember_subclass":
+                        all_paths_to_values.append({
+                            "keys_in_path": [*prefix],
+                            "value": dictionary,
+                            "depth": len(prefix) + 1
+                        })
+
+            topo_sort(to_deserialize)
+            return all_paths_to_values
+        # now replace the values in order of decreasing depth with their corresponding objects when
+        # appropriate.
+        for serialized_metdm in sorted(find_metDataObjects(to_deserialize), key=lambda x: -x["depth"]):
+            empty_object = constructor_map[serialized_metdm["value"]["metDataMember_subclass"]]() 
+            empty_object.__dict__ = {k: v for k, v in serialized_metdm["value"].items() if k != "metDataMember_subclass"}
+            to_replace = reduce(operator.getitem, serialized_metdm["keys_in_path"], to_deserialize)
+            to_replace = empty_object
+        return to_replace
 
     def serialize(self) -> dict:
         """
@@ -93,7 +149,11 @@ class metDataMember(abc.ABC):
             dict: a dictionary representation of the object that is JSON/YAML friendly.
         """        
         to_serialize = {x: getattr(self, x) for x in vars(self) if not x.startswith("_")}
+        to_serialize["metDataMember_subclass"] =  type(self).__name__
         return metDataMember.__recursive_serialize(to_serialize)
+
+    def deserialize(serialized) -> object:
+        return metDataMember.__DAG_deserialize(serialized)
 
 @dataclass
 class Study(metDataMember):
