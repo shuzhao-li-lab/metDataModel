@@ -117,19 +117,24 @@ class metDataMember(abc.ABC):
             # to the values they point to, if a metDataMember_subclass key is encountered.
 
             all_paths_to_values = []
-            def topo_sort(dictionary, prefix=None):
-                # this does the 
+            def topo_sort(data, prefix=None):
+                # this does the topological sorting
                 prefix = prefix if prefix is not None else []
-                for key, value in dictionary.items():
-                    if isinstance(value, dict) and value:
-                        topo_sort(value, [*prefix, key])
-                    elif key == "metDataMember_subclass":
-                        all_paths_to_values.append({
-                            "keys_in_path": [*prefix],
-                            "value": dictionary,
-                            "depth": len(prefix) + 1
-                        })
-
+                if isinstance(data, dict):
+                    for key, value in data.items():
+                        if isinstance(value, (dict, list)) and value:
+                            topo_sort(value, [*prefix, key])
+                        elif key == "metDataMember_subclass":
+                            all_paths_to_values.append({
+                                "keys_in_path": [*prefix],
+                                "value": data,
+                                "depth": len(prefix) + 1
+                            })
+                elif isinstance(data, list):
+                    for i, value in enumerate(data):
+                        if isinstance(value, (dict, list)) and value:
+                            topo_sort(value, [*prefix, i])
+                        
             topo_sort(to_deserialize)
             return all_paths_to_values
         # now replace the values in order of decreasing depth with their corresponding objects when
@@ -153,6 +158,15 @@ class metDataMember(abc.ABC):
         return metDataMember.__recursive_serialize(to_serialize)
 
     def deserialize(serialized) -> object:
+        """
+        Given a dictionary representing a serialized metDataMember, return the  object it reprsents.
+
+        Args:
+            serialized (dict): dictionary representing a serialized metDataMember
+
+        Returns:
+            object: the metDataMember object represented by the dictionary
+        """
         return metDataMember.__DAG_deserialize(serialized)
 
 @dataclass
