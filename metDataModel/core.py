@@ -34,13 +34,9 @@ from __future__ import annotations
 from typing import Union
 import abc
 import pandas as pd
-import inspect
+import json
 from dataclasses import dataclass, field
-from functools import reduce  # forward compatibility for Python 3
-import operator
 
-def getFromDict(dataDict, mapList):
-    return reduce(operator.getitem, mapList, dataDict)
 
 # this is a master list of serializable primitives, i.e., not iterable.
 serializable_primitive_type = Union[str, float, int, tuple]
@@ -89,62 +85,39 @@ class metDataMember(abc.ABC):
             return to_serialize.serialize()
     
     @staticmethod
-    def __DAG_deserialize(to_deserialize) -> dict:
+    def __recursive_deserialize(to_deserialize) -> object:
         """
-        A serialized metDataObject may contain other metDataObjects, as such, we must first identify any 
-        nested objects and create them before setting their encomposing object's datamembers to point
-        at them. 
+        This method converts a serialized metDataObject, represented using a dictionary, and 
+        returns the metDataObject(s). This is achived using recursion. A serialized metDataObject
+        can contain lists or dictionaries of metDataObjects that in turn may contain dicts or 
+        lists of metDataObjects. 
 
-        This can be achieved by topological sorting if we assume that the serialized data can be modeled
-        as a directed acyclic graph (DAG). We can then traverse said graph, find all values that should
-        be metDataObjects and replace them with their metDataObject equivalent. If performed in the correct
-        order, starting at the deepest, furthest object from the root of the dict, we can update the dict
-        in place. The instantiation of the final metDataObject will convert the dictionary into the proper
-        object, complete with any nested metDataObjects. 
+        Thus, to deserialize the following is performed. If a dictionary is encountered, it 
+        represents a metDataObject if it contains the "metDataMember_subclass" field, it 
+        represents a metDataObject that is created by first initializing an empty
+        version of that object and updating its __dict__, otherwise, if it is an iterable,
+        deserialize each member using recursion until we encountered a str, float, or int, which
+        is returned as is. 
 
         Args:
-            to_deserialize (dict): the dictionary representation of the serialized object
+            to_deserialize (dict): the serialized metDataMember as dict
 
         Returns:
-            metDataObject: the deserialized, instantiated metDataObject
-        """        
-
-        # find all constructors and map their constructors to their name for the metDataMember ABC
+            object: the deserialized metDataMember
+        """
         constructor_map = {x().__class__.__name__: x for x in metDataMember.__subclasses__()}
-        
-        def find_metDataObjects(to_deserialize):
-            # this will traverse all paths of keys in the dictionary to and associate them 
-            # to the values they point to, if a metDataMember_subclass key is encountered.
-
-            all_paths_to_values = []
-            def topo_sort(data, prefix=None):
-                # this does the topological sorting
-                prefix = prefix if prefix is not None else []
-                if isinstance(data, dict):
-                    for key, value in data.items():
-                        if isinstance(value, (dict, list)) and value:
-                            topo_sort(value, [*prefix, key])
-                        elif key == "metDataMember_subclass":
-                            all_paths_to_values.append({
-                                "keys_in_path": [*prefix],
-                                "value": data,
-                                "depth": len(prefix) + 1
-                            })
-                elif isinstance(data, list):
-                    for i, value in enumerate(data):
-                        if isinstance(value, (dict, list)) and value:
-                            topo_sort(value, [*prefix, i])
-                        
-            topo_sort(to_deserialize)
-            return all_paths_to_values
-        # now replace the values in order of decreasing depth with their corresponding objects when
-        # appropriate.
-        for serialized_metdm in sorted(find_metDataObjects(to_deserialize), key=lambda x: -x["depth"]):
-            empty_object = constructor_map[serialized_metdm["value"]["metDataMember_subclass"]]() 
-            empty_object.__dict__ = {k: v for k, v in serialized_metdm["value"].items() if k != "metDataMember_subclass"}
-            to_replace = reduce(operator.getitem, serialized_metdm["keys_in_path"], to_deserialize)
-            to_replace = empty_object
-        return to_replace
+        if isinstance(to_deserialize, dict):
+            if "metDataMember_subclass" in to_deserialize:
+                empty_metDataObject = constructor_map[to_deserialize["metDataMember_subclass"]]()
+                to_deserialize_data = {k: v for k, v in to_deserialize.items() if k != "metDataMember_subclass"}
+                empty_metDataObject.__dict__ = metDataMember.__recursive_deserialize(to_deserialize_data)
+                return empty_metDataObject
+            else:
+                return {metDataMember.__recursive_deserialize(key): metDataMember.__recursive_deserialize(value) for key, value in to_deserialize.items()} 
+        elif isinstance(to_deserialize, (str, float, int)):
+            return to_deserialize
+        elif isinstance(to_deserialize, (list, tuple)):
+            return [metDataMember.__recursive_serialize(x) for x in to_deserialize]
 
     def serialize(self) -> dict:
         """
@@ -157,6 +130,7 @@ class metDataMember(abc.ABC):
         to_serialize["metDataMember_subclass"] =  type(self).__name__
         return metDataMember.__recursive_serialize(to_serialize)
 
+    @staticmethod
     def deserialize(serialized) -> object:
         """
         Given a dictionary representing a serialized metDataMember, return the  object it reprsents.
@@ -167,7 +141,29 @@ class metDataMember(abc.ABC):
         Returns:
             object: the metDataMember object represented by the dictionary
         """
-        return metDataMember.__DAG_deserialize(serialized)
+        return metDataMember.__recursive_deserialize(serialized)
+    
+    def to_JSON(self) -> str:
+        """
+        Convert a metDataObject to JSON
+
+        Returns:
+            str: the metDataObject's JSON representation
+        """
+        json.dumps(self.serialize())
+    
+    @staticmethod
+    def from_JSON(json_string) -> object:
+        """
+        Convert a JSON string to a metDataObject
+
+        Args:
+            json_string (str): the JSON representing a metDataObject
+
+        Returns:
+            object: the metDataObject for the provided JSON
+        """
+        json.loads(metDataMember.deserialize(json_string))
 
 @dataclass
 class Study(metDataMember):
@@ -642,3 +638,20 @@ class Gene(metDataMember):
     proteins: list[str, Enzyme] = field(default_factory=list)# can be enzymes
     linked_metabolites: list[str, Compound] = field(default_factory=list)
     linked_diseases: list[str] = field(default_factory=list)
+
+
+def __test_deserialize_serialize():
+    # this method is a very simple test of the serialize and deserialize functionality
+    # this should never be used in production or by end-users, it is simply retained
+    # for future improvements to the serialize and deserialize methods.
+
+    x = Gene()
+    x.a = Gene() # test object as datamemeber 
+    x.b = [Gene(), Gene()] # test list of objects as datamember
+    x.c = {
+        "1": Gene(),
+        "2": Gene()
+        } # test dict of objects as datamember
+    serialized = x.serialize() # serialize the object
+    deserialized = metDataMember.deserialize(serialized) # now deserialize
+    assert serialized == deserialized.serialize() # check that serializations are equal
