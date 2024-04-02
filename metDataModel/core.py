@@ -235,7 +235,7 @@ class Experiment(metDataMember):
         'sample_list': [],
         'file_sample_mapper': {}
     })
-    feature_DataFrame: pd.DataFrame = pd.DataFrame()
+    feature_DataFrame: pd.DataFrame = field(default_factory=pd.DataFrame)
     ordered_samples: list[str, Sample] = field(default_factory=list)
     List_of_empCpds: list[dict, EmpiricalCompound] = field(default_factory=list)
 
