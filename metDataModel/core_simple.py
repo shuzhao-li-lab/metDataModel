@@ -30,153 +30,29 @@ which allow easy access to attributes but have no additional methods.
 # Experimental concepts: experiment, peak, feature, empirical compound; massTrace, MSnSpectrum
 # only considering mass spec not NMR data here
 #
-from __future__ import annotations
-from typing import Union
-import abc
-import pandas as pd
-import json
-from dataclasses import dataclass, field
 
-
-# this is a master list of serializable primitives, i.e., not iterable.
-serializable_primitive_type = Union[str, float, int, tuple]
-
-# this is a datastructure to handle nested, up to depth 1, of serializable primitives in dicts and lists
-serializable_type = Union[serializable_primitive_type, dict[serializable_primitive_type, serializable_primitive_type], list[serializable_primitive_type]]
-
-
-class metDataMember(abc.ABC):
-    """metDataMember
-
-    This is an abstract baseclass from which all metDataMembers should inherit.
-    An abstract base class allows for the easy implementation of methods that 
-    need to be shared among all subclasses. 
-
-    This should NEVER be insantiatable 
-    """
-
-    @staticmethod
-    def __recursive_serialize(to_serialize) -> dict:
-        """
-        This method converts a dictionary consisting of various fields and values
-        into a dictionary suitable for serialization using JSON / YAML or other
-        similar markup-like specification. 
-
-        This is achieved by recursing through the dictionary by field, and setting
-        key, value pairs in the dictionary appropriately. Simple primitives of 
-        types str, float, and int require no processing. Iterables are iterated over
-        and checked for serializable-ness. Values that define a serialize method, will
-        have that method called upon them, thus enabling the nesting of metDataModel 
-        instances. 
-
-        Args:
-            to_serialize (_type_): a dictionary containing data members of a metDataObject
-
-        Returns:
-            dict: a dictionary representation of to_serialize that is JSON/YAML friendly.
-        """        
-        if isinstance(to_serialize, (str, float, int)):
-            return to_serialize
-        elif isinstance(to_serialize, dict):
-            return {metDataMember.__recursive_serialize(key): metDataMember.__recursive_serialize(value) for key, value in to_serialize.items()}
-        elif isinstance(to_serialize, (list, tuple)):
-            return [metDataMember.__recursive_serialize(x) for x in to_serialize]
-        elif hasattr(to_serialize, "serialize"):
-            return to_serialize.serialize()
-    
-    @staticmethod
-    def __recursive_deserialize(to_deserialize) -> object:
-        """
-        This method converts a serialized metDataObject, represented using a dictionary, and 
-        returns the metDataObject(s). This is achived using recursion. A serialized metDataObject
-        can contain lists or dictionaries of metDataObjects that in turn may contain dicts or 
-        lists of metDataObjects. 
-
-        Thus, to deserialize the following is performed. If a dictionary is encountered, it 
-        represents a metDataObject if it contains the "metDataMember_subclass" field, it 
-        represents a metDataObject that is created by first initializing an empty
-        version of that object and updating its __dict__, otherwise, if it is an iterable,
-        deserialize each member using recursion until we encountered a str, float, or int, which
-        is returned as is. 
-
-        Args:
-            to_deserialize (dict): the serialized metDataMember as dict
-
-        Returns:
-            object: the deserialized metDataMember
-        """
-        constructor_map = {x().__class__.__name__: x for x in metDataMember.__subclasses__()}
-        if isinstance(to_deserialize, dict):
-            if "metDataMember_subclass" in to_deserialize:
-                empty_metDataObject = constructor_map[to_deserialize["metDataMember_subclass"]]()
-                to_deserialize_data = {k: v for k, v in to_deserialize.items() if k != "metDataMember_subclass"}
-                empty_metDataObject.__dict__ = metDataMember.__recursive_deserialize(to_deserialize_data)
-                return empty_metDataObject
-            else:
-                return {metDataMember.__recursive_deserialize(key): metDataMember.__recursive_deserialize(value) for key, value in to_deserialize.items()} 
-        elif isinstance(to_deserialize, (str, float, int)):
-            return to_deserialize
-        elif isinstance(to_deserialize, (list, tuple)):
-            return [metDataMember.__recursive_serialize(x) for x in to_deserialize]
-
-    def serialize(self) -> dict:
-        """
-        Given a metDataModel object return a dictionary that is JSON/YAML friendly of its datamembers
-
-        Returns:
-            dict: a dictionary representation of the object that is JSON/YAML friendly.
-        """        
-        to_serialize = {x: getattr(self, x) for x in vars(self) if not x.startswith("_")}
-        to_serialize["metDataMember_subclass"] =  type(self).__name__
-        return metDataMember.__recursive_serialize(to_serialize)
-
-    @staticmethod
-    def deserialize(serialized) -> object:
-        """
-        Given a dictionary representing a serialized metDataMember, return the  object it reprsents.
-
-        Args:
-            serialized (dict): dictionary representing a serialized metDataMember
-
-        Returns:
-            object: the metDataMember object represented by the dictionary
-        """
-        return metDataMember.__recursive_deserialize(serialized)
-    
-    def to_JSON(self) -> str:
-        """
-        Convert a metDataObject to JSON
-
-        Returns:
-            str: the metDataObject's JSON representation
-        """
-        json.dumps(self.serialize())
-    
-    @staticmethod
-    def from_JSON(json_string) -> object:
-        """
-        Convert a JSON string to a metDataObject
-
-        Args:
-            json_string (str): the JSON representing a metDataObject
-
-        Returns:
-            object: the metDataObject for the provided JSON
-        """
-        json.loads(metDataMember.deserialize(json_string))
-
-@dataclass
-class Study(metDataMember):
+class Study:
     '''
     A study can include multiple experiments and datasets by different methods.
     '''
-    id: str = ''
-    url: str = ''
-    time_retrieval: str = ''
+    def __init__(self, id=''):
+        '''
+        Equivalent to a study found in public repositories, e.g. MetaboLights or Metabolomics Workbench.
+        '''
+        self.id = id
+        self.url = ''
+        self.time_retrieval = None
 
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'url': self.url,
+                'time_retrieval': self.time_retrieval,
+                }
 
-@dataclass
-class Experiment(metDataMember):
+class Experiment:
     '''
     An experiment of LC-MS, LC-MS/MS, GC-MS, LC-IMS, etc.
     An experiment can include multiple methods and various types of samples,
@@ -205,64 +81,106 @@ class Experiment(metDataMember):
 
     The empCpd-level data can be in JSON or other formats.
     '''
-    id: str = ''
-    parent_study: str = ''
-    number_samples: int = None
-    species: str = ''
-    tissue: str = ''
-    provenance: dict[serializable_primitive_type, serializable_type] = field(default_factory=lambda: {
-        'generated_time': '',
-        'generated_by': '',
-        'input_filename': '',
-        'preprocess_software': '',
-        'preprocess_parameters': {}
-    })
+    def __init__(self, id=''):
+        '''
+        Try to use long str to be unique in the world.
+        Additional fields can be added to the dictionaries.
+        '''
+        self.id = id                    # e.g. 'EXP00001234'
+        self.parent_study = ''
+        self.number_samples = None
+        self.species = 'hsa'
+        self.tissue = 'plasma'
 
-    chromatography: dict[serializable_primitive_type, serializable_type] = field(default_factory=lambda: {
-        'type': '',
-        'total_time': '',
-        'method_file': '',
-        'column_model': '',
-        'column_length': ''
-    })
-    instrumentation: dict[serializable_primitive_type, serializable_type] = field(default_factory=lambda: {
-        'type': '',
-        'spectrometer': '',
-        'method_file': '',
-        'ionization': ''
-    })
-    ObservationAnnotation: dict[serializable_primitive_type, serializable_type] = field(default_factory=lambda: {
-        'sample_list': [],
-        'file_sample_mapper': {}
-    })
-    feature_DataFrame: pd.DataFrame = pd.DataFrame()
-    ordered_samples: list[str, Sample] = field(default_factory=list)
-    List_of_empCpds: list[dict, EmpiricalCompound] = field(default_factory=list)
+        self.provenance = {
+            'generated_time': '',       # day of experiment
+            'generated_by': '',         # operator of experiment
+            'input_filename': '',
+            'preprocess_software': '',
+            'preprocess_parameters': {
+                'version': '0.0',
+                'ppm': 1,
+                'SNR': 10,
+            },
+        }
+        self.instrumentation = {
+            'type': 'LC-MS',
+            'spectrometer': '',         # mass spectrometer model
+            'method_file': '',          # method file used
+            'ionization': 'pos',        # positive or negative ionization
+        }
+        self.chromatography = {
+            'system': '',               # chromatograph model
+            'total_time': 300,          # seconds
+            'method_file': '',
+            'column_model': '',
+            'column_length': '',
+        }
+        
+        # data 
+        self.feature_DataFrame = None
+        self.FeatureAnnotation = {} 
+        self.ObservationAnnotation = {
+            'sample_list': [],
+            'file_sample_mapper': {}
+        }
+        # immutable ordered version of sample_list
+        self.ordered_samples = ()
 
-@dataclass
-class Method(metDataMember):
+        # EmpiricalCompounds, after annotation
+        self.List_of_empCpds = []
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'study_id': self.parent_study,
+                'number_samples': self.number_samples,
+                'species': self.species,
+                'tissue': self.tissue,
+                'provenance': self.provenance,
+                'instrumentation': self.instrumentation,
+                'chromatography': self.chromatography,
+                }
+        
+
+class Method:
     '''
     A study can include multiple experiments and datasets by different methods.
     '''
-    id: str = ''
-    url: str = ''
-    citation: str = ''
-    chromatography: dict[serializable_primitive_type, serializable_type] = field(default_factory=lambda: {
-        'type': '',
-        'total_time': '',
-        'method_file': '',
-        'column_model': '',
-        'column_length': ''
-    })
-    instrumentation: dict[serializable_primitive_type, serializable_type] = field(default_factory=lambda: {
-        'type': '',
-        'spectrometer': '',
-        'method_file': '',
-        'ionization': ''
-    })
+    def __init__(self, id=''):
+        '''
+        Equivalent to a study found in public repositories, e.g. MetaboLights or Metabolomics Workbench.
+        '''
+        self.id = id
+        self.url = ''
+        self.citation = ''
+        self.instrumentation = {
+            'type': 'LC-MS',
+            'spectrometer': '',         # mass spectrometer model
+            'method_file': '',          # method file used
+            'ionization': 'pos',        # positive or negative ionization
+        }
+        self.chromatography = {
+            'system': '',               # chromatograph model
+            'total_time': 300,          # seconds
+            'method_file': '',
+            'column_model': '',
+            'column_length': '',
+        }
 
-@dataclass
-class Sample(metDataMember):
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'instrumentation': self.instrumentation,
+                'chromatography': self.chromatography,
+                }
+
+
+class Sample:
     '''
     This is an analytical sample subjected to a single metabolomic method and associated with a single data file.
     Elution peaks are defined at sample level. A feature is defined at experiment level.
@@ -273,19 +191,31 @@ class Sample(metDataMember):
         self.anchor_mz_pairs = registry['anchor_mz_pairs']
         self.rt_numbers = registry['list_scan_numbers']
     '''
-    experiment: Union[str, Experiment] = ''
-    mode: str = ''
-    sample_type: str = ''
+    def __init__(self, registry={}, experiment=None, mode='pos'):
+        self.experiment = experiment    # parent Experiment instance
+        self.mode = mode                # pos or neg, but can be mixed in a Method
+        self.sample_type = ''           # QC, blank, study_sample, pooled_study_sample, ...
 
-    input_file: str = ''
-    name: str = ''
-    id: str = ''
-    list_retention_time: list[str, float] = field(default_factory=dict)
-    list_MassTracks: list[str] = field(default_factory=list)
-    list_peaks: list[str, Peak] = field(default_factory=list)
+        # A number of attributes can be passed via registry dictionary
+        self.input_file = registry['input_file']
+        self.name = registry['name']
+        self.id = registry['sample_id']
+        self.list_retention_time = registry['list_retention_time']
+        
+        self.list_MassTracks = []
+        self.list_peaks = []
 
-@dataclass
-class Spectrum(metDataMember):
+    def serialize(self):
+        '''
+        return dictionary of key variables. Extend as needed.
+        '''
+        return {'id': self.id, 
+                'list_peaks': self.list_peaks,
+                'sample_type': self.sample_type
+                }
+
+
+class Spectrum:
     '''
     A list of values on a property in analytical chemistry.
     A mass spectrum is a list of m/z values with corresponding intensity values. 
@@ -306,29 +236,57 @@ class Spectrum(metDataMember):
             {},
             {}
     '''
-    id: str = field(default='')
-    ms_level: int = field(default=2)
-    ionization: str = field(default=None)
-    precursor_ion: float = field(default=None)
-    precursor_ion_mz: float = field(default=None)
-    retention_time: float = field(default=None)
-    rtime: float = field(default=None)
+    def __init__(self, id=''):
+        '''
+        Default to mass spectrum level 2, but easy to be used for level 1 and other data types.
+        '''
+        self.id = id
+        self.ms_level = 2
+        self.precursor_ion = self.precursor_ion_mz = 0
+        self.ionization = "pos"
+        self.list_mz = []
+        self.list_intensity = []
+        self.retention_time = self.rtime = 0
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'precursor_ion': self.precursor_ion, 
+                'rtime': self.rtime, 
+                'ms_level': self.ms_level,
+                'ionization': self.ionization,
+                'list_intensity': self.list_intensity,
+                }
 
 
-@dataclass
-class ArrayOfSpectra(metDataMember):
+class ArrayOfSpectra:
     '''
     Metabolomic experiments usually employ some chromatography as separation technique. 
     Therefore, analysis of a "Sample" by a "Method" generates a series of spectra.
     The "Array of Spectra" is composed by linking separation parameters with spectra.
     '''
-    id: str = field(default='')
-    sample: str = field(default=None)
-    parameters: dict[serializable_primitive_type, serializable_type] = field(default_factory=dict)
-    list_values: list[str, float, int] = field(default_factory=list)
+    def __init__(self, id=''):
+        '''
+        This class is a conceptual abstraction, but can be wrapped into a "Sample" in practice. 
+        '''
+        self.id = id
+        self.sample = None
+        self.parameters = []        # typically for LC-MS: m/z, retention time, intensity
+        self.list_values = []
 
-@dataclass
-class Peak(metDataMember):
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'sample': self.sample, 
+                'list_values': self.list_values,
+                }
+
+
+class Peak:
     '''
     This refers to an elution peak in chromatography.
     The m/z peaks are handled by centroiding algorithms these days and are not part of this.
@@ -352,45 +310,69 @@ class Peak(metDataMember):
         "rtime_left_base": 119.5951254229998,
         "rtime_right_base": 124.12197382300019,}
     '''
-    id : str = field(default='')
-    ms_level : int = field(default=1)
-    mode : str = field(default='pos')
-    sample : str = field(default='')
-    list_mz : list[float] = field(default_factory=list)
-    list_retention_time : list[str, float] = field(default_factory=list)
-    list_intensity: list[float] = field(default_factory=list)
-    
-    #if RT aligned / adjusted
-    list_retention_time_corrected : list[float, str] = field(default_factory=list)
+    def __init__(self, id='', mode='pos'):
+        '''
+        EIC and peak_shape are defined by intensity as the the function of rtime.
+        If mz is of little variation, it's not always necesssary to show list_mz.
+        # other attributes of interest
+        # e.g. for IM data
+        # collision_cross_section = 0
+        '''
+        self.id = id
+        self.ms_level = 1                   # MS levle 1, 2. 3, etc.
+        self.mode = mode                    # ionization mode
+        self.sample = ''                    # if back track to sample
 
-    #if pre-annotated
-    ion_relation: str = ''
+        self.list_mz = []
+        self.list_retention_time = []
+        self.list_intensity = []
 
-    #derivative of XIC
-    mz: float = field(default=None)
-    min_mz: float = field(default=None)
-    max_mz: float = field(default=None)
-    rtime: Union[float, str] = field(default=None)
-    min_ritme: Union[float, str]  = field(default=None)
-    max_rtime: Union[float, str]  = field(default=None)
+        # if RT aligned/adjusted
+        self.list_retention_time_corrected = []
 
+        # derivative to XIC
+        self.mz, self.min_mz, self.max_mz = 0, 0, 0
+        self.rtime, self.min_rtime, self.max_rtime = 0, 0, 0
 
-@dataclass
-class MassTrack(metDataMember):
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'mz': self.mz, 
+                'rtime': self.rtime, 
+                'ms_level': self.ms_level,
+                'mode': self.mode,
+                'list_mz': self.list_mz,
+                'list_retention_time': self.list_retention_time,
+                'list_intensity': self.list_intensity,
+                }
+
+class MassTrack:
     '''
     Same as extracted ion chromatogram. This is used in place of EIC (or XIC, mass trace), 
     defined by m/z, list_retention_time, list_intensity.
     Computationally equivalent to EIC for LC-MS data, but spanning for full RT range in asari.
     See https://github.com/shuzhao-li/asari for application in data preprocessing.
     '''
-    id: str = field(default='')
-    mz: float = field(default=None)
-    list_retention_time: list[str, float, int] = field(default_factory=list)
-    list_intensity : list[str, float, int] = field(default_factory=list)
+    def __init__(self, id=''):
+        self.id = id 
+        self.mz = 0
+        self.list_retention_time = []
+        self.list_intensity = []
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'mz': self.mz, 
+                'list_retention_time': self.list_retention_time,
+                'list_intensity': self.list_intensity,
+                }
 
 
-@dataclass
-class Feature(metDataMember):
+class Feature:
     '''
     A feature is a set of peaks that are aligned across samples.
     This is experiment specific.
@@ -404,29 +386,63 @@ class Feature(metDataMember):
 
     The default is LC-MS feature. Derivative classes can be MS2feature, etc.
     '''
+    def __init__(self, id=''):
+        self.id = id                # e.g. 'F00001234'
+        self.ms_level = 1           # MS levle - 1, 2. 3, etc.
+        # These attributes are used in asari, but some are optional
+        self.mz = 0
+        self.parent_masstrack_id = None
+        self.rtime = 0
+        self.left_base = None
+        self.right_base = None
+        self.height = 0
+        self.peak_area = 0
+        self.goodness_fitting = 0
+        self.snr = 0
+        self.mSelectivity = 0
+        self.cSelectivity = 0
+        self.dSelectivity = 0
 
-    id: str = ''
-    ms_level: int = 1
-    mz: float = 0
-    parent_masstrack_id: str = None
-    rtime: float = 0
-    left_base: float = None
-    right_base: float = None
-    height: float = 0
-    peak_area: float = 0
-    goodness_fitting: float = 0
-    snr: float = 0
-    mSelectivity: float = 0
-    cSelectivity: float = 0
-    dSelectivity: float = 0
-    list_peaks: list[str, Peak] = field(default_factory=list)
-    including_peaks: list[str, Peak] = field(default_factory=list)
-    experiment_belonged: str = ''
-    annotation: dict[serializable_primitive_type] = field(default_factory=dict)
-    statistics: dict[serializable_primitive_type] = field(default_factory=dict)
+        # other attributes of interest
+        self.list_peaks = self.including_peaks = []
+        self.experiment_belonged = ''
 
-@dataclass
-class EmpiricalCompound(metDataMember):
+        # place holder. Will have separate annotation class/method
+        self.annotation = {
+        }
+
+        # statistics across samples
+        self.statistics = {
+            'intensity_sample_mean': None,
+            'intensity_sample_std': None,
+            'intensity_sample_cv': None,
+            'intensity_replicate_cv': None,
+            # statistic_score and p_value depend on the statistical test
+            'statistic_score': None,
+            'p_value': None,
+        }
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'mz': self.mz, 
+                'rtime': self.rtime, 
+                'apex': self.rtime,
+                'parent_masstrack_id': self.parent_masstrack_id,
+                'peak_area': self.peak_area,
+                'height': self.height,
+                'left_base': self.left_base, 
+                'right_base': self.right_base,   
+                'mSelectivity': self.mSelectivity,
+                'cSelectivity': self.cSelectivity,
+                'dSelectivity': self.dSelectivity,
+                'list_peaks': self.list_peaks,
+                }
+
+
+class EmpiricalCompound:
     '''
     EmpiricalCompound is a tentative compound/metabolite,
     a computational unit to represent the result of annotation on mass spec experiment.
@@ -443,61 +459,77 @@ class EmpiricalCompound(metDataMember):
     and can combine multiple methods, including pos and neg ESI, MS^n.
 
     Similar concepts are 'pseudo spectrum' in CAMERA, and 'feature group' in mz.Unity.
-
-    An empCpd is the result of annotation.
-    It has one and only one base neutral mass.
-    Many attributes are optional.
-
-    In a specific Experiment, an EmpiricalCompound consists of a set of features across a set of samples.
-    They can be list of MS1 features, either using pointers to Features in the database.
-    Features can include MS1 and MSn data.
-    How to group Features into empCpd depends on annotation method, e.g. Annotation, AnnotationResult from mass2chem
-    After annotation, not ruling out an empCpd can be mixture (isomers, etc)
     '''
-    
-    id: str = ''
-    interim_id: str = ''
 
-    experiment_belonged: str = ''
-    annotation_method: str = ''
+    def __init__(self, id=''):
+        '''
+        An empCpd is the result of annotation.
+        It has one and only one base neutral mass.
+        Many attributes are optional.
 
-    neutral_base_mass: float = None
-    neutral_formula_mass: float = None
+        In a specific Experiment, an EmpiricalCompound consists of a set of features across a set of samples.
+        They can be list of MS1 features, either using pointers to Features in the database.
+        Features can include MS1 and MSn data.
+        How to group Features into empCpd depends on annotation method, e.g. Annotation, AnnotationResult from mass2chem
+        After annotation, not ruling out an empCpd can be mixture (isomers, etc)
 
-    neutral_formula: str = ''
-    charge: int = None
-    charged_formula: str = ''
-    Database_referred: list = field(default_factory=list)
+        '''
+        self.id = id                            # e.g. 'E00001234'
+        self.interim_id = ''
+        # Experiment specific.
+        self.experiment_belonged = ''
+        self.annotation_method = ''
+        
+        self.neutral_base_mass = self.neutral_formula_mass = 0.0000
+        self.neutral_formula = ''
+        self.charge = 0
+        self.charged_formula = ''
+        self.Database_referred = []
 
-    MS1_pseudo_Spectra: list[str, Peak] = field(default_factory=list)
-    list_features: list[str, Feature] = field(default_factory=list)
-    MS2_Spectra: list[str, Spectrum] = field(default_factory=list)
-    identity: list[str] = field(default_factory=list)
-    annotation: list[str] = field(default_factory=list)
+        self.MS1_pseudo_Spectra = self.list_features = []            # list of features that belong to this empCpd
+        self.MS2_Spectra = []                   # MS2 identifiers can be universal (e.g. hashed ids)
+        self.identity = self.annotation = []    # see desired serialize() output; also in README
 
-    identity_probability_mummichog: list[float] = field(default_factory=list)
+    def read_json_model(self, jmodel):
+        '''Modify as needed
+        '''
+        self.interim_id = jmodel['interim_id']
+        self.neutral_formula_mass = jmodel['neutral_formula_mass']
+        self.neutral_formula = jmodel['neutral_formula']
+        self.Database_referred = jmodel['Database_referred']
+        self.identity = jmodel['identity']
+        self.MS1_pseudo_Spectra  = jmodel['MS1_pseudo_Spectra']
+        self.MS2_Spectra = jmodel['MS2_Spectra']    
 
-    @staticmethod
-    def read_json_model(jmodel):
-    #    '''Modify as needed
-    #    '''
-        return EmpiricalCompound(
-            id = jmodel['id'],
-            interim_id = jmodel['interim_id'],
-            neutral_formula_mass = jmodel['neutral_formula_mass'],
-            neutral_formula = jmodel['neutral_formula'],
-            Database_referred = jmodel['Database_referred'],
-            identity = jmodel['identity'],
-            MS1_pseudo_Spectra  = jmodel['MS1_pseudo_Spectra'],
-            MS2_Spectra = jmodel['MS2_Spectra']
-        )
+    def serialize(self):
+        '''
+        return dictionary of key variables. See README for an example.
+        '''
+        features = []
+        for peak in self.MS1_pseudo_Spectra:
+                features.append(        # this is given as example; one may need to modify the mapping variable names
+                   {"feature_id": peak['id'], "mz": peak['mz'], "rtime": peak['rtime'], "charged_formula": "",  
+                        "ion_relation": peak['ion_relation'],}
+                )
+        return {'interim_id': self.interim_id, 
+                'neutral_formula_mass': self.neutral_formula_mass,
+                'neutral_formula': self.neutral_formula,
+                'Database_referred': self.Database_referred,
+                'identity': self.write_identity(),
+                'MS1_pseudo_Spectra': features,
+                'MS2_Spectra': self.MS2_Spectra,
+                }
+
+    def write_identity(self):
+        '''Place holder'''
+        return self.identity
 
     def get_intensities(self):
-    #    ''' Representative intensity values, can base on the MS1 feature of highest intensity
-    #    self.intensities = { "sample1": 0, "sample2": 0, ... }
-    #    # more efficient version of self.intensities
-    #    self.intensities_by_ordered_samples = []
-    #    '''
+        ''' Representative intensity values, can base on the MS1 feature of highest intensity
+        self.intensities = { "sample1": 0, "sample2": 0, ... }
+        # more efficient version of self.intensities
+        self.intensities_by_ordered_samples = []
+        '''
         pass
 
     def mummichog_annotation(self):
@@ -508,26 +540,50 @@ class EmpiricalCompound(metDataMember):
             # updated probability after mummichog analysis
         ]
 
+
+
 #
 # Theoretical concepts (metabolic model): compound, reaction, pathway, network; enzyme, gene
 #
 
-@dataclass
-class Compound(metDataMember):
+class Compound:
+    def __init__(self):
+        '''
+        All metabolites are compounds, but the reverse is not true.
+        The identifiers from databases are a list of lists in self.db_ids. Because multiple identifiers
+        can be found in one DB: [['KEGG', 'C0000'], ['HMDB', 'HMDB01858'], ['HMDB', 'HMDB13762'], ...].
+        Use lists not tuple for JSON compatibility.
+        '''
+        self.internal_id = self.id = ''
+        self.name = ''          # common name
+        self.db_ids = []        # use list of lists, 
+                                # e.g. [['KEGG', ''], ['HMDB', ''], ['Azimuth', 'HMDB13762'], ['PubChem', ''], ]
+        self.neutral_formula = ''
+        self.neutral_mono_mass = 0.0000
+        # Often in metabolic models, compounds are in charged form
+        self.charge = 0
+        self.charged_formula = ''
 
-    internal_id: str = ''
-    id: str = ''
-    name: str = ''
-    db_ids: list[str] = field(default_factory=list)
-    neutral_formula: str = ''
-    neutral_mono_mass: float = None
-    charge: int = None
-    charged_formula: str = ''
-    SMILES: str = ''
-    inchi: str = ''
+        self.SMILES = ''
+        self.inchi = ''
 
-@dataclass
-class Reaction(metDataMember):
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'name': self.name, 
+                'identifiers': self.db_ids,
+                'neutral_formula': self.neutral_formula,
+                'charge': self.charge,
+                'charged_formula': self.charged_formula,
+                'neutral_mono_mass': self.neutral_mono_mass,
+                'SMILES': self.SMILES,
+                'inchi': self.inchi,
+                }
+
+
+class Reaction:
     '''
     A reaction is defined by reactants and products, each a list of compounds.
     There is directionality of a reaction. A forward reaction is different from reverse reaction.
@@ -536,38 +592,66 @@ class Reaction(metDataMember):
     Reactions are species specific, 
     because genes are species specific.
     '''
-    azimuth_id: str = ''
-    id: str = ''
-    name: str = ''
-    source: list[str] = field(default_factory=list)
-    version: str = ''
-    status: str = ''
-    reactants: list[str, Compound] = field(default_factory=list)
-    products: list[str, Compound] = field(default_factory=list)
-    enzymes: list[str, Enzyme] = field(default_factory=list)
-    genes: list[str, Gene] = field(default_factory=list)
-    pathways: list[str, Pathway] = field(default_factory=list)
-    ontologies: list[str] = field(default_factory=list)
-    species: str = ''
-    compartments: list[str] = field(default_factory=list)
-    cell_types: list[str] = field(default_factory=list)
-    tissues: list[str] = field(default_factory=list)
+    def __init__(self):
+        self.azimuth_id = self.id = ''
+        self.name = ''    # common name of the reaction; ontologies should be higher level
+        self.source = []
+        self.version = ''
+        # status, one of ['active', 'under review', 'obsolete']
+        self.status = ''
 
-@dataclass
-class Pathway(metDataMember):
+        self.reactants = []
+        self.products = []
+
+        # below this line are optional
+        self.enzymes = []
+        self.genes = []
+
+        # belong to
+        self.pathways = []
+        # still looking for good ontology for reactions. Maybe notes like "Glucuronidation" for now.
+        self.ontologies = []
+
+        self.species = ''
+        self.compartments = []
+        self.cell_types = []
+        self.tissues = []
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'name': self.name,
+                'reactants': self.reactants, 
+                'products': self.products, 
+                'genes': self.genes,
+                'enzymes': self.enzymes,
+                }
+
+
+class Pathway:
     '''
     A pathway is defined by connected biochemical reactions, according to human definition.
     '''
+    def __init__(self):
+        self.azimuth_id = self.id = ''
+        self.name = ''
+        self.source = []
+        self.list_of_reactions = []
+        self.status = ''
 
-    azimuth_id: str = ''
-    id: str = ''
-    name: str = ''
-    source: list[str] = field(default_factory=list)
-    list_of_reactions: list[str, Reaction] = field(default_factory=list)
-    status: str = ''
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'name': self.name, 
+                'list_of_reactions': self.list_of_reactions, 
+                }
 
-@dataclass
-class Network(metDataMember):
+
+class Network:
     '''
     This refers to a metabolic network, defined by connected biochemical reactions.
 
@@ -576,16 +660,23 @@ class Network(metDataMember):
 
     Based on prior knowledge. This class does not include correlation networks etc.
     '''
+    def __init__(self):
+        self.azimuth_id = self.id = ''
+        self.name = ''
+        self.source = []
+        self.list_of_reactions = []
+        self.status = ''
 
-    azimuth_id: str = ''
-    id: str = ''
-    name: str = ''
-    source: list[str] = field(default_factory=list)
-    list_of_reactions: list[str, Reaction] = field(default_factory=list)
-    status: str = ''
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'list_of_reactions': self.list_of_reactions, 
+                }
 
-@dataclass
-class MetabolicModel(metDataMember):
+
+class MetabolicModel:
     '''
     A metabolic model, minimal information is list_of_reactions.
     Pathway definition isn't always available.
@@ -593,65 +684,81 @@ class MetabolicModel(metDataMember):
     Genes and proteins correspond to enzymes in reactions.
     The JMS package (https://github.com/shuzhao-li/JMS) handles the conversion of genome scale metabolic models.
     '''
-    id: str = ''
-    meta_data: dict = field(default_factory=dict)
-    list_of_reactions: list[str, Reaction] = field(default_factory=list)
-    list_of_pathways: list[str, Pathway] = field(default_factory=list)
-    list_of_compounds: list[str, Compound] = field(default_factory=list)
-    metadata: dict[serializable_primitive_type, serializable_type] = field(default_factory=lambda: {
-        'species': '',
-        'version': '',
-        'sources': [],
-        'status': '',
-        'last_update': ''
-    })
+    def __init__(self):
+        self.id = ''
+        self.meta_data = {
+            'species': '',
+            'version': '',
+            'sources': [],
+            'status': '',
+            'last_update': '',
+        }
+        self.list_of_reactions = []
+        self.list_of_pathways = []
+        # list_of_compounds can be inferred from reactions, but good to keep annotation in cpds
+        self.list_of_compounds = []
+
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'list_of_reactions': self.list_of_reactions, 
+                'list_of_compounds': self.list_of_compounds,
+                'list_of_pathways': self.list_of_pathways,
+                'meta_data': self.meta_data,
+                }
 
 
 # ---------------------------------------------------------
 # To extend later
 #
 
-@dataclass
-class Enzyme(metDataMember):
+class Enzyme:
     '''
     An enzyme is a protein that catalyzes biochemical reactions.
     '''
-    id: str = ''
-    name: str = ''
-    ec_num: str = ''
-    url: str = ''
-    genes: list[str, Gene] = field(default_factory=list)
-    reactions: list[str, Reaction] = field(default_factory=list)
+    def __init__(self):
+        self.id = ''
+        self.name = ''
+        self.ec_num = ''
+        self.url = ''
+        self.genes = []
+        self.reactions = []
 
-@dataclass
-class Gene(metDataMember):
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'name': self.name,
+                'reactions': self.reactions
+                }
+
+
+class Gene:
     '''
     A gene is defined by polynucleotide sequence in a genome.
     Not a detailed model fo gene structure here. Main objective is to link to enzyme and biochemistry.
     '''
+    def __init__(self):
+        self.id = ''
+        self.name = ''
+        self.symbol = ''
+        self.ensembl_id = ''
+        self.description = ''
+        self.proteins = []              # can be enzymes
 
-    id: str = ''
-    name: str = ''
-    symbol: str = ''
-    ensembl_id: str = ''
-    description: str = ''
-    proteins: list[str, Enzyme] = field(default_factory=list)# can be enzymes
-    linked_metabolites: list[str, Compound] = field(default_factory=list)
-    linked_diseases: list[str] = field(default_factory=list)
+        self.linked_metabolites = []
+        self.linked_dieases = []
 
+    def serialize(self):
+        '''
+        return dictionary of key variables.
+        '''
+        return {'id': self.id, 
+                'name': self.name,
+                'symbol': self.symbol,
+                'proteins': self.proteins
+                }
 
-def __test_deserialize_serialize():
-    # this method is a very simple test of the serialize and deserialize functionality
-    # this should never be used in production or by end-users, it is simply retained
-    # for future improvements to the serialize and deserialize methods.
-
-    x = Gene()
-    x.a = Gene() # test object as datamemeber 
-    x.b = [Gene(), Gene()] # test list of objects as datamember
-    x.c = {
-        "1": Gene(),
-        "2": Gene()
-        } # test dict of objects as datamember
-    serialized = x.serialize() # serialize the object
-    deserialized = metDataMember.deserialize(serialized) # now deserialize
-    assert serialized == deserialized.serialize() # check that serializations are equal
