@@ -109,7 +109,8 @@ Our mass2chem, khipu and JMS packages house the annotation functions.
 The data structures should be language neutral. 
 
 We edit primarily in the Python code, as JSON and YAML can be exported automatically.
-Each Python class has a serialization function to export JSON, which is selective.
+Each Python class has a serialization function to export JSON.
+
 I.e., concise information for users' need is exported, but not all class details.
 
 Adaptation/update/extension is encouraged in other languages. 
@@ -119,6 +120,14 @@ For the core classes, it's more important to have transparent, extensible struct
 Therefore, it's a design decision not to have getter or setter functions. 
 Shallow data structures are more portable.
 MetDataModel provides a template, and application projects can extend it to fit their specific needs.
+
+There are two flavors of the metDataModel provided. The default version uses Python Dataclasses to 
+enforce weak static typing. These types are recommended and not enforced at runtime, but should provide
+users details to implement methods that use them in statically typed languages. The other is 
+dictionary based and has no suggested types. This is the minimal model. 
+
+Note that while metDataModel objects can have other metDataObjects as data members, this can cause 
+issues if there are circular references. 
 
 Please feel free to submit issues, and write Wiki pages for discussions.
 
