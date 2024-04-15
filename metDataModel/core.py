@@ -274,6 +274,12 @@ class Sample(metDataMember):
         self.rt_numbers = registry['list_scan_numbers']
     '''
     experiment: Union[str, Experiment] = ''
+    registry: dict = field(default_factory={
+            "input_file": '',
+            "name": '',
+            "sample_id": '',
+            "list_retention_time": None
+        })
     mode: str = ''
     sample_type: str = ''
 
