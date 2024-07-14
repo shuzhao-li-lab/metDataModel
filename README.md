@@ -157,4 +157,5 @@ To learn about genome scale metabolic models:
 - our book chapter to explain metabolic models in the context of metabolomic pathway analysis (https://link.springer.com/protocol/10.1007/978-1-0716-0239-3_19)
 
 ### Citation
-Mitchell et al, Common data models to streamline metabolomics processing and annotation, and implementation in a Python pipeline  (to come).
+
+Mitchell, J.M., Chi, Y., Thapa, M., Pang, Z., Xia, J. and Li, S., 2024. Common data models to streamline metabolomics processing and annotation, and implementation in a Python pipeline. PLOS Computational Biology, 20(6), p.e1011912. (https://doi.org/10.1371/journal.pcbi.1011912)
