@@ -53,7 +53,7 @@ As long as a workflow is adhered to these core concepts, interoperability is eas
     {
     "interim_id": "kp1832_268.0808",
     "neutral_formula_mass": 268.08077, 
-    "neutral_formula": C10H12N4O5,
+    "neutral_formula": "C10H12N4O5",
     "identity": [
             {"compounds": ["HMDB0000195"], "names": ["Inosine"], 
                     "score": 0.6, "probability": null},
@@ -61,8 +61,8 @@ As long as a workflow is adhered to these core concepts, interoperability is eas
                     "score": 0.1, "probability": null},
             {"compounds": ["HMDB0000481"], "names": ["Allopurinol riboside"], 
                     "score": 0.1, "probability": null},
-            {"compounds": ["HMDB0003040""], "names": ["Arabinosylhypoxanthine"], 
-                    "score": 0.05, "probability": null},
+            {"compounds": ["HMDB0003040"], "names": ["Arabinosylhypoxanthine"], 
+                    "score": 0.05, "probability": null}
             ],
     "MS1_pseudo_Spectra": [
             {"feature_id": "FT1705", "mz": 269.0878, "rtime": 99.90, 
@@ -87,17 +87,16 @@ As long as a workflow is adhered to these core concepts, interoperability is eas
             "MoNA-202402": [{
                 "precursor_ion_id": "269.087921142578_100.9166816170002_plasma_ID_01.mzML",
                 "reference_id": "Inosine",  "db_precursor_mz": 269.088, "db_precursor_rt": 43.44,
-                "msms_score": 0.985},
+                "msms_score": 0.985}
             ],
             "HMDBv5": [{"accession": "HMDB0000195", "name": "Inosine"},
                 {"accession": "HMDB0000481", "name": "Allopurinol riboside"},
                 {"accession": "HMDB0003040", "name": "Arabinosylhypoxanthine"},
                 {"accession": "HMDB0252449", "name": "Formycin b"}], 
             "CSM_r1": []   
-            }
-    "Databases_referred": ["CSM_r1", "HMDBv5", "MoNA-202402", "authLib_Li_Lab_202410"],
+            },
+    "Databases_referred": ["CSM_r1", "HMDBv5", "MoNA-202402", "authLib_Li_Lab_202410"]
     }
-
 
 An empCpd can be constructed without knowing the formula, by grouping features based on mass differences.
 
